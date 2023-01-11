@@ -1,0 +1,76 @@
+{
+  "login": {
+    "title": "Login",
+    "userName": "User Name",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?"
+  },
+  "general": {
+    "yes": "Yes",
+    "no": "No",
+    "ok": "Ok",
+    "mobileNum": "Mobile Number",
+    "email": "Email Address",
+    "address": "Address",
+    "holidays": "Holidays",
+    "events": "Events",
+    "reason": "Reason"
+  },
+  "home": {
+    "track": "Track",
+    "pickUpSchedule": "Pickup Schedule",
+    "myProfile": "My profile",
+    "children": "Children",
+    "messages": "Messages",
+    "holidayList": "Holiday list",
+    "applyLeave": "Apply Leave",
+    "busArrivalMsg": "will arrive in 10 mts"
+  },
+  "track": {
+    "title": "Bus Track",
+    "mapView": "Map view",
+    "listView": "List view"
+  },
+  "pickUpSchedule": {
+    "title": "Pickup Schedule",
+    "toSchool": "To School",
+    "fromSchool": "From School"
+  },
+  "children": {
+    "title": "Children"
+  },
+  "childProfile": {
+    "title": "Children profile",
+    "busAttendance": "Bus Attendance",
+    "leavesTaken": "Leaves Taken",
+    "details": "Details",
+    "parentalDetails": "Parental Details",
+    "applyLeave": "Apply Leave",
+    "showAttendanceSheet": "Show Attendance Sheet",
+    "showBusRoute": "Show Bus Route",
+    "fatherName": "Father’s Name",
+    "contactNum": "Contact Number",
+    "email": "Email",
+    "mothersName": "Mother’s Name",
+    "address": "Address",
+    "postalAddress": "Postal Address",
+    "permanentAddress": "Permanent Address",
+    "relationship": "Relationship with child",
+    "accademicYear": "Academic Year",
+    "admissionDate": "Date of Admission",
+    "admissionNum": "Admission Number",
+    "rollNumber": "Roll Number",
+    "dob": "Date of Birth"
+  },
+  "profile": {
+    "details": "My Details"
+  },
+  "holidays": {
+    "title": "Holidays",
+    "events": "Events"
+  },
+  "students": {
+    "title": "Students",
+    "searchDescription": "Search Student or Stop"
+  }
+}
