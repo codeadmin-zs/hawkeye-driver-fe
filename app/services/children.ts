@@ -54,11 +54,10 @@ export const applyLeave = async (childId,date,reason) => {
   });
 };
 
-export const getPickupRoutes = async childId => {
-  console.log('reached getchildrens api');
+export const getPickupRoutes = () => {
 
   return FetchApi({
-    endpoint: `${ApiConfig.STUDENTS}${childId}${ApiConfig.PICKUP_ROUTES}`,
+    endpoint: `${ApiConfig.VEHICLE}5bc68d68-e527-45d9-8ed4-5c5495d44e6f${ApiConfig.STOPS}`,
     method: 'GET',
   });
 };

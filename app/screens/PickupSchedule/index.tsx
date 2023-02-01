@@ -22,7 +22,8 @@ const PickupSchedule: React.FC = ({ route }) => {
   const { childeInfo } = route.params;
   const { colors } = useTheme();
   const styles = makeStyles(colors);
-  const [pickupData, setPickupData] = useState({});
+  const [pickupData, setPickupData] = useState([]);
+  const [selectedRoute, setSelectedRoute] = useState("");
   const [studentStop, setStudentStop] = useState({ fromStop: "", toStop: "" });
   const dispatch = useDispatch();
 
@@ -32,9 +33,11 @@ const PickupSchedule: React.FC = ({ route }) => {
     dispatch(loadingActions.enableLoading());
     let response = null;
     const fetchData = async () => {
-      response = await getPickupRoutes(childeInfo.guid);
-
+      response = await getPickupRoutes();
+      console.log("respp==pick up",response);
+       let selectedRoute = response?.body[0]?.pathid;
       dispatch(loadingActions.disableLoading());
+      setSelectedRoute(selectedRoute);
       setPickupData(response?.body);
     };
     fetchData();
@@ -68,22 +71,25 @@ const PickupSchedule: React.FC = ({ route }) => {
       />
 
       <View style={styles.tabButtonBox}>
+        {pickupData.map((item)=>
         <TabButton
-          Label={"From School"}
-          textColor={showFromSchool ? colors.primary : colors.passive}
-          borderWidth={showFromSchool ? 3 : 1}
-          borderColor={showFromSchool ? colors.primary : colors.passive}
-          onPress={() => setShowFromSchool(true)}
-          height={moderateScale(40)}
-        />
-        <TabButton
+        Label={item.pathname}
+        textColor={selectedRoute === item.pathid ? colors.primary : colors.passive}
+        borderWidth={selectedRoute === item.pathid ? 3 : 1}
+        borderColor={selectedRoute === item.pathid ? colors.primary : colors.passive}
+        onPress={() => setSelectedRoute(item.pathid)}
+        height={moderateScale(40)}
+      />
+        )}
+        
+        {/* <TabButton
           Label={"To School"}
           height={moderateScale(40)}
           textColor={showFromSchool ? colors.passive : colors.primary}
           borderWidth={showFromSchool ? 1 : 3}
           borderColor={showFromSchool ? colors.passive : colors.primary}
           onPress={() => setShowFromSchool(false)}
-        />
+        /> */}
       </View>
       {isLoading ? (
         <View style={styles.fullView}>
@@ -91,7 +97,7 @@ const PickupSchedule: React.FC = ({ route }) => {
         </View>
       ) : (
         <>
-          <View
+          {/* <View
             style={{
               alignItems: "center",
               justifyContent: "center",
@@ -103,18 +109,13 @@ const PickupSchedule: React.FC = ({ route }) => {
                 ? `${studentStop.fromStop.name} : ETA : ${moment(studentStop.fromStop.eta,'HH:mm:ss').format('hh:mm A')}`
                 : `${studentStop.toStop.name} : ETA : ${moment(studentStop.toStop.eta,'HH:mm:ss').format('hh:mm A')}`}
             </Typography.H4>
-          </View>
-          {showFromSchool ? (
+          </View> */}
+         
             <PickupStop
-              pickupData={pickupData?.outbound}
-              selectedStop={pickupData?.outbound_stop}
+              pickupData={pickupData}
+              selectedRoute={selectedRoute}
             />
-          ) : (
-            <PickupStop
-              pickupData={pickupData?.inbound}
-              selectedStop={pickupData.inbound_stop}
-            />
-          )}
+          
         </>
       )}
     </View>

@@ -5,7 +5,6 @@ import DeviceInfo from 'react-native-device-info';
 
 export const loginUser = async (username: string, password: string) => {
   let uniqueId = await DeviceInfo.getUniqueId();
-  console.log('reached login api');
 
   return FetchApi({
     endpoint: `${ApiConfig.SESSIONS}${uniqueId}`,

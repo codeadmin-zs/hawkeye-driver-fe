@@ -39,7 +39,7 @@ const Home: React.FC = () => {
       bgColor: '#8E8E77',
       iconBgColor: '#C6C6A0',
       textColor: '#fff',
-      onPress: () => NavigationService.navigate('Children',{navType: 'pickup'}),
+      onPress: () => NavigationService.navigate('PickupSchedule',{navType: 'pickup'}),
       iconName: 'Schedule',
       icon: <Schedule />,
     },

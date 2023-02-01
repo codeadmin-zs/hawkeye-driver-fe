@@ -6,6 +6,8 @@ const ApiConfig = {
   SUB_URL: 'apis/v1/',
   SESSIONS: 'sessions/',
   MY_PROFILE: 'users/profiles',
+  VEHICLE: 'vehicles/',
+  STOPS: '/stops',
   CHILDRENS: '/students',
   STUDENTS: 'students/',
   PARENTS: 'parents/',
