@@ -17,7 +17,7 @@ import themeReducer from './features/theme/slice';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: ['login'],
+  whitelist: ['login','profile'],
   debug: true, //to get useful logging
 };
 
@@ -56,6 +56,8 @@ const persistor = persistStore(store);
 const storeHelpers = {
   getAccessToken: () => store.getState().login.accessToken,
   getUserId: () => store.getState().login.id,
+  getUserName: () => store.getState().profile.name,
+  getUserDetails: () => store.getState().profile.profileDetails
 };
 
 const configStore = () => {

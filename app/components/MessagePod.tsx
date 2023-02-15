@@ -49,7 +49,7 @@ const MessagePod: FunctionComponent<any> = ({
         </View>
       </View>
       {message && (
-        <Typography.H6Light style={styles.message}>
+        <Typography.H6Light style={styles.message} numberOfLines={1}>
           {message}
         </Typography.H6Light>
       )}
@@ -67,6 +67,7 @@ const makeStyles = (colors: any) =>
       backgroundColor: colors.surfaceBackground,
       borderRadius: moderateScale(5),
       marginVertical: '1%',
+      
     },
     container: {
       flexDirection: 'row',

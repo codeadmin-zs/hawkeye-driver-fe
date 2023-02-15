@@ -33,13 +33,11 @@ const Children: React.FC = ({route}) => {
       setChildrensData(response?.body);
     };
     fetchData();
-    console.log('response==', response);
   }, []);
 
   const goBack = () => NavigationService.goBack();
   
   const gotoDetails = item =>{
-    console.log("navType",navType);
     
    switch(navType){
     case 'profile':

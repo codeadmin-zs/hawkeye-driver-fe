@@ -46,10 +46,8 @@ const ChildProfile: React.FC = ({route}) => {
         father: parentResponse?.body[0],
         mother: parentResponse?.body[1],
       });
-      console.log('response==22', childResponse, parentResponse);
     };
     fetchData();
-    console.log('response==', childResponse, leaveResponse);
   }, []);
   const {colors} = useTheme();
   const styles = makeStyles(colors, isParentDetails);

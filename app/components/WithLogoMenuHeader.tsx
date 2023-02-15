@@ -25,7 +25,6 @@ const WithLogoMenuHeader: FunctionComponent<any> = props => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const onLogout = () => {
-    console.log("reaacheddd");
     
     dispatch(loginActions.logoutRequest());
   }

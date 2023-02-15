@@ -35,7 +35,6 @@ const MyProfile: React.FC = () => {
       setProfileData(response?.body);
     };
     fetchData();
-    console.log("response==", response);
   }, []);
 
   useEffect(() => {
@@ -48,7 +47,7 @@ const MyProfile: React.FC = () => {
     if (profileData.perm_addr_line4) {
       address += profileData.perm_addr_line4;
     }
-    console.log("response==222", profileData);
+   
   }, [profileData]);
 
   return (

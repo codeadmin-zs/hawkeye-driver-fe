@@ -6,8 +6,9 @@ export const makeStyles = (colors: any) =>
       flex: 1,
     },
     tabButtonBox: {
+      flexGrow:0,
+      width:'100%',
       flexDirection: 'row',
-      justifyContent: 'center',
       backgroundColor: '#fff',
     },
     contentContainer: {
@@ -44,7 +45,7 @@ export const makeStyles = (colors: any) =>
     dataItemBox: {
       flex: 1,
       justifyContent: 'space-between',
-      paddingBottom: '3.2%',
+      paddingBottom: '1%',
     },
     fullView: {
       alignItems: 'center',

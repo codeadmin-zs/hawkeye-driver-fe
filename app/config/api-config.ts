@@ -17,7 +17,9 @@ const ApiConfig = {
   LEAVES: '/leaves',
   VEHICLES: '/vehicles',
   KEY: 'zaeemkey1',
-  PICKUP_ROUTES: '/vehicles/stops'
+  PICKUP_ROUTES: '/vehicles/stops',
+  DRIVER: 'drivers/',
+  MESSAGES: 'notices'
 };
 
 export default ApiConfig;

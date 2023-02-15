@@ -15,7 +15,6 @@ const PickupStop: React.FC = ({ pickupData, selectedRoute }) => {
   const { colors } = useTheme();
   const styles = makeStyles(colors);
   const selectedPath = pickupData.find((item)=> item.pathid === selectedRoute)
- console.log("stations==",selectedPath?.stations);
  
   return (
     <ScrollView style={{ height: dim.height * 0.6 }} contentContainerStyle={{}}>
@@ -37,19 +36,19 @@ const PickupStop: React.FC = ({ pickupData, selectedRoute }) => {
           {selectedPath?.stations?.map((item) => (
             <View style={styles.dataItemContainer}>
               <Typography.H5
-                style={{ color: selectedRoute === selectedPath.pathid ? "#EC0000" : "#000" }}
+                style={{ color: colors.primary}}
               >
                 {item.name}
               </Typography.H5>
               <Typography.H6
-                style={{ color: selectedRoute === selectedPath.pathidid ? "#EC0000" : "#000" }}
+                style={{ color: selectedRoute === selectedPath.pathid ? "#EC0000" : "#000" }}
               >
                 {moment(item.eta,'HH:mm:ss').format('hh:mm A')}
               </Typography.H6>
-              <View style={styles.boardingInfoBox}>
-            <Typography.H6 style={{color: 'green'}}>Boarded - {moment(item.boarded).format('hh:mm A')}</Typography.H6>
-            <Typography.H6 style={{color: 'red'}}>Not Boarded - {moment(item.notboarded).format('hh:mm A')}</Typography.H6>
-        </View>
+              {/* <View style={styles.boardingInfoBox}>
+            <Typography.H6 style={{color: 'green'}}>Boarded - {item.boarded}</Typography.H6>
+            <Typography.H6 style={{color: 'red'}}>Not Boarded - {item.notboarded}</Typography.H6>
+        </View> */}
             </View>
 
           ))}

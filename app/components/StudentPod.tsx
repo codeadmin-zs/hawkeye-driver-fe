@@ -26,7 +26,7 @@ const StudentPod: FunctionComponent<any> = props => {
     return null;
   }
   const styles = makeStyles(colors);
-  console.log(colors);
+ 
   return (
     <TouchableOpacity style={styles.container} onPress={props?.onPress}>
       <View style={styles.logoContainer}>

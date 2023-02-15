@@ -21,7 +21,6 @@ interface WithLogoHeaderProps {
 const Header: FunctionComponent<any> = props => {
   const {colors} = useTheme();
   const styles = makeStyles(colors);
-  console.log(colors);
   return (
     <SafeAreaView>
       <View style={styles.main}>

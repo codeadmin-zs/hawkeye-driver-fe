@@ -24,7 +24,7 @@ const StudentCount: FunctionComponent<any> = ({boardedCount,notBoardedCount,yetB
   //     return null;
   //   }
   const styles = makeStyles(colors);
-  console.log(colors);
+
   return (
     <View style={styles.detailsContainer}>
       <Typography.H5Light style={{ color: "green" }}>
