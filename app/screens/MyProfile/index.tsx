@@ -1,20 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, View} from 'react-native';
-import {Button, TextInput, useTheme} from 'react-native-paper';
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
+import { Button, TextInput, useTheme } from "react-native-paper";
 
-import {useDispatch, useSelector} from 'react-redux';
-import {loadingActions} from '../../store/features/loading/slice';
-import NavigationService from 'app/navigation/NavigationService';
-import {Header} from '../../components';
-import LeftArrow from '../../assets/Svgs/LeftArrow.svg';
-import UserIcon from '../../assets/Svgs/UserIcon.svg';
-import {Typography} from '../../components/Typography';
-import {t} from '../../i18n';
-import {makeStyles} from './styles';
-import {getMyProfile} from '../../services/myProfile';
+import { useDispatch, useSelector } from "react-redux";
+import { loadingActions } from "../../store/features/loading/slice";
+import NavigationService from "app/navigation/NavigationService";
+import { Header } from "../../components";
+import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
+import UserIcon from "../../assets/Svgs/UserIcon.svg";
+import { Typography } from "../../components/Typography";
+import { t } from "../../i18n";
+import { makeStyles } from "./styles";
+import { getMyProfile } from "../../services/myProfile";
 
 const MyProfile: React.FC = () => {
-  const {colors} = useTheme();
+  let address = "";
+  const { colors } = useTheme();
   const styles = makeStyles(colors);
 
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const MyProfile: React.FC = () => {
   const [profileData, setProfileData] = useState({});
 
   const goBack = () => NavigationService.goBack();
-  
+
   useEffect(() => {
     dispatch(loadingActions.enableLoading());
     let response = null;
@@ -34,13 +35,25 @@ const MyProfile: React.FC = () => {
       setProfileData(response?.body);
     };
     fetchData();
-    console.log('response==', response);
   }, []);
+
+  useEffect(() => {
+    if (profileData.perm_addr_line2) {
+      address += profileData.perm_addr_line2 + ",";
+    }
+    if (profileData.perm_addr_line3) {
+      address += profileData.perm_addr_line3 + ",";
+    }
+    if (profileData.perm_addr_line4) {
+      address += profileData.perm_addr_line4;
+    }
+   
+  }, [profileData]);
 
   return (
     <View style={styles.container}>
       <Header
-        title={'My Profile'}
+        title={"My Profile"}
         leftIcon={<LeftArrow />}
         leftIconPress={() => goBack()}
       />
@@ -52,47 +65,48 @@ const MyProfile: React.FC = () => {
         <>
           <View
             style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '100%',
-            }}>
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
             <UserIcon />
-            <Typography.H5Light style={{paddingTop: 8}}>
+            <Typography.H5Light style={{ paddingTop: 8 }}>
               {profileData.name}
             </Typography.H5Light>
           </View>
-          <View style={{flexDirection: 'row', width: '100%'}}>
+          <View style={{ flexDirection: "row", width: "100%" }}>
             <View style={styles.profileTitleBox}>
-              <Typography.H5Light style={{color: '#fff'}}>
-                {t('profile.details')}
+              <Typography.H5Light style={{ color: "#fff" }}>
+                {t("profile.details")}
               </Typography.H5Light>
             </View>
-            <View style={{width: '50%'}} />
+            <View style={{ width: "50%" }} />
           </View>
           <View style={styles.textBoxContainer}>
             <TextInput
-              label={t('general.mobileNum')}
-              placeholder={t('general.mobileNum')}
+              label={t("general.mobileNum")}
+              placeholder={t("general.mobileNum")}
               style={styles.textBox}
               value={profileData?.contact_number}
             />
             <TextInput
-              label={t('general.email')}
-              placeholder={t('general.email')}
+              label={t("general.email")}
+              placeholder={t("general.email")}
               style={styles.textBox}
               value={profileData.email}
             />
             <TextInput
-              label={t('general.address')}
-              placeholder={t('childProfile.address')}
+              label={t("general.address")}
+              placeholder={t("childProfile.address")}
               style={styles.textBox}
               value={profileData.perm_addr_line1}
             />
             <TextInput
               // label={t('general.address')}
-              placeholder={t('childProfile.address')}
+              placeholder={t("childProfile.address")}
               style={styles.textBox}
-              value={`${profileData.perm_addr_line2},${profileData.perm_addr_line3},${profileData.perm_addr_line4}`}
+              value={address}
             />
           </View>
         </>

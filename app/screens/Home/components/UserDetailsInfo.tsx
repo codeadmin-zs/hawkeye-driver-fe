@@ -14,7 +14,6 @@ interface WithLogoHeaderProps {
 
 const UserDetailsInfo: FunctionComponent<any> = props => {
   const theme = useTheme();
-  console.log(theme.colors);
   return (
     <View style={[styles.container(theme), props.containerStyle]}>
       <View style={[styles.titleContainer(theme)]}>

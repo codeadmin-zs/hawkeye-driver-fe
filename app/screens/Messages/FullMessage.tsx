@@ -7,11 +7,13 @@ import LeftArrow from '../../assets/Svgs/LeftArrow.svg';
 import {Typography} from '../../components/Typography';
 import {MessagePod} from '../../components';
 import {moderateScale} from 'react-native-size-matters';
-
+import moment from 'moment'; 
 import commonStyles from './styles';
 
-const FullMessage: React.FC = () => {
+const FullMessage: React.FC = (props:any) => {
   const {colors} = useTheme();
+  const {data} = props.route.params;
+  
   const styles = makeStyles(colors);
 
   const goBack = () => NavigationService.goBack();
@@ -19,24 +21,20 @@ const FullMessage: React.FC = () => {
   return (
     <View style={commonStyles.container}>
       <Header
-        title={'Full Message'}
+        title={'Message'}
         leftIcon={<LeftArrow />}
         leftIconPress={() => goBack()}
       />
       <View style={styles.fullMessageConatiner}>
         <MessagePod
-          messageTitle={'Annual day run through'}
+          messageTitle={data.subject}
           messageType={'info'}
-          date={'12-Jun-2022 2 : 30 AM'}
+          date={moment(data.created_on,'HH:mm:ss').format('hh:mm A')}
         />
         <View style={styles.rootContainer}>
-          <Typography.H6Light>
-            Full Message Text Lorem ipsum is a dummy text without any sense. It
-            is a sequence of Latin words that, as they are positioned, do not
-            form sentences with a complete sense, but give life to a test text
-            useful to fill spaces that will subsequently be occupied from ad hoc
-            texts composed by communication professionals.
-          </Typography.H6Light>
+          <Typography.H5Light style={{paddingHorizontal:'2%',paddingVertical: '4%',lineHeight: 23}}>
+            {data?.content}
+          </Typography.H5Light>
         </View>
       </View>
     </View>
@@ -54,10 +52,11 @@ const makeStyles = (colors: any) =>
       borderRadius: moderateScale(5),
       marginVertical: '1%',
       padding: '2%',
+      height: '80%'
     },
     fullMessageConatiner: {
-      alignItems: 'center',
-      justifyContent: 'center',
+      // alignItems: 'center',
+      // justifyContent: 'center',
       width: '100%',
       paddingHorizontal: '2%',
     },

@@ -18,7 +18,7 @@ interface WithLogoHeaderProps {
   children: ReactNode;
 }
 
-const AttendancePod: FunctionComponent<any> = props => {
+const DriverPod: FunctionComponent<any> = props => {
   const {colors} = useTheme();
   const {data} = props;
 
@@ -26,6 +26,7 @@ const AttendancePod: FunctionComponent<any> = props => {
     return null;
   }
   const styles = makeStyles(colors);
+
   return (
     <TouchableOpacity style={styles.container} onPress={props?.onPress}>
       <View style={styles.logoContainer}>
@@ -34,17 +35,17 @@ const AttendancePod: FunctionComponent<any> = props => {
       <View style={styles.detailsContainer}>
         <Typography.H4 color={'#000'}>{data.name}</Typography.H4>
         <Typography.H6Light style={{color: '#000'}}>
-          {data.admissionNumber}
+          {data.plateNo}
         </Typography.H6Light>
         <Typography.H6Light style={{color: '#000'}}>
-          {data.class}
+          {data.admission_class}
         </Typography.H6Light>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default AttendancePod;
+export default DriverPod;
 
 const makeStyles = (colors: any) =>
   StyleSheet.create({

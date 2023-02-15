@@ -1,13 +1,11 @@
 // import {apiClient,} from 'app/services/client';
 import FetchApi from './client';
 import ApiConfig from 'app/config/api-config';
-import DeviceInfo from 'react-native-device-info';
 
-export const getMyProfile = async () => {
-
+export const getMessages = async () => {
   return FetchApi({
-    endpoint: `${ApiConfig.MY_PROFILE}`,
+    endpoint: `${ApiConfig.MESSAGES}`,
     method: 'GET',
-    isAuth: true,
   });
 };
+

@@ -42,12 +42,11 @@ const ApplyLeave: React.FC = ({ route }) => {
   };
   const goBack = () => {NavigationService.goBack();}
   const onApplyLeave =  async() => {
-    console.log("on apply", childData);
+    
     //  dispatch(loadingActions.enableLoading());
     const resp =   await applyLeave(childData?.guid, selectedDate, leaveReason);
     //  dispatch(loadingActions.disableLoading());
     if(resp?.status === 201){
-      console.log("reppp==",resp);
       setShowSuccess(true);
     }
   };

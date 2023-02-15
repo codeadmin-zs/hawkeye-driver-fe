@@ -46,7 +46,6 @@ const Login: React.FC = () => {
   const onLogin = () => {
     // const userName = 'Demo1';
     // const password = '123';
-    // console.log("refs",userNameRef.current.value);
 
     // if (userName && password) {
     dispatch(loadingActions.enableLoading());
@@ -72,7 +71,6 @@ const Login: React.FC = () => {
               style={styles.textInput}
               // value={userName}
               onChangeText={text => {
-                console.log('text', text);
 
                 setUserName(text);
               }}

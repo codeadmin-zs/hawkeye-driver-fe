@@ -6,6 +6,8 @@ const ApiConfig = {
   SUB_URL: 'apis/v1/',
   SESSIONS: 'sessions/',
   MY_PROFILE: 'users/profiles',
+  VEHICLE: 'vehicles/',
+  STOPS: '/stops',
   CHILDRENS: '/students',
   STUDENTS: 'students/',
   PARENTS: 'parents/',
@@ -15,7 +17,9 @@ const ApiConfig = {
   LEAVES: '/leaves',
   VEHICLES: '/vehicles',
   KEY: 'zaeemkey1',
-  PICKUP_ROUTES: '/vehicles/stops'
+  PICKUP_ROUTES: '/vehicles/stops',
+  DRIVER: 'drivers/',
+  MESSAGES: 'notices'
 };
 
 export default ApiConfig;

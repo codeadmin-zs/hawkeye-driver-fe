@@ -15,7 +15,6 @@ import moment from 'moment';
 
 const AbsentDays: React.FC = ({route}) => {
   const {leavesData,childData} = route.params;
-  console.log("leavesData",leavesData);
   
   const [isParentDetails, setIsParentDetails] = useState(false);
   const {colors} = useTheme();

@@ -22,7 +22,7 @@ const StudentCountBox: FunctionComponent<any> = props => {
 //     return null;
 //   }
   const styles = makeStyles(colors);
-  console.log(colors);
+
   return (
     <>
     <View style={styles.container}>

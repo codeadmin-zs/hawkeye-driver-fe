@@ -1,0 +1,1 @@
+export const googleApiKey = 'AIzaSyApiH_mqSC1atsRH6cQJyXm8CfhTTfj6pM';

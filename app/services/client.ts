@@ -31,14 +31,13 @@ const FetchApi = async ({
     body: method !== "GET" ? body : null,
   };
 
-  console.log("headers sent", storeHelpers.getAccessToken());
-  console.log(consolidatedHeaders);
+  console.log("---access token---", storeHelpers.getAccessToken());
+  console.log("---consolidatedHeaders---",consolidatedHeaders);
   console.log(`${apiOverride}${endpoint}`);
 
   return fetch(`${apiOverride}${endpoint}`, params)
     .then((response: FetchTypes.RawResponse): FetchTypes.Responses => {
-      console.log("success response");
-      console.log(response);
+      console.log("---api response ---"response);
       const { status } = response;
       let isError = true;
       const errorResponse: FetchTypes.Error = {
@@ -85,18 +84,15 @@ const FetchApi = async ({
           return blobResponse;
         });
       } else {
-        console.log("rerror11",response.headers.get("content-type"), status);
+        console.log("---status--", status);
         if (response.headers.get("content-type") && response.headers.get("content-type")?.match(/application\/json/)) {
           // SUCCESSFUL JSON RESPONSE
           return response?.json()?.then((body: FetchTypes.Responses) => {
-            console.log("rerror", body, status);
+            console.log("---response body---", body);
             const jsonResponse: FetchTypes.Json = { status, body };
-            console.log("Full jsonResponse");
-            console.log(jsonResponse);
             return jsonResponse;
           });
         } else {
-          console.log("else==");
           
           return {status,body:"success"};
         }
@@ -112,8 +108,7 @@ const FetchApi = async ({
           detail: error.message,
         },
       };
-      console.log("error response");
-      console.log(error);
+      console.log("---error response---",error);
 
       return errorResponse;
     });

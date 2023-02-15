@@ -20,7 +20,6 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     loginResponse(state: LoginState, action: any) {
-      console.log("resp==",action?.payload?.body);
       state.id = action?.payload?.body.userId;
       state.accessToken = action?.payload?.body?.accessToken;
       state.isLoggedIn = true;

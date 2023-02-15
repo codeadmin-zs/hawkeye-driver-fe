@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {View, FlatList, Text, TouchableOpacity} from 'react-native';
 
 import {useDispatch} from 'react-redux';
@@ -17,13 +17,20 @@ import Children from '../../assets/Svgs/Children.svg';
 import Messages from '../../assets/Svgs/Messages.svg';
 import Holiday from '../../assets/Svgs/Holiday.svg';
 import {t} from '../../i18n';
+import {getDriverDetails} from '../../services/driver';
+import { profileActions } from 'app/store/features/profile/slice';
+import { loadingActions } from 'app/store/features/loading/slice';
 
 const dim = Dimensions.Screen;
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
   const onLogout = () => dispatch(loginActions.logOut());
-
+  useEffect(()=>{
+    dispatch(loadingActions.enableLoading());
+    dispatch(profileActions.profileDetailsRequest());
+    
+  },[])
   const MenuData = [
     {
       title: t('home.track'),
@@ -39,7 +46,7 @@ const Home: React.FC = () => {
       bgColor: '#8E8E77',
       iconBgColor: '#C6C6A0',
       textColor: '#fff',
-      onPress: () => NavigationService.navigate('Children',{navType: 'pickup'}),
+      onPress: () => NavigationService.navigate('PickupSchedule',{navType: 'pickup'}),
       iconName: 'Schedule',
       icon: <Schedule />,
     },
