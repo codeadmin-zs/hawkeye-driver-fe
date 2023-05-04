@@ -13,7 +13,9 @@ import { t } from "../../i18n";
 import { makeStyles } from "./styles";
 import { getMyProfile } from "../../services/myProfile";
 
-const MyProfile: React.FC = () => {
+const MyProfile: React.FC = ({ routes }) => {
+  const { profileInfo } = routes.params;
+
   let address = "";
   const { colors } = useTheme();
   const styles = makeStyles(colors);
@@ -29,9 +31,11 @@ const MyProfile: React.FC = () => {
   useEffect(() => {
     dispatch(loadingActions.enableLoading());
     let response = null;
+
     const fetchData = async () => {
       response = await getMyProfile();
       dispatch(loadingActions.disableLoading());
+      console.log("driver profile", response);
       setProfileData(response?.body);
     };
     fetchData();
@@ -47,7 +51,6 @@ const MyProfile: React.FC = () => {
     if (profileData.perm_addr_line4) {
       address += profileData.perm_addr_line4;
     }
-   
   }, [profileData]);
 
   return (

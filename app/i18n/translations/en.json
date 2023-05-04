@@ -24,7 +24,8 @@
     "messages": "Messages",
     "holidayList": "Holiday list",
     "applyLeave": "Apply Leave",
-    "busArrivalMsg": "will arrive in 10 mts"
+    "busArrivalMsg": "will arrive in 10 mts",
+    "trips": " Trip History"
   },
   "track": {
     "title": "Bus Track",
@@ -72,5 +73,11 @@
   "students": {
     "title": "Students",
     "searchDescription": "Search Student or Stop"
+  },
+  "tripHistory": {
+    "title": "Trip History"
+  },
+  "tripDetails": {
+    "title": "Trip Details"
   }
 }
