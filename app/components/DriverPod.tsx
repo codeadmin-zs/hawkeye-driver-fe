@@ -12,6 +12,7 @@ import { Typography } from "./Typography";
 import Logo from "../assets/Logo.svg";
 import UserIcon from "../assets/Svgs/UserIcon.svg";
 import { moderateScale } from "react-native-size-matters";
+import AppStyles from "app/config/styles";
 
 const dim = Dimensions.Screen;
 
@@ -34,16 +35,23 @@ const DriverPod: FunctionComponent<any> = (props) => {
         <UserIcon />
       </View>
       <View style={styles.detailsContainer}>
-        <Typography.H4 color={"#000"}>{data.name}</Typography.H4>
+        <Typography.H3 color={AppStyles.color.COLOR_DARK_GREY}>
+          {data.name}
+        </Typography.H3>
         <View style={styles.busDetails}>
-          <Typography.H6Light style={{ color: "#000" }}>
+          <Typography.H5Light
+            style={{ color: AppStyles.color.COLOR_DARK_GREY }}
+          >
             Bus : {vehicle.name}
-          </Typography.H6Light>
-          <Typography.H6Light
-            style={{ color: "#000", marginLeft: moderateScale(20) }}
+          </Typography.H5Light>
+          <Typography.H5Light
+            style={{
+              color: AppStyles.color.COLOR_DARK_GREY,
+              marginLeft: moderateScale(20),
+            }}
           >
             Plate : {vehicle.plate}
-          </Typography.H6Light>
+          </Typography.H5Light>
         </View>
       </View>
     </TouchableOpacity>
@@ -62,8 +70,9 @@ const makeStyles = (colors: any) =>
       elevaton: 30,
       paddingVertical: "3%",
       borderRadius: 5,
+      minHeight: 80,
     },
-    detailsContainer: { width: "75%" },
+    detailsContainer: { width: "70%" },
     logoContainer: {
       width: "30%",
       justifyContent: "center",

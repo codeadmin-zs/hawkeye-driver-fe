@@ -130,6 +130,18 @@ const MapViewPod: FunctionComponent<any> = (props) => {
     }
   }, [startAnimation]);
 
+  const fitMapToView = async () => {
+    mapRef.current.fitToCoordinates(coordinatesState, {
+      edgePadding: {
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10,
+      },
+      animated: false,
+    });
+  };
+
   useEffect(() => {
     fitMapToView();
   }, [coordinatesState]);
@@ -143,18 +155,6 @@ const MapViewPod: FunctionComponent<any> = (props) => {
     } else {
       markerState.timing(newCoordinate).start();
     }
-  };
-
-  const fitMapToView = async () => {
-    mapRef.current.fitToCoordinates(coordinatesState, {
-      edgePadding: {
-        top: 10,
-        right: 10,
-        bottom: 10,
-        left: 10,
-      },
-      animated: false,
-    });
   };
 
   const viewTripHandler = () => {
