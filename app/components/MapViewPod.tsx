@@ -64,6 +64,7 @@ const MapViewPod: FunctionComponent<any> = (props) => {
   const [mapType, setMapType] = useState("standard");
   const [coordinatesState, setCoordinatesState] = useState([]);
   const [alarmCoords, setAlarmCoords] = useState([]);
+  const [reachedEnd, setReachedEnd] = useState(false);
 
   let alarmCoordsArray = [];
   let coordinatesArray = [];
@@ -112,6 +113,13 @@ const MapViewPod: FunctionComponent<any> = (props) => {
           );
           i += 1;
         } else {
+          console.log("value of i", i);
+          console.log("length of array", coordinatesState?.length);
+          console.log("reached end");
+          setStartAnimation(false);
+          setIsPaused(true);
+          setCoordsForAnimation([]);
+          setReachedEnd(true);
           clearInterval(intervalId);
         }
       }, 400);
@@ -119,11 +127,6 @@ const MapViewPod: FunctionComponent<any> = (props) => {
       return () => {
         clearInterval(intervalId);
       };
-    }
-    if (i === coordinatesState?.length) {
-      setStartAnimation(false);
-      setIsPaused(true);
-      setCoordsForAnimation([]);
     }
   }, [startAnimation]);
 
@@ -176,6 +179,7 @@ const MapViewPod: FunctionComponent<any> = (props) => {
         longitudeDelta: LONGITUDE_DELTA,
       })
     );
+    setReachedEnd(false);
     i = 0;
   };
 
@@ -332,14 +336,14 @@ const MapViewPod: FunctionComponent<any> = (props) => {
             marginVertical: 0,
           }}
         >
-          {!startAnimation && fullTrips.length > 0 && (
+          {((!startAnimation && fullTrips.length > 0) || reachedEnd) && (
             <View style={styles.buttonStyle}>
               <Pressable onPress={viewTripHandler}>
                 <Play size={20} color={AppStyles.color.COLOR_WHITE} />
               </Pressable>
             </View>
           )}
-          {!isPaused && (
+          {startAnimation && (
             <View style={styles.buttonStyle}>
               <Pressable onPress={pauseAnimationHandler}>
                 <Text style={{ marginLeft: "auto", marginRight: "auto" }}>

@@ -107,6 +107,8 @@ const TripHistory: React.FC = ({ route }) => {
         "YYYY-MM-DD 23:59:59"
       )
     );
+
+    console.log("trips hsitory", tripsResponse.body);
     setTrips(tripsResponse.body);
     setIsLoading(false);
   };
@@ -147,7 +149,9 @@ const TripHistory: React.FC = ({ route }) => {
                   style={{ fontWeight: "600", fontSize: moderateScale(15) }}
                 >
                   {trips.length} Trips found on{" "}
-                  {moment(dateDetails.startDate).format("DD MMM YYYY")}
+                  {moment(trips[0]?.startDate, "DD-MM-YYYY HH:mm:ss").format(
+                    "DD MMM YYYY"
+                  )}
                 </Text>
               </View>
               <FlatList
