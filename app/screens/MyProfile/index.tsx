@@ -13,8 +13,10 @@ import { t } from "../../i18n";
 import { makeStyles } from "./styles";
 import { getMyProfile } from "../../services/myProfile";
 
-const MyProfile: React.FC = ({ routes }) => {
-  const { profileInfo } = routes.params;
+const MyProfile: React.FC = ({ route }) => {
+  const { profileInfo } = route.params;
+
+  console.log("profileInfo", profileInfo);
 
   let address = "";
   const { colors } = useTheme();
@@ -27,31 +29,6 @@ const MyProfile: React.FC = ({ routes }) => {
   const [profileData, setProfileData] = useState({});
 
   const goBack = () => NavigationService.goBack();
-
-  useEffect(() => {
-    dispatch(loadingActions.enableLoading());
-    let response = null;
-
-    const fetchData = async () => {
-      response = await getMyProfile();
-      dispatch(loadingActions.disableLoading());
-      console.log("driver profile", response);
-      setProfileData(response?.body);
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (profileData.perm_addr_line2) {
-      address += profileData.perm_addr_line2 + ",";
-    }
-    if (profileData.perm_addr_line3) {
-      address += profileData.perm_addr_line3 + ",";
-    }
-    if (profileData.perm_addr_line4) {
-      address += profileData.perm_addr_line4;
-    }
-  }, [profileData]);
 
   return (
     <View style={styles.container}>
@@ -75,7 +52,7 @@ const MyProfile: React.FC = ({ routes }) => {
           >
             <UserIcon />
             <Typography.H5Light style={{ paddingTop: 8 }}>
-              {profileData.name}
+              {profileInfo?.name}
             </Typography.H5Light>
           </View>
           <View style={{ flexDirection: "row", width: "100%" }}>
@@ -91,19 +68,19 @@ const MyProfile: React.FC = ({ routes }) => {
               label={t("general.mobileNum")}
               placeholder={t("general.mobileNum")}
               style={styles.textBox}
-              value={profileData?.contact_number}
+              value={profileInfo?.contact_number}
             />
             <TextInput
               label={t("general.email")}
               placeholder={t("general.email")}
               style={styles.textBox}
-              value={profileData.email}
+              value={profileInfo?.email}
             />
             <TextInput
               label={t("general.address")}
               placeholder={t("childProfile.address")}
               style={styles.textBox}
-              value={profileData.perm_addr_line1}
+              value={profileInfo?.address}
             />
             <TextInput
               // label={t('general.address')}
