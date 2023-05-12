@@ -45,7 +45,7 @@ const Home: React.FC = () => {
     const fetchData = async () => {
       const response = await getDriverDetails();
       // dispatch(loadingActions.disableLoading());
-      console.log("driver profile", response);
+      console.log("driver profile.........", response);
       setProfileData(response?.body);
     };
     fetchData();
@@ -118,6 +118,15 @@ const Home: React.FC = () => {
       iconName: "Holiday",
       icon: <Holiday />,
     },
+    // {
+    //   title: t("home.applyLeave"),
+    //   bgColor: "#5DD261",
+    //   iconBgColor: "#3EB843",
+    //   textColor: "#fff",
+    //   onPress: () => NavigationService.navigate("HolidayList"),
+    //   iconName: "Holiday",
+    //   icon: <Holiday />,
+    // },
     {
       title: t("home.trips"),
       bgColor: "#ad60d1",
@@ -146,7 +155,7 @@ const Home: React.FC = () => {
       <Typography.Link
         style={{ textAlign: "center" }}
         onPress={() =>
-          NavigationService.navigate("Children", { navType: "profile" })
+          NavigationService.navigate("ApplyLeave",{driverData:profileData})
         }
       >
         {t("home.applyLeave")}

@@ -87,5 +87,8 @@
   },
   "tripDetails": {
     "title": "Trip Details"
+  },
+  "applyLeave":{
+    "title":"Apply Leave"
   }
 }
