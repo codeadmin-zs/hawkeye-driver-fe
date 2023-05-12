@@ -10,7 +10,8 @@ import Login from "app/screens/Login";
 import Home from "app/screens/Home";
 import ForgotPassword from "app/screens/ForgotPassword";
 import PickupSchedule from "app/screens/PickupSchedule";
-import Children from "app/screens/Children";
+// import Children from "app/screens/Children";
+import MyBus from 'app/screens/MyBus'
 import HolidayList from "app/screens/HolidayList";
 import Messages from "app/screens/Messages";
 import MyProfile from "app/screens/MyProfile";
@@ -23,6 +24,8 @@ import FullMessage from "../screens/Messages/FullMessage";
 import BusList from "../screens/Track/BusList";
 import TripHistory from "../screens/TripHistory";
 import TripDetails from "../screens/TripDetails";
+import BusDetails from "../screens/BusDetails"
+// import MyBus from "../screens/MyBus"
 
 import ThemeController from "../components/ThemeController";
 import { StatusBar } from "react-native";
@@ -106,9 +109,14 @@ const App: React.FC<IProps> = (props: IProps) => {
               component={PickupSchedule}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Children"
               component={Children}
+              options={{ headerShown: false }}
+            /> */}
+            <Stack.Screen
+              name="MyBus"
+              component={MyBus}
               options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -169,6 +177,11 @@ const App: React.FC<IProps> = (props: IProps) => {
             <Stack.Screen
               name="TripDetails"
               component={TripDetails}
+              options={{ headerShown: false }}
+            />
+             <Stack.Screen
+              name="BusDetails"
+              component={BusDetails}
               options={{ headerShown: false }}
             />
           </>

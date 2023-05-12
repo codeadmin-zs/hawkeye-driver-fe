@@ -108,7 +108,7 @@ const TripHistory: React.FC = ({ route }) => {
       )
     );
 
-    console.log("trips hsitory", tripsResponse.body);
+    console.log("trips history", tripsResponse.body);
     setTrips(tripsResponse.body);
     setIsLoading(false);
   };

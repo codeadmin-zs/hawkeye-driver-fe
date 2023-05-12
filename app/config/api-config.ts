@@ -4,7 +4,6 @@ const ApiConfig = {
   // BASE_URL_AUTH: 'http://3.23.232.201:5437/',
   // BASE_URL_API: 'http://3.23.232.201:5438/',
   BASE_URL_AUTH: "http://18.217.209.61:5437/",
-
   BASE_URL_API: "http://18.217.209.61:5438/",
   GTRACKIT_BASE_URL_API: "https://test.g-trackit.com:8090/",
   SUB_URL: "apis/v1/",

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { View, FlatList, Text, TouchableOpacity } from "react-native";
-
 import * as loginActions from "app/store/actions/loginActions";
 import NavigationService from "app/navigation/NavigationService";
 import styles from "./styles";
@@ -8,13 +7,13 @@ import UserDetailsInfo from "./components/UserDetailsInfo";
 import WithLogoMenuHeader from "../../components/WithLogoMenuHeader";
 import Dimensions from "../../utils/helper";
 import { Typography } from "../../components/Typography";
-
 import Track from "../../assets/Svgs/Track.svg";
 import Schedule from "../../assets/Svgs/Schedule.svg";
 import MyProfile from "../../assets/Svgs/MyProfile.svg";
 import Children from "../../assets/Svgs/Children.svg";
 import Messages from "../../assets/Svgs/Messages.svg";
 import Holiday from "../../assets/Svgs/Holiday.svg";
+import MyBus from "../../assets/Svgs/MyBus.svg"
 import { TrackerHistoryIcon } from "app/components/svgComponents";
 import { t } from "../../i18n";
 import { getDriverDetails } from "../../services/driver";
@@ -23,7 +22,6 @@ import { loadingActions } from "app/store/features/loading/slice";
 import AppStyles from "app/config/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../../services/myProfile";
-
 const dim = Dimensions.Screen;
 
 const Home: React.FC = () => {
@@ -82,16 +80,26 @@ const Home: React.FC = () => {
       iconName: "MyProfile",
       icon: <MyProfile />,
     },
-    {
-      title: t("home.children"),
-      bgColor: "#E97A73",
-      iconBgColor: "#CD6059",
-      textColor: "#fff",
-      onPress: () =>
-        NavigationService.navigate("Children", { navType: "profile" }),
-      iconName: "Children",
-      icon: <Children />,
-    },
+    // {
+    //   title: t("home.children"),
+    //   bgColor: "#E97A73",
+    //   iconBgColor: "#CD6059",
+    //   textColor: "#fff",
+    //   onPress: () =>
+    //     NavigationService.navigate("Children", { navType: "profile" }),
+    //   iconName: "Children",
+    //   icon: <Children />,
+    // },
+      {
+        title: t("home.myBus"),
+        bgColor: "#E97A73",
+        iconBgColor: "#CD6059",
+        textColor: "#fff",
+        onPress: () => NavigationService.navigate("MyBus"),
+        iconName: "MyBus",
+        icon: <MyBus />,
+      },
+    
     {
       title: t("home.messages"),
       bgColor: "#4767BB",

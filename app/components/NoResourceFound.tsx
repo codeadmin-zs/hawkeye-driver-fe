@@ -23,6 +23,7 @@ const NoResourceFound = (props: any) => {
     return times.map((prop, key) => {
       return (
         <View
+        key={key}
           style={{
             width: '100%',
             alignItems: 'center',
