@@ -16,17 +16,4 @@ export const getEventsList = async () => {
   });
 };
 
-// export const getLeave = async () => {
-//   return FetchApi({
-//     endpoint: `${ApiConfig.DRIVER}`,
-//     method: "GET",
-//   });
-// };
-
-// export const postLeave = async () => {
-//   return FetchApi({
-//     endpoint: `${ApiConfig.DRIVER}`,
-//     method: "POST",
-//   });
-// };
 

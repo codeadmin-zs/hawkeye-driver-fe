@@ -16,7 +16,7 @@ import HolidayList from "app/screens/HolidayList";
 import Messages from "app/screens/Messages";
 import MyProfile from "app/screens/MyProfile";
 import ChildProfile from "../screens/ChildProfile";
-import ApplyLeave from "../screens/leavedemo";
+import ApplyLeave from "../screens/ApplyLeave";
 import AttendanceSheet from "../screens/AttendanceSheet";
 import AbsentDays from "../screens/AbsentDays";
 import Track from "../screens/Track";

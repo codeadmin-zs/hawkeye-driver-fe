@@ -19,17 +19,17 @@ import { makeStyles } from "./styles";
 import { Button } from "../../components/Buttons/button";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { t } from "../../i18n";
-import { applyLeave } from "../../services/children";
+// import { ApplyLeave } from "../../services/children";
 import { loadingActions } from "../../store/features/loading/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { formatLeaveApiParams } from "../../utils/formatParams";
 import { Picker } from "@react-native-picker/picker";
 import { fonts } from "../../config/fonts";
+import { applyDriverLeave } from "../../services/driver";
 
 const ApplyLeave: React.FC = ({ route }) => {
-  console.log("ths is apply leave page");
   const { driverData } = route.params;
-  console.log(driverData);
+  console.log("driverData", driverData);
 
   const dispatch = useDispatch();
 
@@ -37,7 +37,6 @@ const ApplyLeave: React.FC = ({ route }) => {
   const [leaveReason, setLeaveReason] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [markedDates, setMarkedDates] = useState({});
-
   const [showSuccess, setShowSuccess] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -108,7 +107,7 @@ const ApplyLeave: React.FC = ({ route }) => {
     NavigationService.goBack();
   };
   const onApplyLeave = async () => {
-    console.log("on apply of leave", driverData);
+    // console.log("onapply of leave", driverData);
     setShowWarning(false);
     const validationResult = validationFunc();
     // console.log('childData');
@@ -121,11 +120,12 @@ const ApplyLeave: React.FC = ({ route }) => {
         leaveReason,
         absentType
       );
+      // console.log("formattedParams", formattedParams);
 
-      const resp = await applyLeave(driverData?.guid, formattedParams);
+      const resp = await applyDriverLeave(driverData?.guid, formattedParams);
       dispatch(loadingActions.disableLoading());
       if (resp?.status === 201) {
-        console.log("reppp==", resp);
+        console.log("ressppp==", resp);
         setShowSuccess(true);
       }
     } else {

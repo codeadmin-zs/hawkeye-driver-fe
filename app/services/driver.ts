@@ -12,6 +12,7 @@ export const getDriverDetails = () => {
     });
   };
 
+
   export const getLeavesData = async () => {
     console.log(
       "reached getdriver api",
@@ -27,7 +28,8 @@ export const getDriverDetails = () => {
   //HARDCODED VALUE
   export const applyDriverLeave = async (guid, formattedParams) => {
     console.log("reached apply leave api", formattedParams);
-  
+    console.log();
+    
     return FetchApi({
       endpoint: `${ApiConfig.DRIVER}${guid}${ApiConfig.LEAVES}`,
       method: "POST",
@@ -59,4 +61,3 @@ export const getDriverDetails = () => {
   //       reason: "Family gettogether",
   //     },
   //   });
-  // };
