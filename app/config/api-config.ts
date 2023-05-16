@@ -27,6 +27,7 @@ const ApiConfig = {
   TRIPS: "trips",
   TRIPHISTORY: "tripdetails",
   PLATES: "plates",
+  USERS:"users/"
 };
 
 export default ApiConfig;

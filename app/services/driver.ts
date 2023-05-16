@@ -3,6 +3,7 @@ import FetchApi from './client';
 import ApiConfig from 'app/config/api-config';
 import DeviceInfo from 'react-native-device-info';
 import {storeHelpers} from '../store';
+import { formatLeaveApiParams } from "../utils/formatParams";
 
 export const getDriverDetails = () => {
   
@@ -25,39 +26,15 @@ export const getDriverDetails = () => {
     });
   };
   
+
+
   //HARDCODED VALUE
   export const applyDriverLeave = async (guid, formattedParams) => {
     console.log("reached apply leave api", formattedParams);
-    console.log();
     
     return FetchApi({
-      endpoint: `${ApiConfig.DRIVER}${guid}${ApiConfig.LEAVES}`,
+      endpoint: `${ApiConfig.USERS}${guid}${ApiConfig.LEAVES}`,
       method: "POST",
       payload: formattedParams,
     });
   };
-
-
-  // export const getLeave = async () => {
-  //   return FetchApi({
-  //     endpoint: `${ApiConfig.DRIVER}`,
-  //     method: "GET",
-  //   });
-  // };
-  // export const getLeavesData = async (guid) => {
-  //   return FetchApi({
-  //     endpoint: `${ApiConfig.DRIVER}${guid}${ApiConfig.LEAVES}`,
-  //     method: "GET",
-  //   });
-  // };
-
-  // export const applyLeave = async ( guid, date, reason) => {
-  //   return FetchApi({
-  //     endpoint: `${ApiConfig.DRIVER}${guid}${ApiConfig.LEAVES}`,
-  //     method: "POST",
-  //     payload: {
-  //       absent_on: "2022/12/27",
-  //       absent_type: 2,
-  //       reason: "Family gettogether",
-  //     },
-  //   });
