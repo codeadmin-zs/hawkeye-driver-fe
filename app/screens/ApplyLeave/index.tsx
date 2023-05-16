@@ -43,7 +43,7 @@ const ApplyLeave: React.FC = ({ route }) => {
   const [absentType, setAbsentType] = useState("Sick");
   const [isFormValid, setIsFormValid] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-  const [errorStatus,setErrorStatus]=useState(false)
+  const [errorStatus, setErrorStatus] = useState('');
 
   const { colors } = useTheme();
   const styles = makeStyles(colors);
@@ -107,44 +107,46 @@ const ApplyLeave: React.FC = ({ route }) => {
   const goBack = () => {
     NavigationService.goBack();
   };
-
   const onApplyLeave = async () => {
-    try{
-    setShowWarning(false);
-    const validationResult = validationFunc();
-    if (validationResult) {
-      dispatch(loadingActions.enableLoading());
-      const formattedParams = formatLeaveApiParams(
-        markedDates,
-        // childData,
-        driverData,
-        leaveReason,
-        absentType
-      );
-      console.log("formattedParams", formattedParams);
+    try {
+      setShowWarning(false);
+      const validationResult = validationFunc();
+      if (validationResult) {
+        dispatch(loadingActions.enableLoading());
+        const formattedParams = formatLeaveApiParams(
+          markedDates,
+          // childData,
+          driverData,
+          leaveReason,
+          absentType
+        );
+        console.log("formattedParams", formattedParams);
 
-      const resp = await applyDriverLeave(driverData?.guid, formattedParams);
-      dispatch(loadingActions.disableLoading());
-      if (resp?.status === 201) {
+        const resp = await applyDriverLeave(driverData?.guid, formattedParams);
+        dispatch(loadingActions.disableLoading());
         console.log("ressppp==", resp);
-        setShowSuccess(true);
+        if (resp?.status === 201) {
+          // console.log("ressppp==", resp);
+          setShowSuccess(true);
+        }
+        else if(resp?.status === 409){
+          setErrorStatus(resp?.body?.detail)
+          console.log("reached the error part");
+
+        }
+      } else {
+        setShowWarning(true);
+        // console.log("reached the error part");
       }
-    } else {
-      setShowWarning(true);
+    } catch (error) {
+      // if error?.resp?.status === 409) {
+      //   setErrorStatus(true);
+      // } else {
+      //   console.log("error",error);
+      // }
+      console.log("error", error);
     }
-  }
-catch{
-  // setErrorStatus(false)
-  if(status===409){
-<MessageBox
-        showMessage={showSuccess}
-        label={"Close"}
-        message={`${absentType} Leave applied for ${startDate} to ${endDate} is successful`}
-      />
-  }
-}};
-
-
+  };
   return (
     <View style={styles.container}>
       <Header
@@ -156,7 +158,7 @@ catch{
       <MessageBox
         showMessage={showSuccess}
         label={"Close"}
-        message={`${absentType} Leave applied for ${startDate} to ${endDate} is successful`}
+        message={`${absentType} Leave applied for ${startDate} to ${endDate} is successful.`}
       />
       {showWarning && (
         <MessageBox
@@ -165,14 +167,14 @@ catch{
           message={`Please fill all the fields.`}
         />
       )}
-
-{errorStatus === 409 && (
-  <MessageBox
-    showMessage={true}
-    label={"Close"}
-    message={`An error occurred. Please try again later.`}
-  />
-)}
+      {errorStatus?.length >0 && (
+        <MessageBox
+          showMessage={true}
+          label={"Close"}
+          message={errorStatus}
+          
+        />
+      )}
 
       <View style={styles.fillBox} />
       <View style={styles.StudentPodContainer}>
@@ -191,21 +193,8 @@ catch{
             onDayPress={(day) => {
               console.log("selected day", day);
               getSelectedDayEvents(day.dateString);
-              // validationFunc();
             }}
             theme={{
-              // backgroundColor: "#ffffff",
-              // calendarBackground: "#ffffff",
-              // todayTextColor: "#ffffff",
-              // dayTextColor: "#222222",
-              // textDisabledColor: "#d9e1e8",
-              // monthTextColor: "#222222",
-              // arrowColor: "#57B9BB",
-              // textDayFontWeight: "300",
-              // textMonthFontWeight: "bold",
-              // textDayHeaderFontWeight: "500",
-              // textDayFontSize: 16,
-              // textMonthFontSize: 18,
               selectedDayBackgroundColor: "#fff",
               selectedDayTextColor: "#222",
             }}
@@ -262,15 +251,6 @@ catch{
                   borderRadius: "2%",
                 }}
               >
-                {/* <Picker.Item
-                  label="Options"
-                  style={{
-                    flex: 1,
-                    textAlign: "center",
-                    color: colors.primary,
-                  }}
-                  value=""
-                /> */}
                 <Picker.Item label="Sick" value="Sick" />
                 <Picker.Item label="Casual" value="Casual" />
                 <Picker.Item label="Emergency" value="Emergency" />

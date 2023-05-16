@@ -36,7 +36,7 @@ const FetchApi = async ({
 
   console.log("---access token---", storeHelpers.getAccessToken());
   console.log("---consolidatedHeaders---", consolidatedHeaders);
-  console.log("api drivers----------",`${apiOverride}${endpoint}`);
+  console.log("api drivers----------", `${apiOverride}${endpoint}`);
 
   return fetch(`${apiOverride}${endpoint}`, params)
     .then((response: FetchTypes.RawResponse): FetchTypes.Responses => {
@@ -70,11 +70,17 @@ const FetchApi = async ({
           errorResponse.body.detail =
             "The service is currently unavailable. We apologise for the inconvenience and thank you for your patience. We’ll be back with you soon.";
           break;
+        case 409:
+          errorResponse.body.detail = "Conflicting data found";
+          console.log("reached case 409");
+
+          break;
         default:
           isError = false;
       }
 
       if (isError) {
+        console.log("error response", errorResponse);
         return errorResponse;
       } else if (blob) {
         // SUCCESSFUL BLOB RESPONSE
@@ -106,6 +112,7 @@ const FetchApi = async ({
       }
     })
     .then((result: any) => {
+      console.log("second then result", result);
       return result;
     })
     .catch((error) => {
