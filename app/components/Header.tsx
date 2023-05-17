@@ -41,15 +41,6 @@ const Header: FunctionComponent<any> = (props) => {
             {props.rightIcon}
           </TouchableOpacity>
         </View>
-        {/* {props.rightIconProps && props.rightIconProps.notificationCount > 0 && (
-          <TouchableOpacity
-            style={styles.notificationCount}
-            onPress={props.rightIconPress}>
-            <Text style={styles.notificationCountText}>
-              {props.rightIconProps.notificationCount}
-            </Text>
-          </TouchableOpacity>
-        )} */}
       </View>
     </SafeAreaView>
   );

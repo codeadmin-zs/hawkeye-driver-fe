@@ -53,7 +53,6 @@ export const TripSummaryPod = ({ data, showArrow = true }) => {
             }}
           >
             <View style={styles.tripSpeedDetailsContainer}>
-              {/* <RoundOdo width={10} height={10} iconColor={"gray"} /> */}
               <View style={styles.tripSpeedDetails}>
                 <PartialOdo width={10} height={10} iconColor={"gray"} />
                 <Text

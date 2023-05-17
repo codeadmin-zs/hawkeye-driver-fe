@@ -107,11 +107,6 @@ const App: React.FC<IProps> = (props: IProps) => {
               component={PickupSchedule}
               options={{ headerShown: false }}
             />
-            {/* <Stack.Screen
-              name="Children"
-              component={Children}
-              options={{ headerShown: false }}
-            /> */}
             <Stack.Screen
               name="MyBus"
               component={MyBus}

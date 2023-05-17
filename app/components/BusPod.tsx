@@ -87,16 +87,6 @@ const BusPod: FunctionComponent<any> = ({
           <Menu />
         </View>
       </View>
-      {/* <View
-        style={{
-          width: '100%',
-          backgroundColor: colors.surfaceBackground,
-          paddingVertical: '2%',
-          paddingHorizontal: '2%',
-          marginBottom: '2%',
-        }}>
-        <ActionBar />
-      </View> */}
     </TouchableOpacity>
   );
 };

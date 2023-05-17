@@ -96,7 +96,6 @@ const MyProfile: React.FC = ({ route }) => {
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 onPress={() => NavigationService.navigate("MyBus")}>
-                {/* <BusIcon style={styles.busIcon}/> */}
                 <Typography.H5Light style={styles.buttonText}>
                   {t("general.busNo")}
                 </Typography.H5Light>
