@@ -113,9 +113,6 @@ const MapViewPod: FunctionComponent<any> = (props) => {
           );
           i += 1;
         } else {
-          console.log("value of i", i);
-          console.log("length of array", coordinatesState?.length);
-          console.log("reached end");
           setStartAnimation(false);
           setIsPaused(true);
           setCoordsForAnimation([]);

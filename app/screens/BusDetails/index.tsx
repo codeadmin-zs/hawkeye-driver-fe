@@ -4,10 +4,9 @@ import { Text } from 'react-native-svg'
 import './style'
 
 const BusDetails = () => {
-  console.log("this is busdetails page");
   return (
     <View>
-      <Text>ygdtudcfgt</Text>
+      <Text>this is bus details page</Text>
     </View>
   )
 }

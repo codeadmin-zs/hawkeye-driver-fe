@@ -39,7 +39,6 @@ export default function MessageBox(props) {
           justifyContent: "space-around",
           backgroundColor: "white",
           alignItems: "center",
-          //flexDirection:'row',
           borderRadius: moderateScale(5),
         }}
       >

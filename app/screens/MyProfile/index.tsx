@@ -17,7 +17,6 @@ import { Text } from "react-native-svg";
 
 const MyProfile: React.FC = ({ route }) => {
   const { profileInfo } = route.params;
-  console.log("profileinfo.......", profileInfo);
  
   let address = "";
   const { colors } = useTheme();
@@ -86,12 +85,6 @@ const MyProfile: React.FC = ({ route }) => {
               value={profileInfo?.address}
               editable={false}
             />
-            {/* <TextInput
-              // label={t('general.address')}
-              placeholder={t("childProfile.address")}
-              style={styles.textBox}
-              value={address}
-            /> */}
             <TextInput
               label={t("general.schoolName")}
               placeholder={t("childProfile.schoolName")}

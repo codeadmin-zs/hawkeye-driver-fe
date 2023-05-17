@@ -27,21 +27,14 @@ const FetchApi = async ({
     "API-KEY": ApiConfig.KEY,
     ...headers,
   };
-  console.log("api path ", apiOverride);
   const params: FetchTypes.Params = {
     method,
     headers: consolidatedHeaders,
     body: method !== "GET" ? body : null,
   };
 
-  console.log("---access token---", storeHelpers.getAccessToken());
-  console.log("---consolidatedHeaders---", consolidatedHeaders);
-  console.log(`${apiOverride}${endpoint}`);
-
   return fetch(`${apiOverride}${endpoint}`, params)
     .then((response: FetchTypes.RawResponse): FetchTypes.Responses => {
-      console.log("---api response ---", response);
-
       const { status } = response;
       let isError = true;
       const errorResponse: FetchTypes.Error = {
@@ -89,14 +82,12 @@ const FetchApi = async ({
           return blobResponse;
         });
       } else {
-        console.log("---status--", status);
         if (
           response.headers.get("content-type") &&
           response.headers.get("content-type")?.match(/application\/json/)
         ) {
           // SUCCESSFUL JSON RESPONSE
           return response?.json()?.then((body: FetchTypes.Responses) => {
-            console.log("---response body---", body);
             const jsonResponse: FetchTypes.Json = { status, body };
             return jsonResponse;
           });
@@ -115,7 +106,6 @@ const FetchApi = async ({
           detail: error.message,
         },
       };
-      console.log("---error response---", error);
 
       return errorResponse;
     });

@@ -10,7 +10,6 @@ import Login from "app/screens/Login";
 import Home from "app/screens/Home";
 import ForgotPassword from "app/screens/ForgotPassword";
 import PickupSchedule from "app/screens/PickupSchedule";
-// import Children from "app/screens/Children";
 import MyBus from 'app/screens/MyBus'
 import HolidayList from "app/screens/HolidayList";
 import Messages from "app/screens/Messages";
@@ -25,7 +24,6 @@ import BusList from "../screens/Track/BusList";
 import TripHistory from "../screens/TripHistory";
 import TripDetails from "../screens/TripDetails";
 import BusDetails from "../screens/BusDetails"
-// import MyBus from "../screens/MyBus"
 
 import ThemeController from "../components/ThemeController";
 import { StatusBar } from "react-native";

@@ -133,7 +133,6 @@ const HolidayList: React.FC = () => {
               selectedDayTextColor: "#222",
             }}
             initialDate={moment().format("YYYY-MM-DD")}
-            // minDate={moment().format("YYYY-MM-DD")}
           />
         ) : isLoading ? (
           <View style={styles.fullView}>
@@ -188,7 +187,6 @@ const HolidayList: React.FC = () => {
               selectedDayTextColor: "#222",
             }}
             initialDate={moment().format("YYYY-MM-DD")}
-            // minDate={moment().format("YYYY-MM-DD")}
           />
         ) : isLoading ? (
           <View style={styles.fullView}>
@@ -196,7 +194,6 @@ const HolidayList: React.FC = () => {
           </View>
         ) : (
           <FlatList
-            //   style={{width:'100%',paddingVertical: 10}}
             contentContainerStyle={{ alignItems: "center" }}
             data={eventList}
             renderItem={({ item, index, separators }) => (

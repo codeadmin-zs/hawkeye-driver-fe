@@ -25,13 +25,10 @@ export const makeStyles = (colors: any) => {
       borderBottomWidth: 3,
       paddingVertical: "2%",
       width: "50%",
-
-      // alignItems: "center",
     },
     inActive: {
       paddingVertical: "2%",
       width: "50%",
-      // alignItems: "center",
     },
     mapContainer: {
       flex: 1,

@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(5),
   },
   header: {
-    // fontWeight: "bold",
     marginBottom: moderateScale(10),
     display: "flex",
     flexDirection: "row",

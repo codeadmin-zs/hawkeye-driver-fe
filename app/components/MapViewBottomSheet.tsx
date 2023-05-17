@@ -16,7 +16,7 @@ import { Typography } from "./Typography";
 
 const dim = Dimensions.Screen;
 
-const MapViewBottomSheet = ({ data, visible,onDismiss }) => {
+const MapViewBottomSheet = ({ data, visible, onDismiss }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const { colors } = useTheme();
@@ -26,13 +26,8 @@ const MapViewBottomSheet = ({ data, visible,onDismiss }) => {
   const styles = makeStyles(colors);
 
   useEffect(() => {
-    
     setModalVisible(visible);
   }, [visible]);
-
-  // const onDismiss = () => {
-  //   setModalVisible(false);
-  // };
 
   return modalVisible ? (
     <>
@@ -56,22 +51,34 @@ const MapViewBottomSheet = ({ data, visible,onDismiss }) => {
           </View>
           <View style={styles.horizontalLine} />
           <View style={styles.listContainer}>
-            <View style={{flexDirection:'row',alignItems:'center',paddingTop:'2%'}}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                paddingTop: "2%",
+              }}
+            >
               <View
-                style={{ height: moderateScale(16), width: moderateScale(16),borderRadius: moderateScale(16),backgroundColor:'#EC0000' }}
+                style={{
+                  height: moderateScale(16),
+                  width: moderateScale(16),
+                  borderRadius: moderateScale(16),
+                  backgroundColor: "#EC0000",
+                }}
               />
-              <View style={{paddingLeft: '8%'}}>
-              <Typography.H5Light style={{color:'#474545'}}>{markerData?.title}</Typography.H5Light>
-              <Typography.H5 style={{  }}>
-              {moment(markerData?.eta, "HH:mm:ss").format("hh:mm A")}
-            </Typography.H5>
+              <View style={{ paddingLeft: "8%" }}>
+                <Typography.H5Light style={{ color: "#474545" }}>
+                  {markerData?.title}
+                </Typography.H5Light>
+                <Typography.H5 style={{}}>
+                  {moment(markerData?.eta, "HH:mm:ss").format("hh:mm A")}
+                </Typography.H5>
               </View>
             </View>
             <View>
-            <Typography.H4>{`${index}th`}</Typography.H4>
-            <Typography.H4>{"Stop"}</Typography.H4>
+              <Typography.H4>{`${index}th`}</Typography.H4>
+              <Typography.H4>{"Stop"}</Typography.H4>
             </View>
-            {/* <View style={styles.horizontalLine} /> */}
           </View>
         </View>
       </View>
@@ -113,10 +120,10 @@ const makeStyles = (colors: any) =>
     },
     listContainer: {
       width: "100%",
-      flexDirection:'row',
-      alignItems:'center',
-      justifyContent:'space-between',
-      paddingTop: '2%'
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingTop: "2%",
     },
     header: {
       paddingVertical: moderateScale(2),
@@ -142,7 +149,7 @@ const makeStyles = (colors: any) =>
     line: {
       width: moderateScale(75),
       height: moderateScale(5),
-      backgroundColor: '#C4C4C4',
+      backgroundColor: "#C4C4C4",
       alignSelf: "center",
       marginVertical: 5,
       borderRadius: 2,

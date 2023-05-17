@@ -1,10 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-// import { VehicleInfoStyles } from "./VehicleInfo";
 import { moderateScale } from "react-native-size-matters";
 import moment from "moment";
 import { DatePickerCalender } from "./svgComponents";
-// import {TouchableOpacity} from 'react-native-gesture-handler';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const initialDate = new Date();
@@ -50,7 +48,6 @@ export const DateTab = ({ startDate, onChangeDate }) => {
 
   let dateComponent = [];
   const dateComparison = moment(selectedDate).isSame(initialDate, "date");
-  console.log("date Comparison", dateComparison);
   for (let i = 0; i <= 3; i++) {
     if (dateComparison && i === 0) {
       continue;

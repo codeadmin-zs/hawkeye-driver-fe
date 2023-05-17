@@ -40,12 +40,9 @@ const Home: React.FC = () => {
   const goBack = () => NavigationService.goBack();
 
   useEffect(() => {
-    // dispatch(loadingActions.enableLoading());
     let response = null;
     const fetchData = async () => {
       const response = await getDriverDetails();
-      // dispatch(loadingActions.disableLoading());
-      console.log("driver profile", response);
       setProfileData(response?.body);
     };
     fetchData();
@@ -80,16 +77,6 @@ const Home: React.FC = () => {
       iconName: "MyProfile",
       icon: <MyProfile />,
     },
-    // {
-    //   title: t("home.children"),
-    //   bgColor: "#E97A73",
-    //   iconBgColor: "#CD6059",
-    //   textColor: "#fff",
-    //   onPress: () =>
-    //     NavigationService.navigate("Children", { navType: "profile" }),
-    //   iconName: "Children",
-    //   icon: <Children />,
-    // },
       {
         title: t("home.myBus"),
         bgColor: "#E97A73",

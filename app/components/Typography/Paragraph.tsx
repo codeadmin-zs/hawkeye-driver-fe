@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {utils} from '../../utils';
-// import { colors, fonts } from '../../constants';
 
 export interface TypographyProps {
   children: any;
@@ -23,8 +22,6 @@ export function Paragraph({
     text: {
       lineHeight: utils.device.s([20, 24]),
       fontSize: utils.device.s([13, 16]),
-      // fontFamily: fonts.medium,
-      // color: invert ? colors.black : colors.white,
       textShadowColor: textShadow === true ? 'rgba(0, 0, 0, 0.6)' : undefined,
       textShadowOffset:
         textShadow === true ? {width: 0.5, height: 0.5} : undefined,

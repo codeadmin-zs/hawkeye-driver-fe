@@ -43,9 +43,7 @@ const ApplyLeave: React.FC = ({ route }) => {
   const goBack = () => {NavigationService.goBack();}
   const onApplyLeave =  async() => {
     
-    //  dispatch(loadingActions.enableLoading());
     const resp =   await applyLeave(childData?.guid, selectedDate, leaveReason);
-    //  dispatch(loadingActions.disableLoading());
     if(resp?.status === 201){
       setShowSuccess(true);
     }
@@ -84,18 +82,6 @@ const ApplyLeave: React.FC = ({ route }) => {
               getSelectedDayEvents(day.dateString);
             }}
             theme={{
-              // backgroundColor: "#ffffff",
-              // calendarBackground: "#ffffff",
-              // todayTextColor: "#ffffff",
-              // dayTextColor: "#222222",
-              // textDisabledColor: "#d9e1e8",
-              // monthTextColor: "#222222",
-              // arrowColor: "#57B9BB",
-              // textDayFontWeight: "300",
-              // textMonthFontWeight: "bold",
-              // textDayHeaderFontWeight: "500",
-              // textDayFontSize: 16,
-              // textMonthFontSize: 18,
               selectedDayBackgroundColor: "#fff",
               selectedDayTextColor: "#222",
             }}
