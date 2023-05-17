@@ -206,25 +206,23 @@ const MapViewPod: FunctionComponent<any> = (props) => {
     <View style={{ flex: 1 }}>
       <MapView
         style={{ flex: 1 }}
+        ref={mapRef}
         onLayout={() => {
-          if (coordsForAnimation.length > 0) {
-            const bounds = [
-              { lat: "25.15549", lang: "55.40987" },
-              { lat: "25.27253", lang: "55.31696" },
-            ];
-            mapRef.current.fitToCoordinates(bounds, {
+          if (coordinatesState.length > 0) {
+          
+            mapRef.current.fitToCoordinates(coordinatesState, {
               edgePadding: {
                 top: 10,
                 right: 10,
                 bottom: 10,
                 left: 10,
               },
-              animated: false,
+              animated: true,
             });
           }
         }}
         mapType={mapType}
-        ref={mapRef}
+      
         loadingEnabled={false}
         provider={PROVIDER_GOOGLE}
         initialRegion={{

@@ -7,6 +7,6 @@ export const getMyProfile = async () => {
   return FetchApi({
     endpoint: `${ApiConfig.MY_PROFILE}`,
     method: 'GET',
-    isAuth: true,
+    isAuthReq: true,
   });
 };

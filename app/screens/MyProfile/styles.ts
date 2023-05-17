@@ -31,7 +31,7 @@ export const makeStyles = (colors: any) =>
     buttonContainer: {
       backgroundColor: "#144072",
       width: "40%",
-      height: 50,
+      height: "10%",
       borderRadius: 10, // added borderRadius
       marginTop: 16,
       justifyContent: "center",

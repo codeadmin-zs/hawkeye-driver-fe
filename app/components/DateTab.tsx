@@ -7,9 +7,15 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const initialDate = new Date();
 initialDate.setDate(initialDate.getDate() - 1);
-const formattedDate = `${initialDate.getFullYear()}-0${
-  initialDate.getMonth() + 1
-}-${initialDate.getDate()}`;
+
+//YYYY-MM-DD format
+const formattedDate = initialDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit'
+});
+console.log(formattedDate);
+
 
 export const DateTab = ({ startDate, onChangeDate }) => {
   const [selectedDate, setSelectedDate] = useState(formattedDate);

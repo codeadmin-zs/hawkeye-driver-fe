@@ -23,7 +23,6 @@ import FullMessage from "../screens/Messages/FullMessage";
 import BusList from "../screens/Track/BusList";
 import TripHistory from "../screens/TripHistory";
 import TripDetails from "../screens/TripDetails";
-import BusDetails from "../screens/BusDetails"
 
 import ThemeController from "../components/ThemeController";
 import { StatusBar } from "react-native";
@@ -170,11 +169,6 @@ const App: React.FC<IProps> = (props: IProps) => {
             <Stack.Screen
               name="TripDetails"
               component={TripDetails}
-              options={{ headerShown: false }}
-            />
-             <Stack.Screen
-              name="BusDetails"
-              component={BusDetails}
               options={{ headerShown: false }}
             />
           </>

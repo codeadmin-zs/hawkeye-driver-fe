@@ -6,7 +6,7 @@ import {storeHelpers} from '../store';
 export const getDriverDetails = () => {
   
     return FetchApi({
-      endpoint: `${ApiConfig.DRIVER}${storeHelpers.getUserId()}`,
+      endpoint: `${ApiConfig.DRIVER}/${storeHelpers.getUserId()}`,
       method: 'GET',
     });
   };

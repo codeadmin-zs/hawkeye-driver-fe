@@ -10,6 +10,9 @@ import {
   StartTrackIcon,
 } from "../components/svgComponents";
 
+const scaledWidth = moderateScale(10);
+const scaledHeight = moderateScale(10);
+
 const TripListViewPod = (props) => {
   const {
     statusText,
@@ -45,8 +48,8 @@ const TripListViewPod = (props) => {
       </View>
       <View style={styles.wrapper}>
         <StartTrackIcon
-          width={10}
-          height={10}
+          width={scaledWidth}
+          height={scaledHeight}
           color={AppStyles.color.COLOR_DARK_GREY}
         />
         <Text
@@ -66,13 +69,21 @@ const TripListViewPod = (props) => {
         </View>
       )}
       <View style={styles.wrapper}>
-        <PartialOdo width={10} height={10} iconColor={colors.text} />
+        <PartialOdo
+          width={scaledWidth}
+          height={scaledHeight}
+          iconColor={colors?.text}
+        />
         <Text style={{ marginLeft: moderateScale(8) }}>{speed} km/hr</Text>
       </View>
       <View style={styles.wrapper}>
-        <ClockIcon width={10} height={10} iconColor={"gray"} />
+        <ClockIcon
+          width={scaledWidth}
+          height={scaledHeight}
+          iconColor={"gray"}
+        />
         <Text style={{ marginLeft: moderateScale(8) }}>
-          {createtime.split(" ")[1]}{" "}
+          {createtime?.split(" ")[1]}{" "}
         </Text>
       </View>
     </View>

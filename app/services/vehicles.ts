@@ -4,14 +4,14 @@ import { storeHelpers } from "../store";
 
 export const getVehicleDetails = async (id) => {
   return FetchApi({
-    endpoint: `${ApiConfig.VEHICLES_}/${id}`,
+    endpoint: `${ApiConfig.VEHICLE}/${id}`,
     method: "GET",
   });
 };
 
 export const getVehiclePaths = async (id) => {
   return FetchApi({
-    endpoint: `${ApiConfig.VEHICLES_}/${id}${ApiConfig.STOPS}`,
+    endpoint: `${ApiConfig.VEHICLE}/${id}/${ApiConfig.STOPS}`,
     method: "GET",
   });
 };

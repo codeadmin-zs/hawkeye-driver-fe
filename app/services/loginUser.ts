@@ -6,10 +6,10 @@ export const loginUser = async (username: string, password: string) => {
   let uniqueId = await DeviceInfo.getUniqueId();
 
   return FetchApi({
-    endpoint: `${ApiConfig.SESSIONS}${uniqueId}`,
+    endpoint: `${ApiConfig.SESSIONS}/${uniqueId}`,
     method: 'POST',
     auth: false,
-    isAuth: true,
+    isAuthReq: true,
     payload: {
       un: username,
       pwd: password,
