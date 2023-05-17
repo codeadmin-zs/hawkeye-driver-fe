@@ -28,4 +28,24 @@ export const makeStyles = (colors: any) =>
       width: '100%',
       height: '100%',
     },
+    buttonContainer: {
+      backgroundColor: "#144072",
+      width: "40%",
+      height: 50,
+      borderRadius: 10, // added borderRadius
+      marginTop: 16,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    buttonText:{
+      color:"#fff"
+    },
+   
+    
+    
+    
+    
+    
+    
+    
   });

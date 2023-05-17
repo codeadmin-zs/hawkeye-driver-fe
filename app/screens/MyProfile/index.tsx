@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
-import { Button, TextInput, useTheme } from "react-native-paper";
+import { ActivityIndicator, View, TouchableOpacity } from "react-native";
+import { Button, TextInput, useTheme, IconButton } from "react-native-paper";
+import BusIcon from "../../assets/Svgs/MyBus.svg";
 
 import { useDispatch, useSelector } from "react-redux";
 import { loadingActions } from "../../store/features/loading/slice";
@@ -12,8 +13,11 @@ import { Typography } from "../../components/Typography";
 import { t } from "../../i18n";
 import { makeStyles } from "./styles";
 import { getMyProfile } from "../../services/myProfile";
+import { Text } from "react-native-svg";
 
-const MyProfile: React.FC = () => {
+const MyProfile: React.FC = ({ route }) => {
+  const { profileInfo } = route.params;
+ 
   let address = "";
   const { colors } = useTheme();
   const styles = makeStyles(colors);
@@ -25,30 +29,6 @@ const MyProfile: React.FC = () => {
   const [profileData, setProfileData] = useState({});
 
   const goBack = () => NavigationService.goBack();
-
-  useEffect(() => {
-    dispatch(loadingActions.enableLoading());
-    let response = null;
-    const fetchData = async () => {
-      response = await getMyProfile();
-      dispatch(loadingActions.disableLoading());
-      setProfileData(response?.body);
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (profileData.perm_addr_line2) {
-      address += profileData.perm_addr_line2 + ",";
-    }
-    if (profileData.perm_addr_line3) {
-      address += profileData.perm_addr_line3 + ",";
-    }
-    if (profileData.perm_addr_line4) {
-      address += profileData.perm_addr_line4;
-    }
-   
-  }, [profileData]);
 
   return (
     <View style={styles.container}>
@@ -72,7 +52,7 @@ const MyProfile: React.FC = () => {
           >
             <UserIcon />
             <Typography.H5Light style={{ paddingTop: 8 }}>
-              {profileData.name}
+              {profileInfo?.name}
             </Typography.H5Light>
           </View>
           <View style={{ flexDirection: "row", width: "100%" }}>
@@ -88,26 +68,39 @@ const MyProfile: React.FC = () => {
               label={t("general.mobileNum")}
               placeholder={t("general.mobileNum")}
               style={styles.textBox}
-              value={profileData?.contact_number}
+              value={profileInfo?.contact_number}
+              editable={false}
             />
             <TextInput
               label={t("general.email")}
               placeholder={t("general.email")}
               style={styles.textBox}
-              value={profileData.email}
+              value={profileInfo?.email}
+              editable={false}
             />
             <TextInput
               label={t("general.address")}
               placeholder={t("childProfile.address")}
               style={styles.textBox}
-              value={profileData.perm_addr_line1}
+              value={profileInfo?.address}
+              editable={false}
             />
             <TextInput
-              // label={t('general.address')}
-              placeholder={t("childProfile.address")}
+              label={t("general.schoolName")}
+              placeholder={t("childProfile.schoolName")}
               style={styles.textBox}
-              value={address}
+              value={profileInfo?.schoolName}
+              editable={false}
             />
+
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                onPress={() => NavigationService.navigate("MyBus")}>
+                <Typography.H5Light style={styles.buttonText}>
+                  {t("general.busNo")}
+                </Typography.H5Light>
+              </TouchableOpacity>
+            </View>
           </View>
         </>
       )}

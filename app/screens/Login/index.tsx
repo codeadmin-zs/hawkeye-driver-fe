@@ -28,33 +28,18 @@ interface IState {
 }
 
 const Login: React.FC = () => {
-  // const id = useSelector((state: IState) => state.loginReducer?.id);
   const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-
   const userNameRef = React.useRef(null);
   const passwordRef = React.useRef(null);
-  // const {actions} = useLoginSlice();
-
-  // const onLogin = () => NavigationService.navigate('Home');
-  // const handlePasswordChange = text => setPassword(text);
-
-  // const handleUserNameChange = text => setUserName(text);
 
   const onLogin = () => {
-    // const userName = 'Demo1';
-    // const password = '123';
-
-    // if (userName && password) {
     dispatch(loadingActions.enableLoading());
     dispatch(loginActions.loginRequest({userName, password}));
-    // }
-    // return null;
   };
 
-  // const onForgot = () => NavigationService.navigate('ForgotPassword');
   return (
     <ImageBackgroundTemplate>
       <View style={styles.containerView}>
@@ -69,12 +54,10 @@ const Login: React.FC = () => {
               label={t('login.userName')}
               placeholder={t('login.userName')}
               style={styles.textInput}
-              // value={userName}
               onChangeText={text => {
 
                 setUserName(text);
               }}
-              // left={()=> <Username fill={'red'} />}
             />
           </View>
           <View style={styles.textInputContainer}>
@@ -87,32 +70,9 @@ const Login: React.FC = () => {
               placeholder={t('login.password')}
               style={styles.textInput}
               onChangeText={text => setPassword(text)}
-              // value={password}
               right={<Close />}
             />
           </View>
-          {/* <View
-            style={{
-              alignSelf: 'center',
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginVertical: 2,
-            }}>
-            <View style={{right: -10}}>
-              <Regions />
-            </View>
-            <TextInput
-              label="Region"
-              placeholder="Select region"
-              style={{
-                backgroundColor: 'transparent',
-                width: '92%',
-                paddingLeft: '2%',
-              }}
-              right={<Regions />}
-            />
-          </View> */}
           <Typography.H5 style={{textAlign: 'right', marginVertical: 10}}>
             {t('login.forgotPassword')}
           </Typography.H5>

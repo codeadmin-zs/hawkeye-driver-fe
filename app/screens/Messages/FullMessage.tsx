@@ -55,8 +55,6 @@ const makeStyles = (colors: any) =>
       height: '80%'
     },
     fullMessageConatiner: {
-      // alignItems: 'center',
-      // justifyContent: 'center',
       width: '100%',
       paddingHorizontal: '2%',
     },

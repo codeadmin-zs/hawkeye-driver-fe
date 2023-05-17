@@ -2,8 +2,6 @@ import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {utils} from '../../utils';
 import {fonts} from '../../config/fonts';
-// import { colors, fonts } from '../../constants';
-// import { TypographyProps } from '../../types';
 
 export function Title({
   children,
@@ -18,9 +16,7 @@ export function Title({
 }: any) {
   const styles = StyleSheet.create({
     subTitle: {
-      // fontSize: utils.device.s([25, 35]),
       fontFamily: fonts.medium,
-      // color: invert ? colors.black : colors.white,
       color,
       textShadowColor: textShadow === true ? 'rgba(0, 0, 0, 0.6)' : undefined,
       textShadowOffset:

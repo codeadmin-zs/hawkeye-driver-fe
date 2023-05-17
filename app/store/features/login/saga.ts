@@ -14,7 +14,6 @@ export function* loginAsync(actions: any) {
   );
   yield put(loginActions.loginResponse(response));
   if (response && response[0] === 201) {
-    // yield put(loginActions.loginResponse(response));
     yield put(loadingActions.disableLoading());
   } else if (response && response[0] === 401) {
     yield put(loginActions.loginError());

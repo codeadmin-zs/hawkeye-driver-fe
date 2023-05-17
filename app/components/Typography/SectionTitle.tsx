@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {utils} from '../../utils';
 import {fonts} from '../../config/fonts';
-// import { colors, fonts } from '../../constants';
 
 export interface TypographyProps {
   children: any;
@@ -29,7 +28,6 @@ export function SectionTitle({
       fontSize: utils.device.s([20, 22]),
       fontFamily: fonts.medium,
       color: '#000',
-      // color: invert ? colors.black : colors.white,
       textShadowColor: textShadow === true ? 'rgba(0, 0, 0, 0.6)' : undefined,
       textShadowOffset:
         textShadow === true ? {width: 0.5, height: 0.5} : undefined,
