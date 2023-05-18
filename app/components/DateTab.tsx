@@ -1,21 +1,23 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
+// import { VehicleInfoStyles } from "./VehicleInfo";
 import { moderateScale } from "react-native-size-matters";
 import moment from "moment";
 import { DatePickerCalender } from "./svgComponents";
+// import {TouchableOpacity} from 'react-native-gesture-handler';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const initialDate = new Date();
 initialDate.setDate(initialDate.getDate() - 1);
+const dateComponent = [];
+let unchangedDate;
 
-//YYYY-MM-DD format
-const formattedDate = initialDate.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit'
-});
-console.log(formattedDate);
-
+//YYYY-MM-DD FORMAT
+const year = initialDate.getFullYear();
+const month = initialDate.getMonth() + 1;
+const day = initialDate.getDate();
+const formattedMonth = month < 10 ? `0${month}` : month; // add leading zero if month is less than 10
+const formattedDate = `${year}-${formattedMonth}-${day}`;
 
 export const DateTab = ({ startDate, onChangeDate }) => {
   const [selectedDate, setSelectedDate] = useState(formattedDate);
@@ -52,7 +54,6 @@ export const DateTab = ({ startDate, onChangeDate }) => {
     };
   };
 
-  let dateComponent = [];
   const dateComparison = moment(selectedDate).isSame(initialDate, "date");
   for (let i = 0; i <= 3; i++) {
     if (dateComparison && i === 0) {
@@ -82,7 +83,6 @@ export const DateTab = ({ startDate, onChangeDate }) => {
       </View>
     );
   }
-  let unchangedDate;
   const { displayDate, actualDate } = setMoment(1, true);
   const activeDate = moment(selectedDate).isSame(actualDate, "date");
 

@@ -21,12 +21,22 @@ const FetchApi = async ({
   apiOverride = isGtrackit ? ApiConfig.GTRACKIT_BASE_URL_API : apiOverride;
   apiOverride += ApiConfig.SUB_URL
 
+  console.log("base url",apiOverride);
+  console.log("driver url",`${apiOverride}${endpoint}`);
+  
+  
+
   const consolidatedHeaders: FetchTypes.ParamHeaders = {
     Authorization: auth ? `Bearer ${storeHelpers.getAccessToken()}` : "",
     "Content-Type": contentType,
     "API-KEY": ApiConfig.KEY,
     ...headers,
   };
+
+  console.log(consolidatedHeaders);
+  
+
+  // console.log("====getVehicleDetails",getVehicleDetails)
   const params: FetchTypes.Params = {
     method,
     headers: consolidatedHeaders,

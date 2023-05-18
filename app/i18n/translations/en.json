@@ -87,5 +87,9 @@
   },
   "tripDetails": {
     "title": "Trip Details"
+  },
+  "driver":{
+    "empId":"Employee Id",
+    "rfid":"RFID"
   }
 }

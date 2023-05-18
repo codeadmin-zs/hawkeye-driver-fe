@@ -37,7 +37,7 @@ const Login: React.FC = () => {
 
   const onLogin = () => {
     dispatch(loadingActions.enableLoading());
-    dispatch(loginActions.loginRequest({userName, password}));
+    dispatch(loginActions.loginRequest({userName,password}));
   };
 
   return (
@@ -71,6 +71,7 @@ const Login: React.FC = () => {
               style={styles.textInput}
               onChangeText={text => setPassword(text)}
               right={<Close />}
+              secureTextEntry
             />
           </View>
           <Typography.H5 style={{textAlign: 'right', marginVertical: 10}}>
