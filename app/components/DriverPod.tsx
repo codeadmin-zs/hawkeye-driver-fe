@@ -16,10 +16,6 @@ import AppStyles from "app/config/styles";
 
 const dim = Dimensions.Screen;
 
-interface WithLogoHeaderProps {
-  children: ReactNode;
-}
-
 const DriverPod: FunctionComponent<any> = (props) => {
   const { colors } = useTheme();
   const { data, vehicle } = props;

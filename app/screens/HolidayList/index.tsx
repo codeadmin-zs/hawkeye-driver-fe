@@ -75,7 +75,10 @@ const HolidayList: React.FC = () => {
 
     const fetchData = async () => {
       holidayResponse = await getHolidaysList();
+      console.log("holidayResponse",holidayResponse);
       eventResponse = await getEventsList();
+      console.log("eventResponse",eventResponse);
+      
       dispatch(loadingActions.disableLoading());
       if (
         Array.isArray(holidayResponse?.body) &&
@@ -93,6 +96,10 @@ const HolidayList: React.FC = () => {
     };
     fetchData();
   }, []);
+
+  console.log(eventList,"eventList");
+  console.log(HolidayList,"HolidayList");
+  
 
   const goBack = () => NavigationService.goBack();
   return (

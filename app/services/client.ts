@@ -21,30 +21,28 @@ const FetchApi = async ({
   apiOverride = isGtrackit ? ApiConfig.GTRACKIT_BASE_URL_API : apiOverride;
   apiOverride += ApiConfig.SUB_URL
 
-  console.log("base url",apiOverride);
-  console.log("driver url",`${apiOverride}${endpoint}`);
-  
-  
-
   const consolidatedHeaders: FetchTypes.ParamHeaders = {
     Authorization: auth ? `Bearer ${storeHelpers.getAccessToken()}` : "",
     "Content-Type": contentType,
     "API-KEY": ApiConfig.KEY,
     ...headers,
   };
-
-  console.log(consolidatedHeaders);
+  console.log("api path ", apiOverride);
   
-
-  // console.log("====getVehicleDetails",getVehicleDetails)
   const params: FetchTypes.Params = {
     method,
     headers: consolidatedHeaders,
     body: method !== "GET" ? body : null,
   };
+  console.log("---access token---", storeHelpers.getAccessToken());
+  console.log("---consolidatedHeaders---", consolidatedHeaders);
+  console.log(`${apiOverride}${endpoint}`);
 
   return fetch(`${apiOverride}${endpoint}`, params)
     .then((response: FetchTypes.RawResponse): FetchTypes.Responses => {
+
+      console.log("---api response ---", response);
+
       const { status } = response;
       let isError = true;
       const errorResponse: FetchTypes.Error = {
@@ -82,6 +80,7 @@ const FetchApi = async ({
       } else if (blob) {
         // SUCCESSFUL BLOB RESPONSE
         return response.blob().then((body: FetchTypes.Responses) => {
+          console.log("---response body---", body);
           const blobResponse: FetchTypes.Blob = {
             status,
             body: {
@@ -115,7 +114,7 @@ const FetchApi = async ({
           detail: error.message,
         },
       };
-
+      console.log("---error response---", error);
       return errorResponse;
     });
 };

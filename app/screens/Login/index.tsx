@@ -28,18 +28,43 @@ interface IState {
 }
 
 const Login: React.FC = () => {
+  // const id = useSelector((state: IState) => state.loginReducer?.id);
   const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [isValid, setIsValid] = useState({ userName: false, password: false });
   const userNameRef = React.useRef(null);
   const passwordRef = React.useRef(null);
+  // const {actions} = useLoginSlice();
+
+  // const onLogin = () => NavigationService.navigate('Home');
+  // const handlePasswordChange = text => setPassword(text);
+
+  // const handleUserNameChange = text => setUserName(text);
 
   const onLogin = () => {
+
+    if(!userName){
+      setIsValid((prev)=>{
+        return {...prev,userName:true}
+      })
+    }
+
+    if(!password){
+      setIsValid((prev)=>{
+        return {...prev,password:true}
+      })
+    }
+
+    if (userName && password) {
     dispatch(loadingActions.enableLoading());
-    dispatch(loginActions.loginRequest({userName,password}));
+    dispatch(loginActions.loginRequest({userName, password}));
+    }
+    return null;
   };
 
+  // const onForgot = () => NavigationService.navigate('ForgotPassword');
   return (
     <ImageBackgroundTemplate>
       <View style={styles.containerView}>
@@ -54,26 +79,52 @@ const Login: React.FC = () => {
               label={t('login.userName')}
               placeholder={t('login.userName')}
               style={styles.textInput}
-              onChangeText={text => {
-
+              error={isValid.userName}
+              // value={userName}
+              onChangeText={(text) => {
                 setUserName(text);
               }}
-            />
-          </View>
-          <View style={styles.textInputContainer}>
+              // left={()=> <Username fill={'red'} />}
+              />
+              </View>
+              <View style={styles.textInputContainer}>
+                <View style={{right: -10}}>
+                  <Lock />
+                </View>
+                <TextInput
+                  ref={passwordRef}
+                  label={t('login.password')}
+                  placeholder={t('login.password')}
+                  style={styles.textInput}
+                  onChangeText={text => setPassword(text)}
+                  // value={password}
+                  error={isValid.password}
+                  right={<Close />}
+                  secureTextEntry={true}
+                />
+              </View>
+          {/* <View
+            style={{
+              alignSelf: 'center',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginVertical: 2,
+            }}>
             <View style={{right: -10}}>
-              <Lock />
+              <Regions />
             </View>
             <TextInput
-              ref={passwordRef}
-              label={t('login.password')}
-              placeholder={t('login.password')}
-              style={styles.textInput}
-              onChangeText={text => setPassword(text)}
-              right={<Close />}
-              secureTextEntry
+              label="Region"
+              placeholder="Select region"
+              style={{
+                backgroundColor: 'transparent',
+                width: '92%',
+                paddingLeft: '2%',
+              }}
+              right={<Regions />}
             />
-          </View>
+          </View> */}
           <Typography.H5 style={{textAlign: 'right', marginVertical: 10}}>
             {t('login.forgotPassword')}
           </Typography.H5>

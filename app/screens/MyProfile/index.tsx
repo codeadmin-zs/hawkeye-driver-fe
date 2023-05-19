@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, View, TouchableOpacity } from "react-native";
+import { ActivityIndicator, View, TouchableOpacity, Text } from "react-native";
 import { Button, TextInput, useTheme, IconButton } from "react-native-paper";
 import BusIcon from "../../assets/Svgs/MyBus.svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,14 +12,13 @@ import { Typography } from "../../components/Typography";
 import { t } from "../../i18n";
 import { makeStyles } from "./styles";
 import { getMyProfile } from "../../services/myProfile";
-import { Text } from "react-native-svg";
 import { getVehicleDetails } from "app/services/vehicles";
 import { moderateScale } from "react-native-size-matters";
 // import { Linking } from 'react-native';
 
 const MyProfile: React.FC = ({ route }) => {
   const { profileInfo } = route.params;
-  console.log(profileInfo);
+  console.log("profileInfo",profileInfo);
   const [busNo, setBusNo] = useState("");
   useEffect(() => {
     const fetchData = async () => {
@@ -118,18 +117,22 @@ const MyProfile: React.FC = ({ route }) => {
               value={profileInfo?.schoolName}
               editable={false}
             />
-            <TouchableOpacity
-              onPress={() => NavigationService.navigate("MyBus")}
-            >
-              <TextInput
-                label={t("general.busNo")}
-                placeholder={t("general.busNo")}
-                style={styles.textBox}
-                value={busNo}
-                editable={false}
-                placeholderTextColor="#0000FF"
-              />
-            </TouchableOpacity>
+<View style={styles.busNo}>
+  <Text style={{ fontSize: moderateScale(11) }}>Bus Number</Text>
+  <Typography.Link onPress={()=>NavigationService.navigate("MyBus")}>{busNo}</Typography.Link>
+</View>
+
+            {/* <View style={{marginLeft:"5"}}>
+          <Text style={styles.textBox}>bus Number</Text>
+             <Typography.Link
+        style={{ textAlign: "left"}}
+        onPress={() =>
+          NavigationService.navigate("MyBus")
+        }
+      >
+        {busNo}
+      </Typography.Link>
+          </View> */}
           </View>
         </>
       )}

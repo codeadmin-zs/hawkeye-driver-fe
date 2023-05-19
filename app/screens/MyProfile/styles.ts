@@ -37,15 +37,8 @@ export const makeStyles = (colors: any) =>
       justifyContent: "center",
       alignItems: "center",
     },
-    buttonText:{
-      color:"#fff"
+    busNo:{
+      marginLeft:"4%",
+      marginTop: '3%',
     },
-   
-    
-    
-    
-    
-    
-    
-    
   });
