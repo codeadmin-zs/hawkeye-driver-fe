@@ -5,6 +5,7 @@ import {
   FlatList,
   ActivityIndicator,
   TouchableOpacity,
+  Text
 } from "react-native";
 import { useTheme } from "react-native-paper";
 
@@ -23,6 +24,7 @@ import { makeStyles } from "./styles";
 import { getHolidaysList, getEventsList } from "../../services/holiday";
 import { t } from "../../i18n";
 import { moderateScale } from "react-native-size-matters";
+import AppStyles from "app/config/styles";
 
 const HolidayList: React.FC = () => {
   const [holidayList, setHolidayList] = useState([]);
@@ -33,11 +35,24 @@ const HolidayList: React.FC = () => {
   const [markedEvents, setMarkedEvents] = useState({});
   const [holidayText, setHolidayText] = useState("");
   const [eventText, setEventText] = useState("");
+  const [selectedDate, setSelectedDate] = React.useState(
+    moment().format("YYYY-MM-DD")
+  );
 
   const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
   const { colors } = useTheme();
   const styles = makeStyles(colors);
+  const currentDay = moment().format("YYYY-MM-DD");
+  const dateDisplay= moment().format("DD-MM-YYYY");
+
+  const markedCurrentDate = {
+    [currentDay]: {
+      selected: true,
+      selectedColor: AppStyles.color.COLOR_SECONDARY_BLUE,
+      selectedTextColor: "#FFFFFF",
+    },
+  };
 
   useEffect(() => {
     let markedEventDates: any = {};
@@ -47,6 +62,7 @@ const HolidayList: React.FC = () => {
         markedHolidayDates[holiday.holiday_on] = {
           selected: true,
           selectedColor: "#00B0BF",
+          // selectedColor: "green",
           selectedTextColor: "#FFFFFF",
           selectedHolidayText: holiday?.text,
         };
@@ -75,10 +91,10 @@ const HolidayList: React.FC = () => {
 
     const fetchData = async () => {
       holidayResponse = await getHolidaysList();
-      console.log("holidayResponse",holidayResponse);
+      console.log("holidayResponse", holidayResponse);
       eventResponse = await getEventsList();
-      console.log("eventResponse",eventResponse);
-      
+      console.log("eventResponse", eventResponse);
+
       dispatch(loadingActions.disableLoading());
       if (
         Array.isArray(holidayResponse?.body) &&
@@ -97,11 +113,8 @@ const HolidayList: React.FC = () => {
     fetchData();
   }, []);
 
-  console.log(eventList,"eventList");
-  console.log(HolidayList,"HolidayList");
-  
-
   const goBack = () => NavigationService.goBack();
+
   return (
     <View style={styles.container}>
       <Header
@@ -111,6 +124,7 @@ const HolidayList: React.FC = () => {
       />
       <ScrollView style={styles.contentContainer}>
         <View style={styles.headerContainer}>
+          <View style={styles.holidayHeader}>
           <Typography.H1 style={{ paddingRight: "2%", top: "1%" }}>
             {t("holidays.title")}
           </Typography.H1>
@@ -119,11 +133,18 @@ const HolidayList: React.FC = () => {
           >
             {showHolidayCalender ? <CalendarListIcon /> : <CalendarIcon />}
           </TouchableOpacity>
+          </View>
+          <View>
+          <Typography.H4>{dateDisplay}</Typography.H4>
+
+          </View>
+
         </View>
         {showHolidayCalender ? (
           <Calendar
+            initialDate={moment().format("YYYY-MM-DD")}
+            markedDates={{...markedCurrentDate,...markedHolidays}}
             markingType={"multi-dot"}
-            markedDates={markedHolidays}
             onDayPress={(day) => {
               const holidayText =
                 markedHolidays?.[day.dateString]?.selectedHolidayText;
@@ -139,7 +160,6 @@ const HolidayList: React.FC = () => {
               selectedDayBackgroundColor: "#fff",
               selectedDayTextColor: "#222",
             }}
-            initialDate={moment().format("YYYY-MM-DD")}
           />
         ) : isLoading ? (
           <View style={styles.fullView}>
@@ -166,7 +186,7 @@ const HolidayList: React.FC = () => {
             <Typography.H5>{holidayText}</Typography.H5>
           </View>
         )}
-        <View style={styles.headerContainer}>
+        <View style={styles.headerContainerEvents}>
           <Typography.H1 style={{ paddingRight: "2%", top: "1%" }}>
             {t("holidays.events")}
           </Typography.H1>
