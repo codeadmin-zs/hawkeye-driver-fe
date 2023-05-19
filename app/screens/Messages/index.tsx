@@ -8,7 +8,7 @@ import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
 import { Typography } from "../../components/Typography";
 import { MessagePod } from "../../components";
 import { getMessages } from "../../services/message";
-import moment from 'moment'; 
+import moment from "moment";
 import styles from "./styles";
 
 const Messages: React.FC = () => {
@@ -17,6 +17,7 @@ const Messages: React.FC = () => {
   useEffect(() => {
     const _getMessages = async () => {
       const resp = await getMessages();
+      console.log("getmessages", resp);
 
       setMessages(resp?.body);
     };
@@ -24,9 +25,8 @@ const Messages: React.FC = () => {
     _getMessages();
   }, []);
 
-  
-  const onPress = (item:any) => {
-    NavigationService.navigate("FullMessage",{data:item});
+  const onPress = (item: any) => {
+    NavigationService.navigate("FullMessage", { data: item });
   };
 
   return (
@@ -44,12 +44,12 @@ const Messages: React.FC = () => {
             data={messages}
             renderItem={({ item, index, separators }) => (
               <MessagePod
-                onPress={()=>onPress(item)}
+                onPress={() => onPress(item)}
                 key={index}
                 messageTitle={item.subject}
                 messageType={"info"}
                 message={item.content}
-                date={moment(item.created_on,'HH:mm:ss').format('hh:mm A')}
+                date={moment(item.created_on, "HH:mm:ss").format("hh:mm A")}
               />
             )}
           />

@@ -49,7 +49,7 @@ const HolidayList: React.FC = () => {
   const markedCurrentDate = {
     [currentDay]: {
       selected: true,
-      selectedColor: AppStyles.color.COLOR_SECONDARY_BLUE,
+      selectedColor: AppStyles.color.COLOR_MEDIUM_DARK_BLUE,
       selectedTextColor: "#FFFFFF",
     },
   };
