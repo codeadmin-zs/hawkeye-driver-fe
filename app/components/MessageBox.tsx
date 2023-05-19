@@ -39,7 +39,6 @@ export default function MessageBox(props) {
           justifyContent: "space-around",
           backgroundColor: "white",
           alignItems: "center",
-          //flexDirection:'row',
           borderRadius: moderateScale(5),
         }}
       >
@@ -83,7 +82,6 @@ export default function MessageBox(props) {
             <Text>Date : {alarmDetails?.createtime}</Text>
           </View>
         </View>
-        {/* <HalfButton Label={props.Label} onPress={props.onPress} height={moderateScale(40)} backgroundColor={AppStyles.colors.COLOR_PRIMARY} textColor={'white'}/> */}
         <Pressable
           onPress={props.onPress}
           style={{

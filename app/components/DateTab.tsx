@@ -9,9 +9,15 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const initialDate = new Date();
 initialDate.setDate(initialDate.getDate() - 1);
-const formattedDate = `${initialDate.getFullYear()}-0${
-  initialDate.getMonth() + 1
-}-${initialDate.getDate()}`;
+const dateComponent = [];
+let unchangedDate;
+
+//YYYY-MM-DD FORMAT
+const year = initialDate.getFullYear();
+const month = initialDate.getMonth() + 1;
+const day = initialDate.getDate();
+const formattedMonth = month < 10 ? `0${month}` : month; // add leading zero if month is less than 10
+const formattedDate = `${year}-${formattedMonth}-${day}`;
 
 export const DateTab = ({ startDate, onChangeDate }) => {
   const [selectedDate, setSelectedDate] = useState(formattedDate);
@@ -48,9 +54,7 @@ export const DateTab = ({ startDate, onChangeDate }) => {
     };
   };
 
-  let dateComponent = [];
   const dateComparison = moment(selectedDate).isSame(initialDate, "date");
-  console.log("date Comparison", dateComparison);
   for (let i = 0; i <= 3; i++) {
     if (dateComparison && i === 0) {
       continue;
@@ -79,7 +83,6 @@ export const DateTab = ({ startDate, onChangeDate }) => {
       </View>
     );
   }
-  let unchangedDate;
   const { displayDate, actualDate } = setMoment(1, true);
   const activeDate = moment(selectedDate).isSame(actualDate, "date");
 

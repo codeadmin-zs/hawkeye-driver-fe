@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, View, TouchableOpacity } from "react-native";
+import { ActivityIndicator, View, TouchableOpacity, Text } from "react-native";
 import { Button, TextInput, useTheme, IconButton } from "react-native-paper";
 import BusIcon from "../../assets/Svgs/MyBus.svg";
-
 import { useDispatch, useSelector } from "react-redux";
 import { loadingActions } from "../../store/features/loading/slice";
 import NavigationService from "app/navigation/NavigationService";
@@ -13,12 +12,23 @@ import { Typography } from "../../components/Typography";
 import { t } from "../../i18n";
 import { makeStyles } from "./styles";
 import { getMyProfile } from "../../services/myProfile";
-import { Text } from "react-native-svg";
+import { getVehicleDetails } from "app/services/vehicles";
+import { moderateScale } from "react-native-size-matters";
+// import { Linking } from 'react-native';
 
 const MyProfile: React.FC = ({ route }) => {
   const { profileInfo } = route.params;
-  console.log("profileinfo.......", profileInfo);
- 
+  console.log("profileInfo",profileInfo);
+  const [busNo, setBusNo] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      const vehicleDetails = await getVehicleDetails(profileInfo.vehicleGuid);
+      console.log("vehicleDetails", vehicleDetails);
+      setBusNo(vehicleDetails.body.name);
+    };
+    fetchData();
+  }, []);
+
   let address = "";
   const { colors } = useTheme();
   const styles = makeStyles(colors);
@@ -73,6 +83,20 @@ const MyProfile: React.FC = ({ route }) => {
               editable={false}
             />
             <TextInput
+              label={t("driver.empId")}
+              placeholder={t("general.mobileNum")}
+              style={styles.textBox}
+              value={profileInfo?.employeeid}
+              editable={false}
+            />
+            <TextInput
+              label={t("driver.rfid")}
+              placeholder={t("general.mobileNum")}
+              style={styles.textBox}
+              value={profileInfo?.rfid}
+              editable={false}
+            />
+            <TextInput
               label={t("general.email")}
               placeholder={t("general.email")}
               style={styles.textBox}
@@ -86,12 +110,6 @@ const MyProfile: React.FC = ({ route }) => {
               value={profileInfo?.address}
               editable={false}
             />
-            {/* <TextInput
-              // label={t('general.address')}
-              placeholder={t("childProfile.address")}
-              style={styles.textBox}
-              value={address}
-            /> */}
             <TextInput
               label={t("general.schoolName")}
               placeholder={t("childProfile.schoolName")}
@@ -99,16 +117,22 @@ const MyProfile: React.FC = ({ route }) => {
               value={profileInfo?.schoolName}
               editable={false}
             />
+<View style={styles.busNo}>
+  <Text style={{ fontSize: moderateScale(11) }}>Bus Number</Text>
+  <Typography.Link onPress={()=>NavigationService.navigate("MyBus")}>{busNo}</Typography.Link>
+</View>
 
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() => NavigationService.navigate("MyBus")}>
-                {/* <BusIcon style={styles.busIcon}/> */}
-                <Typography.H5Light style={styles.buttonText}>
-                  {t("general.busNo")}
-                </Typography.H5Light>
-              </TouchableOpacity>
-            </View>
+            {/* <View style={{marginLeft:"5"}}>
+          <Text style={styles.textBox}>bus Number</Text>
+             <Typography.Link
+        style={{ textAlign: "left"}}
+        onPress={() =>
+          NavigationService.navigate("MyBus")
+        }
+      >
+        {busNo}
+      </Typography.Link>
+          </View> */}
           </View>
         </>
       )}

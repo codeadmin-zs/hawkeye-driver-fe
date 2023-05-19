@@ -15,11 +15,9 @@ export const makeStyles = (colors: any) =>
       marginRight: "auto",
     },
     MainContainer: {
-      // backgroundColor:'red',
       width: "100%",
       flexDirection: "column",
       alignItems: "center",
-      //   backgroundColor: "yellow",
       paddingTop: moderateScale(11),
       paddingBottom: moderateScale(11),
     },

@@ -1,4 +1,3 @@
-// import {apiClient,} from 'app/services/client';
 import FetchApi from './client';
 import ApiConfig from 'app/config/api-config';
 import DeviceInfo from 'react-native-device-info';
@@ -8,7 +7,7 @@ import { formatLeaveApiParams } from "../utils/formatParams";
 export const getDriverDetails = () => {
   
     return FetchApi({
-      endpoint: `${ApiConfig.DRIVER}${storeHelpers.getUserId()}`,
+      endpoint: `${ApiConfig.DRIVER}/${storeHelpers.getUserId()}`,
       method: 'GET',
     });
   };

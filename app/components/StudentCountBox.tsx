@@ -17,10 +17,6 @@ interface WithLogoHeaderProps {
 const StudentCountBox: FunctionComponent<any> = props => {
   const {colors} = useTheme();
   const {totalcount= 10} = props;
-
-//   if (!data) {
-//     return null;
-//   }
   const styles = makeStyles(colors);
 
   return (

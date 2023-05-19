@@ -6,7 +6,7 @@ import { FetchTypes } from "../types";
 const FetchApi = async ({
   auth = true,
   blob = false,
-  isAuth = false,
+  isAuthReq = false,
   isGtrackit = false,
   apiOverride = ApiConfig.BASE_URL_API,
   endpoint = "",
@@ -17,9 +17,9 @@ const FetchApi = async ({
 }) => {
   const body =
     contentType === "multipart/form-data" ? payload : JSON.stringify(payload);
-  apiOverride = isAuth ? ApiConfig.BASE_URL_AUTH : ApiConfig.BASE_URL_API;
+  apiOverride = isAuthReq ? ApiConfig.BASE_URL_AUTH : ApiConfig.BASE_URL_API;
   apiOverride = isGtrackit ? ApiConfig.GTRACKIT_BASE_URL_API : apiOverride;
-  apiOverride += ApiConfig.SUB_URL;
+  apiOverride += ApiConfig.SUB_URL
 
   const consolidatedHeaders: FetchTypes.ParamHeaders = {
     Authorization: auth ? `Bearer ${storeHelpers.getAccessToken()}` : "",
@@ -28,18 +28,19 @@ const FetchApi = async ({
     ...headers,
   };
   console.log("api path ", apiOverride);
+  
   const params: FetchTypes.Params = {
     method,
     headers: consolidatedHeaders,
     body: method !== "GET" ? body : null,
   };
-
   console.log("---access token---", storeHelpers.getAccessToken());
   console.log("---consolidatedHeaders---", consolidatedHeaders);
   console.log("api drivers----------", `${apiOverride}${endpoint}`);
 
   return fetch(`${apiOverride}${endpoint}`, params)
     .then((response: FetchTypes.RawResponse): FetchTypes.Responses => {
+
       console.log("---api response ---", response);
 
       const { status } = response;
@@ -85,6 +86,7 @@ const FetchApi = async ({
       } else if (blob) {
         // SUCCESSFUL BLOB RESPONSE
         return response.blob().then((body: FetchTypes.Responses) => {
+          console.log("---response body---", body);
           const blobResponse: FetchTypes.Blob = {
             status,
             body: {
@@ -95,14 +97,11 @@ const FetchApi = async ({
           return blobResponse;
         });
       } else {
-        console.log("---status--", status);
         if (
-          response.headers.get("content-type") &&
           response.headers.get("content-type")?.match(/application\/json/)
         ) {
           // SUCCESSFUL JSON RESPONSE
           return response?.json()?.then((body: FetchTypes.Responses) => {
-            console.log("---response body---", body);
             const jsonResponse: FetchTypes.Json = { status, body };
             return jsonResponse;
           });
@@ -123,7 +122,6 @@ const FetchApi = async ({
         },
       };
       console.log("---error response---", error);
-
       return errorResponse;
     });
 };

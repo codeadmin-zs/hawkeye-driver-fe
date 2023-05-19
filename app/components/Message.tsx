@@ -76,7 +76,6 @@ const makeStyles = (colors: any) =>
       justifyContent: "space-around",
       backgroundColor: "white",
       alignItems: "center",
-      //flexDirection:'row',
       borderRadius: moderateScale(5),
     },
     title: { color: "#000", numberOfLines: 1 },

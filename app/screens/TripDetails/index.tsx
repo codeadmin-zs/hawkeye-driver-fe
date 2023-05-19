@@ -124,7 +124,6 @@ const TripDetails: React.FC = ({ route }) => {
           )}
           {showList && fullTrips?.length > 0 && (
             <View style={{ flex: 1, paddingHorizontal: "2%" }}>
-              {/* <Text>List View</Text> */}
               <FlatList
                 data={fullTrips}
                 renderItem={({ item }) => (

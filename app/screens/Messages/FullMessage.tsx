@@ -61,5 +61,22 @@ const Messages: React.FC = () => {
     </View>
   );
 };
+export default FullMessage;
 
-export default Messages;
+const makeStyles = (colors: any) =>
+  StyleSheet.create({
+    rootContainer: {
+      elevaton: 30,
+      width: '100%',
+      backgroundColor: colors.surfaceBackground,
+      borderRadius: moderateScale(5),
+      marginVertical: '1%',
+      padding: '2%',
+      height: '80%'
+    },
+    fullMessageConatiner: {
+      width: '100%',
+      paddingHorizontal: '2%',
+    },
+  });
+

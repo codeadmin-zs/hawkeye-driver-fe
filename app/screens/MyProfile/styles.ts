@@ -30,22 +30,15 @@ export const makeStyles = (colors: any) =>
     },
     buttonContainer: {
       backgroundColor: "#144072",
-      width: "40%",
-      height: 50,
+      width: "25%",
+      height: "7%",
       borderRadius: 10, // added borderRadius
       marginTop: 16,
       justifyContent: "center",
       alignItems: "center",
     },
-    buttonText:{
-      color:"#fff"
+    busNo:{
+      marginLeft:"4%",
+      marginTop: '3%',
     },
-   
-    
-    
-    
-    
-    
-    
-    
   });

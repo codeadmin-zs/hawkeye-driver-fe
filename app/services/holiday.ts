@@ -1,6 +1,6 @@
-// import {apiClient,} from 'app/services/client';
-import FetchApi from "./client";
-import ApiConfig from "app/config/api-config";
+
+import FetchApi from './client';
+import ApiConfig from 'app/config/api-config';
 
 export const getHolidaysList = async () => {
   return FetchApi({

@@ -53,7 +53,6 @@ export const TripSummaryPod = ({ data, showArrow = true }) => {
             }}
           >
             <View style={styles.tripSpeedDetailsContainer}>
-              {/* <RoundOdo width={10} height={10} iconColor={"gray"} /> */}
               <View style={styles.tripSpeedDetails}>
                 <PartialOdo width={10} height={10} iconColor={"gray"} />
                 <Text
@@ -100,7 +99,6 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(5),
   },
   header: {
-    // fontWeight: "bold",
     marginBottom: moderateScale(10),
     display: "flex",
     flexDirection: "row",

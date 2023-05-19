@@ -49,23 +49,13 @@ const TripHistory: React.FC = ({ route }) => {
   const { colors } = useTheme();
   const styles = makeStyles(colors);
   const goBack = () => NavigationService.goBack();
-  console.log("profileInfo", profileInfo);
 
   async function getTripHistory() {
     try {
       setIsLoading(true);
-
-      // const driverResponse = await getDriverDetails();
-
-      // console.log("driver details from trip history", driverResponse.body);
-      // const driverDetails = driverResponse.body;
-
       const response = await getVehicleDetails(profileInfo?.vehicleGuid);
 
       const vehicle = response.body;
-      console.log("vehicles", vehicle);
-
-      // const plate = vehicle.plate;
 
       setVehicle(vehicle);
 
@@ -108,7 +98,6 @@ const TripHistory: React.FC = ({ route }) => {
       )
     );
 
-    console.log("trips history", tripsResponse.body);
     setTrips(tripsResponse.body);
     setIsLoading(false);
   };

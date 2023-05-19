@@ -45,10 +45,6 @@ const PickupStop: React.FC = ({ pickupData, selectedRoute }) => {
               >
                 {moment(item.eta,'HH:mm:ss').format('hh:mm A')}
               </Typography.H6>
-              {/* <View style={styles.boardingInfoBox}>
-            <Typography.H6 style={{color: 'green'}}>Boarded - {item.boarded}</Typography.H6>
-            <Typography.H6 style={{color: 'red'}}>Not Boarded - {item.notboarded}</Typography.H6>
-        </View> */}
             </View>
 
           ))}

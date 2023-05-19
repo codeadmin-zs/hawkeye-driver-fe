@@ -22,7 +22,12 @@ import { loadingActions } from "app/store/features/loading/slice";
 import AppStyles from "app/config/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../../services/myProfile";
+import { moderateScale } from "react-native-size-matters";
+
+
 const dim = Dimensions.Screen;
+const scaledWidth = moderateScale(36);
+const scaledHeight = moderateScale(36);
 
 const Home: React.FC = () => {
   const onLogout = () => dispatch(loginActions.logOut());
@@ -40,12 +45,9 @@ const Home: React.FC = () => {
   const goBack = () => NavigationService.goBack();
 
   useEffect(() => {
-    // dispatch(loadingActions.enableLoading());
     let response = null;
     const fetchData = async () => {
       const response = await getDriverDetails();
-      // dispatch(loadingActions.disableLoading());
-      console.log("driver profile.........", response);
       setProfileData(response?.body);
     };
     fetchData();
@@ -80,16 +82,6 @@ const Home: React.FC = () => {
       iconName: "MyProfile",
       icon: <MyProfile />,
     },
-    // {
-    //   title: t("home.children"),
-    //   bgColor: "#E97A73",
-    //   iconBgColor: "#CD6059",
-    //   textColor: "#fff",
-    //   onPress: () =>
-    //     NavigationService.navigate("Children", { navType: "profile" }),
-    //   iconName: "Children",
-    //   icon: <Children />,
-    // },
       {
         title: t("home.myBus"),
         bgColor: "#E97A73",
@@ -137,8 +129,8 @@ const Home: React.FC = () => {
       iconName: "TripHistory",
       icon: (
         <TrackerHistoryIcon
-          width={36}
-          height={36}
+          width={scaledWidth}
+          height={scaledHeight}
           stroke={AppStyles.color.COLOR_BLACK}
         />
       ),
