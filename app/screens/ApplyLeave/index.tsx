@@ -47,9 +47,43 @@ const ApplyLeave: React.FC = ({ route }) => {
     if(resp?.status === 201){
       setShowSuccess(true);
     }
-  };
 
-  
+  // console.log("markedDates", markedDates);
+  const goBack = () => {
+    NavigationService.goBack();
+  };
+  const onApplyLeave = async () => {
+    try {
+      setShowWarning(false);
+      const validationResult = validationFunc();
+      if (validationResult) {
+        dispatch(loadingActions.enableLoading());
+        const formattedParams = formatLeaveApiParams(
+          markedDates,
+          // childData,
+          driverData,
+          leaveReason,
+          absentType
+        );
+        console.log("formattedParams", formattedParams);
+
+        const resp = await applyDriverLeave(driverData?.guid, formattedParams);
+        dispatch(loadingActions.disableLoading());
+        console.log("ressppp==", resp);
+        if (resp?.status === 201) {
+          // console.log("ressppp==", resp);
+          setShowSuccess(true);
+        } else if (resp?.status === 409) {
+          setErrorStatus(resp?.body?.detail);
+          console.log("reached the error part");
+        }
+      } else {
+        setShowWarning(true);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -59,6 +93,7 @@ const ApplyLeave: React.FC = ({ route }) => {
         leftIconPress={goBack}
       />
       {isLoading && <HudView />}
+
       <MessageBox
         showMessage={showSuccess}
         label={"Close"}
