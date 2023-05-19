@@ -32,6 +32,7 @@ const AppStyles = {
     COLOR_SHADOW_RED: "#EF7371",
     COLOR_RED: "#ff0000",
     COLOR_DARK_RED: "#990000",
+    COLOR_RED_IDLE: "#FD8181"
   },
   fonts: {
     // FONT_REGULAR: 'Roboto-Regular',

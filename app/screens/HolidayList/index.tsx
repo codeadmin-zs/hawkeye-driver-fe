@@ -61,7 +61,7 @@ const HolidayList: React.FC = () => {
       holidayList?.forEach((holiday) => {
         markedHolidayDates[holiday.holiday_on] = {
           selected: true,
-          selectedColor: "#00B0BF",
+          selectedColor: AppStyles.color.COLOR_RED_IDLE,
           // selectedColor: "green",
           selectedTextColor: "#FFFFFF",
           selectedHolidayText: holiday?.text,
@@ -73,7 +73,7 @@ const HolidayList: React.FC = () => {
       eventList?.forEach((event) => {
         markedEventDates[event.event_on] = {
           selected: true,
-          selectedColor: "#00B0BF",
+          selectedColor: AppStyles.color.COLOR_RED_IDLE,
           selectedTextColor: "#FFFFFF",
           selectedEventText: event?.text,
         };
@@ -199,7 +199,7 @@ const HolidayList: React.FC = () => {
         {showEventCalender ? (
           <Calendar
             markingType={"multi-dot"}
-            markedDates={markedEvents}
+            markedDates={{...markedCurrentDate,...markedEvents}}
             onDayPress={(day) => {
               const eventText =
                 markedEvents?.[day.dateString]?.selectedEventText;
@@ -213,7 +213,7 @@ const HolidayList: React.FC = () => {
               selectedDayBackgroundColor: "#fff",
               selectedDayTextColor: "#222",
             }}
-            initialDate={moment().format("YYYY-MM-DD")}
+           
           />
         ) : isLoading ? (
           <View style={styles.fullView}>
