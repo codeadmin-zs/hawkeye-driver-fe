@@ -19,7 +19,7 @@ import UserIcon from "../assets/Svgs/UserIcon.svg";
 import { moderateScale } from "react-native-size-matters";
 import moment from "moment";
 import TrackDetails from "../screens/Track/components/TrackDetails";
-import TrackPod from 'app/components/TrackPod';
+import TrackPod from "app/components/TrackPod";
 import { storeHelpers } from "app/store";
 
 const dim = Dimensions.Screen;
@@ -45,26 +45,16 @@ const RoutePod: FunctionComponent<any> = ({
 
   return (
     <TouchableOpacity onPress={onPress}>
-      {/* <View style={styles.container}> */}
-        {/* <View style={styles.logoContainer}>
-          <View style={styles.logoBox}>
-            <Bus />
-          </View>
-        </View> */}
-        <View style={styles.detailsContainer}>
+      <View style={styles.detailsContainer}>
         <TrackPod trackData={routeData} driverName={driverName} />
-        </View>
-        <View
-            style={styles.driverNameContainer}
-          >
-            <UserIcon height={moderateScale(20)} width={moderateScale(20)} />
-            <Typography.H6 style={{ paddingHorizontal: "3%" }}>
-              {storeHelpers.getUserName()}
-            </Typography.H6>
-          </View>
-      {/* </View> */}
-      
-    
+      </View>
+      <View style={styles.driverNameContainer}>
+        <UserIcon height={moderateScale(20)} width={moderateScale(20)} />
+        <Typography.H6 style={{ paddingHorizontal: "3%" }}>
+          {storeHelpers.getUserName()}
+        </Typography.H6>
+      </View>
+
       <View style={{ width: "100%" }}>
         <TrackDetails stations={stations} />
       </View>
@@ -84,7 +74,7 @@ const makeStyles = (colors: any) =>
       borderTopRightRadius: 5,
       borderTopLeftRadius: 5,
     },
-    detailsContainer: { width: "100%"},
+    detailsContainer: { width: "100%" },
     logoContainer: {
       width: "20%",
       justifyContent: "center",
@@ -126,14 +116,14 @@ const makeStyles = (colors: any) =>
       paddingHorizontal: "2%",
       paddingBottom: "2%",
     },
-    driverNameContainer:{
-        paddingTop:'1%',
-        flexDirection: "row",
-        paddingLeft:'3%',
-        paddingBottom:'2%',
-        width: '100%',
-        backgroundColor:'#fff',
-        borderBottomWidth: 1,
-        borderColor: 'rgba(202, 202, 202, 0.8)'
-      }
+    driverNameContainer: {
+      paddingTop: "1%",
+      flexDirection: "row",
+      paddingLeft: "3%",
+      paddingBottom: "2%",
+      width: "100%",
+      backgroundColor: "#fff",
+      borderBottomWidth: 1,
+      borderColor: "rgba(202, 202, 202, 0.8)",
+    },
   });

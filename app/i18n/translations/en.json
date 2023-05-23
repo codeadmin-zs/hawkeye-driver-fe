@@ -14,7 +14,9 @@
     "address": "Address",
     "holidays": "Holidays",
     "events": "Events",
-    "reason": "Reason"
+    "reason": "Reason",
+    "busNo":"Bus Number",
+    "schoolName":"School Name"
   },
   "home": {
     "track": "Track",
@@ -24,7 +26,9 @@
     "messages": "Messages",
     "holidayList": "Holiday list",
     "applyLeave": "Apply Leave",
-    "busArrivalMsg": "will arrive in 10 mts"
+    "busArrivalMsg": "will arrive in 10 mts",
+    "trips": " Trip History",
+    "myBus":"My Bus"
   },
   "track": {
     "title": "Bus Track",
@@ -38,6 +42,9 @@
   },
   "children": {
     "title": "Children"
+  },
+  "myBus":{
+    "title": "My Bus"
   },
   "childProfile": {
     "title": "Children profile",
@@ -60,7 +67,9 @@
     "admissionDate": "Date of Admission",
     "admissionNum": "Admission Number",
     "rollNumber": "Roll Number",
-    "dob": "Date of Birth"
+    "dob": "Date of Birth",
+    "schoolName":"School Name",
+    "busNo":"Bus Number"
   },
   "profile": {
     "details": "My Details"
@@ -72,5 +81,21 @@
   "students": {
     "title": "Students",
     "searchDescription": "Search Student or Stop"
+  },
+  "tripHistory": {
+    "title": "Trip History"
+  },
+  "tripDetails": {
+    "title": "Trip Details"
+  },
+
+  "driver":{
+    "empId":"Employee Id",
+    "rfid":"RFID"
+},
+
+  "applyLeave":{
+    "title":"Apply Leave"
+
   }
 }

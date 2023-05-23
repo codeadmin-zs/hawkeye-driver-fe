@@ -3,12 +3,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {fonts} from '../../config/fonts';
 import {utils} from '../../utils';
-
 import {Title} from './Title';
-// import {SectionTitle} from './SectionTitle';
-// import {SubTitle} from './SubTitle';
-// import {Paragraph} from './Paragraph';
-// import {DetailTitle, Detail, DetailSubTitle, DetailDescription} from './Detail';
 
 const h1FontSize = utils.device.s([22, 24]);
 const h2FontSize = utils.device.s([18, 20]);
@@ -34,7 +29,6 @@ const H = ({
       {
         fontFamily: fonts.medium,
         color: '#000',
-        // color: invert ? colors.black : colors.white,
         fontSize,
         textShadowColor: textShadow === true ? 'rgba(0, 0, 0, 0.6)' : null,
         textShadowOffset:
@@ -161,7 +155,6 @@ const Body = ({children, invert, style, allowFontScaling = true}) => (
     style={[
       {
         fontFamily: fonts.medium,
-        // color: invert ? colors.black : colors.white,
         fontSize: bodyFontSize,
         ...style,
       },
@@ -176,9 +169,7 @@ const Small = ({children, invert, style, allowFontScaling = true}) => (
     style={[
       {
         fontFamily: fonts.medium,
-        // letterSpacing: -0.3,
         lineHeight: 23,
-        // color: invert ? colors.black : colors.white,
         paddingBottom: 10,
         fontSize: smallFontSize,
         ...style,
@@ -191,9 +182,6 @@ const Small = ({children, invert, style, allowFontScaling = true}) => (
 
 export const Typography = {
   Title,
-  // SectionTitle,
-  // SubTitle,
-  // Paragraph,
   H1,
   H2,
   H3,
@@ -209,8 +197,4 @@ export const Typography = {
   Body,
   Link,
   Small,
-  // DetailTitle,
-  // Detail,
-  // DetailSubTitle,
-  // DetailDescription,
 };

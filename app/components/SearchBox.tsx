@@ -9,7 +9,6 @@ import {
   SafeAreaView,
   TextInput
 } from 'react-native';
-// import TextInput from 'react-native-material-textinput';
 import {moderateScale} from 'react-native-size-matters';
 import Search from '../assets/Svgs/Search.svg';
 import Dimensions from '../utils/helper';
@@ -49,8 +48,6 @@ const dim = Dimensions.Screen;
                 alignItems: 'center',
                 justifyContent: 'center',
                 paddingLeft: '6%',
-                // backgroundColor:'red',
-                // flex:.5
               }}>
               <Search
                 color={colors.primary}
@@ -66,7 +63,6 @@ const dim = Dimensions.Screen;
                 flex: 1,
               }}>
               <TextInput
-                // ref={(txt)=>inputRef?.current = txt}
                 height={moderateScale(40)}
                 placeholderColor={colors.passive}
                 color={colors.passive}
@@ -78,19 +74,13 @@ const dim = Dimensions.Screen;
                   color: colors.passive,
                   width:'100%'
                 }}
-                //   value={'this.state.userName'}
                 onChangeText={text => {
                   props.onSearch(text);
                 }}
-                //   error={
-                //     this.state.userNameError && 'Enter Valid Username'
-                //   }
-                //  onEndEditing={() => this._onEndEditing(this.state.userName)}
                 fontFamily={'Poppins-Regular'}
               />
             </View>
           </View>
-          {/* </View> */}
         </View>
       </SafeAreaView>
     );
@@ -101,21 +91,10 @@ export default SearchBox;
 const makeStyles = (colors: any) =>
   StyleSheet.create({
   main: {
-    // height: moderateScale(80),
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: moderateScale(10),
     backgroundColor: colors.primary,
   },
-//   inputDataText: {
-//     height: '65%',
-//     elevation: moderateScale(2),
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     // marginBottom: moderateScale(20),
-//     backgroundColor: AppStyles.colors.COLOR_PRIMARY, //
-//     paddingHorizontal: moderateScale(15),
-//     borderRadius: moderateScale(3),
-//   },
 });

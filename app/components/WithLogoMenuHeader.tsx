@@ -1,4 +1,4 @@
-import React, {FunctionComponent, ReactNode} from 'react';
+import React, {FunctionComponent, ReactNode, useEffect, useState} from 'react';
 import {
   View,
   ImageBackground,
@@ -14,6 +14,8 @@ import Logout from '../assets/Svgs/LogoutIcon.svg';
 import {moderateScale} from 'react-native-size-matters';
 import {useDispatch} from 'react-redux';
 import {loginActions} from '../store/features/login/slice';
+import UserDetailsInfo from "../screens/Home/components/UserDetailsInfo";
+import { getDriverDetails } from 'app/services/driver';
 
 const dim = Dimensions.Screen;
 
@@ -22,12 +24,23 @@ interface WithLogoHeaderProps {
 }
 
 const WithLogoMenuHeader: FunctionComponent<any> = props => {
+  const [schoolName,setSchoolName]=useState('')
   const theme = useTheme();
   const dispatch = useDispatch();
   const onLogout = () => {
     
     dispatch(loginActions.logoutRequest());
   }
+  useEffect(() => {
+    const fetchData = async () => {
+        const driverDetails = await getDriverDetails();
+        console.log("driverDetails", driverDetails);
+        console.log("school",driverDetails.body.schoolName);
+        setSchoolName(driverDetails.body.schoolName);
+    };
+    fetchData();
+  }, []);
+  
   return (
     <View style={styles.container(theme)}>
       <View style={styles.titleContainer(theme)}>
@@ -36,7 +49,7 @@ const WithLogoMenuHeader: FunctionComponent<any> = props => {
           Your remote eye
         </Typography.H6Light>
         <Typography.H4 style={{color: '#F3F053', top: '-10%'}}>
-          Chempaka International
+          {schoolName}
         </Typography.H4>
       </View>
       <View style={styles.imageContainer(theme)}>
