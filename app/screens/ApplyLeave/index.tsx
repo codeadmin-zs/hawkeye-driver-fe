@@ -19,7 +19,6 @@ import { makeStyles } from "./styles";
 import { Button } from "../../components/Buttons/button";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { t } from "../../i18n";
-// import { ApplyLeave } from "../../services/children";
 import { loadingActions } from "../../store/features/loading/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { formatLeaveApiParams } from "../../utils/formatParams";
@@ -43,7 +42,7 @@ const ApplyLeave: React.FC = ({ route }) => {
   const [absentType, setAbsentType] = useState("Sick");
   const [isFormValid, setIsFormValid] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-  const [errorStatus, setErrorStatus] = useState('');
+  const [errorStatus, setErrorStatus] = useState("");
 
   const { colors } = useTheme();
   const styles = makeStyles(colors);
@@ -93,7 +92,6 @@ const ApplyLeave: React.FC = ({ route }) => {
         console.log("range", range);
       }
 
-      // setStartDate(null);
       setEndDate(date);
       setMarkedDates({
         ...markedDates,
@@ -108,14 +106,12 @@ const ApplyLeave: React.FC = ({ route }) => {
     NavigationService.goBack();
   };
   const onApplyLeave = async () => {
-    try {
       setShowWarning(false);
       const validationResult = validationFunc();
       if (validationResult) {
         dispatch(loadingActions.enableLoading());
         const formattedParams = formatLeaveApiParams(
           markedDates,
-          // childData,
           driverData,
           leaveReason,
           absentType
@@ -128,28 +124,14 @@ const ApplyLeave: React.FC = ({ route }) => {
         if (resp?.status === 201) {
           // console.log("ressppp==", resp);
           setShowSuccess(true);
-        }
-        else if(resp?.status === 409){
-          setErrorStatus(resp?.body?.detail)
+        } else if (resp?.status === 409) {
+          setErrorStatus(resp?.body?.detail);
           console.log("reached the error part");
-
         }
       } else {
         setShowWarning(true);
-        // console.log("reached the error part");
       }
-    } catch (error) {
-      // if error?.resp?.status === 409) {
-      //   setErrorStatus(true);
-      // } else {
-      //   console.log("error",error);
-      // }
-      console.log("error", error);
-    }
   };
-
-  
-
   return (
     <View style={styles.container}>
       <Header
@@ -171,13 +153,8 @@ const ApplyLeave: React.FC = ({ route }) => {
           message={`Please fill all the fields.`}
         />
       )}
-      {errorStatus?.length >0 && (
-        <MessageBox
-          showMessage={true}
-          label={"Close"}
-          message={errorStatus}
-          
-        />
+      {errorStatus?.length > 0 && (
+        <MessageBox showMessage={true} label={"Close"} message={errorStatus} />
       )}
 
       <View style={styles.fillBox} />
@@ -287,6 +264,5 @@ const ApplyLeave: React.FC = ({ route }) => {
     </View>
   );
 };
-}
 
 export default ApplyLeave;
