@@ -5,7 +5,6 @@ import {storeHelpers} from '../store';
 import { formatLeaveApiParams } from "../utils/formatParams";
 
 export const getDriverDetails = () => {
-  
     return FetchApi({
       endpoint: `${ApiConfig.DRIVER}/${storeHelpers.getUserId()}`,
       method: 'GET',

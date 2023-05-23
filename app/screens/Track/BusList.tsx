@@ -7,7 +7,6 @@ import LeftArrow from '../../assets/Svgs/LeftArrow.svg';
 import {Typography} from '../../components/Typography';
 import {BusPod} from '../../components';
 import {moderateScale} from 'react-native-size-matters';
-
 import commonStyles from './styles';
 
 const BusList: React.FC = () => {

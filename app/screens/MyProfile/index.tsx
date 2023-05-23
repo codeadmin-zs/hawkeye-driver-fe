@@ -118,7 +118,7 @@ const MyProfile: React.FC = ({ route }) => {
               editable={false}
             />
 <View style={styles.busNo}>
-  <Text style={{ fontSize: moderateScale(11) }}>Bus Number</Text>
+  <Text style={{ fontSize: moderateScale(11) }}>{t("general.busNo")}</Text>
   <Typography.Link onPress={()=>NavigationService.navigate("MyBus")}>{busNo}</Typography.Link>
 </View>
 

@@ -87,7 +87,7 @@ const Home: React.FC = () => {
         bgColor: "#E97A73",
         iconBgColor: "#CD6059",
         textColor: "#fff",
-        onPress: () => NavigationService.navigate("MyBus"),
+        onPress: () => NavigationService.navigate("MyBus",{}),
         iconName: "MyBus",
         icon: <MyBus />,
       },

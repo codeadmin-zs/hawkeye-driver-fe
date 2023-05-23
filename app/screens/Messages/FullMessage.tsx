@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList } from "react-native";
-import { Button, TextInput } from "react-native-paper";
-
+import { View, FlatList,StyleSheet} from "react-native";
+import { Button, TextInput,useTheme } from "react-native-paper";
 import NavigationService from "app/navigation/NavigationService";
 import { Header } from "../../components";
 import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
@@ -10,6 +9,7 @@ import { MessagePod } from "../../components";
 import { getMessages } from "../../services/message";
 import moment from 'moment'; 
 import commonStyles from './styles';
+import { moderateScale } from "react-native-size-matters";
 
 const FullMessage: React.FC = (props:any) => {
   const {colors} = useTheme();
