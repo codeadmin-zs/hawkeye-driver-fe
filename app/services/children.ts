@@ -33,17 +33,18 @@ export const getLeavesData = async (childId) => {
   });
 };
 
-export const applyLeave = async (childId, date, reason) => {
-  return FetchApi({
-    endpoint: `${ApiConfig.STUDENTS}/${childId}/${ApiConfig.LEAVES}`,
-    method: "POST",
-    payload: {
-      absent_on: "2022/12/27",
-      absent_type: 2,
-      reason: "Family gettogether",
-    },
-  });
-};
+// export const applyLeave = async (childId, date, reason) => {
+//   return FetchApi({
+//     endpoint: `${ApiConfig.STUDENTS}${childId}${ApiConfig.LEAVES}`,
+//     method: "POST",
+//     payload: {
+//       absent_on: "2022/12/27",
+//       absent_type: 2,
+//       reason: "Family gettogether",
+//     },
+//   });
+// };
+
 
 export const getPickupRoutes = (id: string) => {
   return FetchApi({

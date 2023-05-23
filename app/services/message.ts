@@ -8,3 +8,11 @@ export const getMessages = async () => {
   });
 };
 
+export const createMessage=async(data)=>{
+  return FetchApi({
+    endpoint: `${ApiConfig.MESSAGES}`,
+    method: 'POST',
+  })
+}
+// console.log("data",data);
+
