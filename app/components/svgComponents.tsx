@@ -421,3 +421,33 @@ export function StartTrackIcon(props) {
     </Svg>
   );
 }
+
+export const SearchIcon = (props) => (
+  <Svg
+    width={props.height}
+    height={props.width}
+    fill="none"
+    viewBox="0 0 22 22"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <Path
+      d="m21.7 19.02-4.284-4.283a1.03 1.03 0 0 0-.73-.3h-.7a8.892 8.892 0 0 0 1.89-5.5C17.876 4 13.876 0 8.938 0 4.001 0 0 4 0 8.937c0 4.936 4 8.936 8.938 8.936a8.896 8.896 0 0 0 5.5-1.89v.7c0 .275.108.537.301.73l4.285 4.284a1.027 1.027 0 0 0 1.456 0l1.216-1.216a1.036 1.036 0 0 0 .005-1.46ZM8.939 14.436a5.497 5.497 0 0 1-5.5-5.5c0-3.037 2.458-5.499 5.5-5.499 3.038 0 5.5 2.458 5.5 5.5 0 3.037-2.457 5.5-5.5 5.5Z"
+      fill={props.color}
+    />
+  </Svg>
+);
+
+export const MessageIcon = (props) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    height={props.size}
+    viewBox="0 96 960 960"
+    width={props.size}
+  >
+    <Path
+      fill={props.color ? props.color : "black"}
+      d="M140 896q-24 0-42-18t-18-42V316q0-24 18-42t42-18h680q24 0 42 18t18 42v520q0 24-18 42t-42 18H140Zm340-302L140 371v465h680V371L480 594Zm0-60 336-218H145l335 218ZM140 371v-55 520-465Z"
+    />
+  </Svg>
+);

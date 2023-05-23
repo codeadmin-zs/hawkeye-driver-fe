@@ -17,6 +17,7 @@ import { loadingActions } from "../../store/features/loading/slice";
 import { useDispatch, useSelector } from "react-redux";
 
 const ApplyLeave: React.FC = ({ route }) => {
+  console.log("reached apply leave page");
   const { childData } = route.params;
   const dispatch = useDispatch();
 
@@ -179,5 +180,6 @@ const ApplyLeave: React.FC = ({ route }) => {
     </View>
   );
 };
+}
 
 export default ApplyLeave;

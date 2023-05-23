@@ -130,18 +130,18 @@ const Home: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <WithLogoMenuHeader />
-      <UserDetailsInfo userName={profileData?.name} />
-      <Typography.H5 style={{ color: "red", textAlign: "center" }}>
-        {`Your Bus ${t("home.busArrivalMsg")}`}
-      </Typography.H5>
-      <Typography.Link
-        style={{ textAlign: "center" }}
-        onPress={() =>
-          NavigationService.navigate("Children", { navType: "profile" })
-        }
-      >
-        {t("home.applyLeave")}
+    <WithLogoMenuHeader />
+    <UserDetailsInfo userName={profileData?.name} />
+    <Typography.H5 style={{ color: "red", textAlign: "center" }}>
+      {`Your Bus ${t("home.busArrivalMsg")}`}
+    </Typography.H5>
+    <Typography.Link
+      style={{ textAlign: "center" }}
+      onPress={() =>
+        NavigationService.navigate("ApplyLeave",{driverData:profileData})
+      }
+    >
+      {t("home.applyLeave")}
       </Typography.Link>
       <FlatList
         style={styles.tileContainer}

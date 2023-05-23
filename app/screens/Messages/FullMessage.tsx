@@ -10,9 +10,9 @@ import {moderateScale} from 'react-native-size-matters';
 import moment from 'moment'; 
 import commonStyles from './styles';
 
-const FullMessage: React.FC = (props:any) => {
+const FullMessage: React.FC = ({route}) => {
   const {colors} = useTheme();
-  const {data} = props.route.params;
+  const {data} = route.params;
   
   const styles = makeStyles(colors);
 
@@ -27,9 +27,9 @@ const FullMessage: React.FC = (props:any) => {
       />
       <View style={styles.fullMessageConatiner}>
         <MessagePod
-          messageTitle={data.subject}
+          messageTitle={data?.subject}
           messageType={'info'}
-          date={moment(data.created_on,'HH:mm:ss').format('hh:mm A')}
+          date={data?.created_on}
         />
         <View style={styles.rootContainer}>
           <Typography.H5Light style={{paddingHorizontal:'2%',paddingVertical: '4%',lineHeight: 23}}>
