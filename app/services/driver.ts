@@ -10,3 +10,15 @@ export const getDriverDetails = () => {
       method: 'GET',
     });
   };
+
+  export const getLeavesData = async () => {
+    console.log(
+      "reached getdriver api",
+      `${ApiConfig.DRIVER}${ApiConfig.LEAVES}`
+    );
+  
+    return FetchApi({
+      endpoint: `${ApiConfig.DRIVER}${ApiConfig.LEAVES}`,
+      method: "GET",
+    });
+  };
