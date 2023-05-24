@@ -118,8 +118,8 @@ const MyProfile: React.FC = ({ route }) => {
               editable={false}
             />
 <View style={styles.busNo}>
-  <Text style={{ fontSize: moderateScale(11) }}>{t("general.busNo")}</Text>
-  <Typography.Link onPress={()=>NavigationService.navigate("MyBus")}>{busNo}</Typography.Link>
+  <Text style={{ fontSize: moderateScale(11), fontFamily:"poppins" }}>{t("general.busNo")}</Text>
+  <Typography.Link onPress={()=>NavigationService.navigate("MyBus")} style={{ fontFamily:"poppins" }} >{busNo}</Typography.Link>
 </View>
 
             {/* <View style={{marginLeft:"5"}}>

@@ -15,6 +15,7 @@ export const getVehiclePaths = async (id) => {
     method: "GET",
   });
 };
+
 export const getTrips = async (plate, starttime, endtime) => {
   return FetchApi({
     endpoint: `${ApiConfig.TRIPS}/${ApiConfig.PLATES}/${plate}?starttime=${starttime}&endtime=${endtime}`,
@@ -22,6 +23,7 @@ export const getTrips = async (plate, starttime, endtime) => {
     isGtrackit: true,
   });
 };
+
 export const getTripDetails = async (plate, starttime, endtime) => {
   return FetchApi({
     endpoint: `${ApiConfig.TRIPHISTORY}/${ApiConfig.PLATES}/${plate}?starttime=${starttime}&endtime=${endtime}`,

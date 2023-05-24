@@ -9,8 +9,6 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const initialDate = new Date();
 initialDate.setDate(initialDate.getDate() - 1);
-const dateComponent = [];
-let unchangedDate;
 
 //YYYY-MM-DD FORMAT
 const year = initialDate.getFullYear();
@@ -23,9 +21,14 @@ export const DateTab = ({ startDate, onChangeDate }) => {
   const [selectedDate, setSelectedDate] = useState(formattedDate);
   const [openModal, setOpenModal] = useState(false);
 
+  let unchangedDate;
+  const dateComponent = []; 
+
   useEffect(() => {
     if (startDate !== selectedDate) {
       setSelectedDate(startDate);
+      console.log("startDate",startDate);
+      
     }
   }, [startDate]);
 
