@@ -14,11 +14,11 @@ export const getDriverDetails = () => {
   export const getLeavesData = async () => {
     console.log(
       "reached getdriver api",
-      `${ApiConfig.USERS}${ApiConfig.LEAVES}`
+      `${ApiConfig.USERS}/${ApiConfig.LEAVES}`
     );
   
     return FetchApi({
-      endpoint: `${ApiConfig.USERS}${ApiConfig.LEAVES}`,
+      endpoint: `${ApiConfig.USERS}/${ApiConfig.LEAVES}`,
       method: "GET",
     });
   };
@@ -27,7 +27,7 @@ export const getDriverDetails = () => {
     console.log("reached apply leave api", formattedParams);
     
     return FetchApi({
-      endpoint: `${ApiConfig.USERS}${guid}/${ApiConfig.LEAVES}`,
+      endpoint: `${ApiConfig.USERS}/${guid}/${ApiConfig.LEAVES}`,
       method: "POST",
       payload: formattedParams,
     });

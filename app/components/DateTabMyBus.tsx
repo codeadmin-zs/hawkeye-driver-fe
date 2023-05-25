@@ -33,8 +33,7 @@ const formattedDate = `${year}-${formattedMonth}-${day}`;
     let addedDays = moment().add(noOfDays, "days");
     if (!previosDate) {
         addedDays = moment(selectedDate).add(noOfDays, "days");
-    } else {
-    }
+    } 
     return {
       displayDate: addedDays.calendar(null, {
         sameDay: "[Today]",

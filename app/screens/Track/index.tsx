@@ -36,6 +36,8 @@ this.map = "";
 
 const Track: React.FC = ({ route, navigation }) => {
   const { routeParam } = route.params;
+  console.log("trackpage",routeParam);
+  
   const { stations } = routeParam;
   const driverName = storeHelpers.getUserDetails()?.name;
   const [wayPoints, setWayPoints] = useState([]);

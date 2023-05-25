@@ -7,12 +7,13 @@ import { ScrollView } from "react-native-gesture-handler";
 import moment from "moment";
 import { useTheme } from "react-native-paper";
 
-import { BusPod, DateTab, Header, TrackPod } from "app/components";
+import { DateTab, Header, TrackPod } from "app/components";
 import { t } from "../../i18n";
 import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
 import { makeStyles } from "./styles";
-import { DateTabMyBus } from "app/components/DateTabMyBus";
-import {getVehicleDetails,getVehiclePaths} from '../../services/vehicles'
+import { DateTabMyBus } from "../../components/DateTabMyBus";
+import {getVehicleDetails,getVehiclePaths,getRoutesOfVehicle,getStopsOfRoute} from '../../services/vehicles'
+import BusPod from '../../components/BusPod'
 
 const MyBus: React.FC = ({route}) => {
   const {profileInfo}=route.params
@@ -56,8 +57,21 @@ const [plateNumber, setPlateNumber] = useState('');
     }
     getPaths()
   }, []);
-
-
+  useEffect(() => {
+    const getRoutes = async () => {
+      const resp = await getRoutesOfVehicle(profileInfo?.vehicleGuid,);
+      console.log("pathresponse",resp);
+    }
+    getRoutes()
+  }, []);
+  useEffect(() => {
+    const getPaths = async () => {
+      const resp = await getStopsOfRoute(profileInfo?.vehicleGuid);
+      console.log("pathresponse",resp);
+    }
+    getPaths()
+  }, []);
+  
   
 
   const goBack = () => NavigationService.goBack();
@@ -74,6 +88,9 @@ const [plateNumber, setPlateNumber] = useState('');
           onChangeDate={(date) => dateChangeHandler(date)} />
       <BusPod busNumber={busNumber}
       plateNumber={plateNumber}
+        time={"8:10 AM"}
+      attendandName={"Revathi"}
+      driverName={profileInfo.name}
       />
     </View>
     </>

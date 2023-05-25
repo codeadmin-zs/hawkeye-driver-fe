@@ -21,7 +21,9 @@ const ApiConfig = {
   TRIPS: "trips",
   TRIPHISTORY: "tripdetails",
   PLATES: "plates",
-  USERS:"users/"
+  USERS:"users",
+  ROUTES:"routes",
+  DATE:"date"
 };
 
 export default ApiConfig;
