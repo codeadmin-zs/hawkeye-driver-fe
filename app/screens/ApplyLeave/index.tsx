@@ -63,7 +63,6 @@ const ApplyLeave: React.FC = ({ route }) => {
       return false;
     }
   }
-
   const getSelectedDayEvents = (date) => {
     if (!startDate || (startDate && endDate)) {
       // if there's no start date selected, or if both start and end dates are selected

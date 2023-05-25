@@ -1,44 +1,42 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-// import { VehicleInfoStyles } from "./VehicleInfo";
 import { moderateScale } from "react-native-size-matters";
 import moment from "moment";
 import { DatePickerCalender } from "./svgComponents";
-// import {TouchableOpacity} from 'react-native-gesture-handler';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-export const DateTab = ({ startDate, onChangeDate }) => {
-
+export const DateTabMyBus = ({ startDate, onChangeDate}) => {
   const initialDate = new Date();
 initialDate.setDate(initialDate.getDate() - 1);
 
-  //YYYY-MM-DD FORMAT
+//YYYY-MM-DD FORMAT
 const year = initialDate.getFullYear();
 const month = initialDate.getMonth() + 1;
 const day = initialDate.getDate();
 const formattedMonth = month < 10 ? `0${month}` : month; // add leading zero if month is less than 10
 const formattedDate = `${year}-${formattedMonth}-${day}`;
-
   const [selectedDate, setSelectedDate] = useState(formattedDate);
   const [openModal, setOpenModal] = useState(false);
 
-  const dateComponent = [];
   let unchangedDate;
+  const dateComponent = []; 
 
   useEffect(() => {
     if (startDate !== selectedDate) {
       setSelectedDate(startDate);
+      console.log("startDate",startDate);
+      
     }
   }, [startDate]);
 
   const setMoment = (noOfDays, previosDate) => {
-    let subtractedDays = moment().subtract(noOfDays, "days");
+    let addedDays = moment().add(noOfDays, "days");
     if (!previosDate) {
-      subtractedDays = moment(selectedDate).subtract(noOfDays, "days");
+        addedDays = moment(selectedDate).add(noOfDays, "days");
     } else {
     }
     return {
-      displayDate: subtractedDays.calendar(null, {
+      displayDate: addedDays.calendar(null, {
         sameDay: "[Today]",
         nextDay: "[Tomorrow]",
         nextWeek: "MMM DD",
@@ -52,10 +50,9 @@ const formattedDate = `${year}-${formattedMonth}-${day}`;
           }
         },
       }),
-      actualDate: new Date(subtractedDays.format("YYYY-MM-DD")),
+      actualDate: new Date(addedDays.format("YYYY-MM-DD")),
     };
   };
-
 
   const dateComparison = moment(selectedDate).isSame(initialDate, "date");
   for (let i = 0; i <= 3; i++) {
@@ -86,7 +83,7 @@ const formattedDate = `${year}-${formattedMonth}-${day}`;
       </View>
     );
   }
-  const { displayDate, actualDate } = setMoment(1, true);
+  const { displayDate, actualDate } = setMoment(0, true);
   const activeDate = moment(selectedDate).isSame(actualDate, "date");
 
   unchangedDate = (

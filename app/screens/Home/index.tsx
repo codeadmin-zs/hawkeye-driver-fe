@@ -39,15 +39,15 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
 
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
-
   const [profileData, setProfileData] = useState({});
-
   const goBack = () => NavigationService.goBack();
 
   useEffect(() => {
     let response = null;
     const fetchData = async () => {
       const response = await getDriverDetails();
+      console.log("======response",response);
+      
       setProfileData(response?.body);
     };
     fetchData();
@@ -87,11 +87,10 @@ const Home: React.FC = () => {
         bgColor: "#E97A73",
         iconBgColor: "#CD6059",
         textColor: "#fff",
-        onPress: () => NavigationService.navigate("MyBus",{}),
+        onPress: () => NavigationService.navigate("MyBus",{profileInfo: profileData}),
         iconName: "MyBus",
         icon: <MyBus />,
       },
-    
     {
       title: t("home.messages"),
       bgColor: "#4767BB",
