@@ -39,9 +39,7 @@ const initialDate = {
 
 const TripHistory: React.FC = ({ route }) => {
   const { profileInfo } = route.params;
-
   const [errorStatus, setErrorStatus] = useState(false);
-
   const [dateDetails, setDateDetails] = useState(initialDate);
   const [trips, setTrips] = useState(null);
   const [vehicle, setVehicle] = useState("");
@@ -164,7 +162,7 @@ const TripHistory: React.FC = ({ route }) => {
               <NoResourceFound />
               <View style={styles.errorMsg}>
                 <Text style={styles.extraBoldFont}>
-                  No trips found on :{" "}
+                   {t("tripHistory.noTripsFound")} :
                   <Text
                     style={{
                       color: AppStyles.color.COLOR_DARK_GREY,

@@ -41,7 +41,7 @@ export const getRoutesOfVehicle = (guid: string, date: string) => {
 
 export const getStopsOfRoute = (guid: string) => {
   return FetchApi({
-    endpoint: `${ApiConfig.ROUTES}/${guid}${ApiConfig.STOPS}`,
+    endpoint: `${ApiConfig.ROUTES}/${guid}/${ApiConfig.STOPS}`,
     method: "GET",
   });
 };

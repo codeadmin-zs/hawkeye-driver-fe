@@ -495,3 +495,41 @@ export const Dots = (props) => (
     <Circle cx="2.5" cy="20.5" r="2.5" fill="#505050" />
   </Svg>
 );
+
+// export function StartTrackIcon(props) {
+//   return (
+//     <Svg
+//       width={props.width}
+//       height={props.height}
+//       viewBox="0 0 22 34"
+//       fill="none"
+//       xmlns="http://www.w3.org/2000/svg"
+//     >
+//       <Path
+//         fill-rule="evenodd"
+//         clip-rule="evenodd"
+//         d="M19.9029 16.5854L10.7808 29.0246L1.65874 16.5854H1.7001C0.622107 14.927 0 12.9365 0 10.7806C0 4.80975 4.80989 0 10.7806 0C16.7514 0 21.5613 4.80989 21.5613 10.7806C21.561 12.9368 20.9391 14.927 19.9025 16.5854H19.9029ZM10.7808 6.63409C8.50021 6.63409 6.63441 8.49989 6.63441 10.7805C6.63441 13.0611 8.50021 14.9269 10.7808 14.9269C13.0614 14.9269 14.9272 13.0611 14.9272 10.7805C14.9272 8.49989 13.0614 6.63409 10.7808 6.63409ZM10.7808 30.6832C16.7517 30.6832 21.5614 31.4294 21.5614 32.3416C21.5614 33.2538 16.7515 34 10.7808 34C4.81007 34 0.000178509 33.2538 0.000178509 32.3416C0.000178509 31.4294 4.81007 30.6832 10.7808 30.6832Z"
+//         fill={props.color}
+//       />
+//     </Svg>
+//   );
+// }
+
+export const StopTrackIcon = (props) => (
+  <Svg
+    width={props.width}
+    height={props.height}
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Circle
+      cx="12"
+      cy="12"
+      r="8"
+      stroke={props.color}
+      stroke-width="5"
+      fill="#fff"
+    />
+  </Svg>
+);

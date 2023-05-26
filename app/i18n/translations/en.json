@@ -44,7 +44,8 @@
     "title": "Children"
   },
   "myBus":{
-    "title": "My Bus"
+    "title": "My Bus",
+    "eta":"eta"
   },
   "childProfile": {
     "title": "Children profile",
@@ -83,7 +84,8 @@
     "searchDescription": "Search Student or Stop"
   },
   "tripHistory": {
-    "title": "Trip History"
+    "title": "Trip History",
+    "noTripsFound":"No trips found on"
   },
   "tripDetails": {
     "title": "Trip Details"
@@ -93,9 +95,8 @@
     "empId":"Employee Id",
     "rfid":"RFID"
 },
-
   "applyLeave":{
     "title":"Apply Leave"
+  },
 
-  }
 }

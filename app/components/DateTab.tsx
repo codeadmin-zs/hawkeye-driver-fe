@@ -7,17 +7,17 @@ import { DatePickerCalender } from "./svgComponents";
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-export const DateTab = ({ startDate, onChangeDate }) => {
-
-  const initialDate = new Date();
+const initialDate = new Date();
 initialDate.setDate(initialDate.getDate() - 1);
 
-  //YYYY-MM-DD FORMAT
+//YYYY-MM-DD FORMAT
 const year = initialDate.getFullYear();
 const month = initialDate.getMonth() + 1;
 const day = initialDate.getDate();
 const formattedMonth = month < 10 ? `0${month}` : month; // add leading zero if month is less than 10
 const formattedDate = `${year}-${formattedMonth}-${day}`;
+
+export const DateTab = ({ startDate, onChangeDate }) => {
 
   const [selectedDate, setSelectedDate] = useState(formattedDate);
   const [openModal, setOpenModal] = useState(false);
@@ -29,6 +29,7 @@ const formattedDate = `${year}-${formattedMonth}-${day}`;
     if (startDate !== selectedDate) {
       setSelectedDate(startDate);
     }
+    console.log('startDate',startDate);
   }, [startDate]);
 
   const setMoment = (noOfDays, previosDate) => {
@@ -55,7 +56,6 @@ const formattedDate = `${year}-${formattedMonth}-${day}`;
       actualDate: new Date(subtractedDays.format("YYYY-MM-DD")),
     };
   };
-
 
   const dateComparison = moment(selectedDate).isSame(initialDate, "date");
   for (let i = 0; i <= 3; i++) {

@@ -5,9 +5,8 @@ import moment from "moment";
 import { DatePickerCalender } from "./svgComponents";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-export const DateTabMyBus = ({ startDate, onChangeDate}) => {
-  const initialDate = new Date();
-initialDate.setDate(initialDate.getDate() - 1);
+const initialDate = new Date();
+initialDate.setDate(initialDate.getDate());
 
 //YYYY-MM-DD FORMAT
 const year = initialDate.getFullYear();
@@ -15,6 +14,8 @@ const month = initialDate.getMonth() + 1;
 const day = initialDate.getDate();
 const formattedMonth = month < 10 ? `0${month}` : month; // add leading zero if month is less than 10
 const formattedDate = `${year}-${formattedMonth}-${day}`;
+
+export const FutureDateTab = ({ startDate, onChangeDate}) => {
   const [selectedDate, setSelectedDate] = useState(formattedDate);
   const [openModal, setOpenModal] = useState(false);
 
@@ -24,8 +25,7 @@ const formattedDate = `${year}-${formattedMonth}-${day}`;
   useEffect(() => {
     if (startDate !== selectedDate) {
       setSelectedDate(startDate);
-      console.log("startDate",startDate);
-      
+      console.log("startDate",startDate); 
     }
   }, [startDate]);
 
