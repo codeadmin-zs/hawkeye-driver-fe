@@ -53,6 +53,8 @@ console.log('date',date)
     const getVehicles = async () => {
       const vehicleResponse = await getVehicleDetails(profileInfo?.vehicleGuid);
       console.log("&&&&&vehicleResponse", vehicleResponse);
+      console.log("profileInfo?.vehicleGuid",profileInfo?.vehicleGuid);
+      
       const vehiclesRes = vehicleResponse?.body;
       setGetVehiclesData(vehiclesRes);
 
@@ -69,23 +71,26 @@ console.log('date',date)
       const vehicleStops = stopsResponse?.body;
       console.log("vehicleStops", vehicleStops);
 
-      const stop = vehicleStops?.stopsDetail;
+      const stop = vehicleStops;
       console.log("stops", stop);
+      const routeName=vehicleStops?.route?.name
+      console.log("routename",vehicleStops?.route?.name);
+      
       // console.log("vehicleStops",vehicleStops?.route.startstop);
-      const allStops = [
-        {
-          stopName: vehicleStops?.route?.startstopid,
-          eta: vehicleStops?.route?.eta,
-          routename:vehicleStops?.route?.name
-        },
-        ...stop,
-        {
-          stopName: vehicleStops?.route.endstopid,
-          eta: vehicleStops?.route.eta,
-        }
-      ];
-      console.log("allStops", allStops);
-      setGetStops(allStops);
+      // const allStops = [
+      //   {
+      //     // stopName: vehicleStops?.route?.startstopid,
+      //     // eta: vehicleStops?.route?.eta,
+      //     routename:vehicleStops?.route?.name
+      //   },
+      //   ...stop,
+      //   // {
+      //   //   stopName: vehicleStops?.route.endstopid,
+      //   //   eta: vehicleStops?.route.eta,
+      //   // }
+      // ];
+      console.log("allStops", stop);
+      setGetStops(stop);
     };
     getVehicles();
   }, [dateDetails]);
@@ -118,6 +123,7 @@ console.log('date',date)
         profileInfo={profileInfo}
         vehicleRoutes={vehicleRoutes}
         stops={getStops}
+        
       />
     </>
   );
