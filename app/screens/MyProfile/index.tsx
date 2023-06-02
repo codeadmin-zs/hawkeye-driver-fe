@@ -124,7 +124,7 @@ const MyProfile: React.FC = ({ route }) => {
                 {t("general.busNo")}
               </Text>
               <Typography.Link
-                onPress={() => NavigationService.navigate("MyBus")}
+                onPress={() => NavigationService.navigate("MyBusList",{profileInfo: profileData})}
                 style={{ fontFamily: "poppins" }}
               >
                 {busNo}

@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  ActivityIndicator,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import NavigationService from "app/navigation/NavigationService";
 import { moderateScale } from "react-native-size-matters";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import moment from "moment";
 import { useTheme } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
+import { loadingActions } from "../../store/features/loading/slice";
 
-import { DateTab, Header, TrackPod } from "app/components";
+import { DateTab, Header, TrackPod, NoResourceFound } from "app/components";
+import ExpandableList from "app/components/ExpandableList";
 import { t } from "../../i18n";
+import { Typography } from "../../components/Typography";
 import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
 import { makeStyles } from "./styles";
 import { FutureDateTab } from "app/components/FutureDateTab";
+import AppStyles from "../../config/styles";
 import {
   getVehicleDetails,
   getVehiclePaths,
@@ -22,63 +33,72 @@ import BusPod from "../../components/BusPod";
 import RouteListView from "app/components/RouteListView";
 
 const MyBus: React.FC = ({ route }) => {
-  const { profileInfo,vehicleDetails } = route.params;
+  const { profileInfo, vehicleDetails = null } = route.params;
   console.log("profileInfo222", profileInfo);
-  console.log("vehicleDetails222",vehicleDetails);
-  console.log("busname",vehicleDetails?.guid);
-  
-  
-  const initialDate = {
-    startDate: moment().format("YYYY-MM-DD"),
-  };
-  // console.log("startDate",initialDate.startDate);
-
-  const [getVehiclesData, setGetVehiclesData] = useState({});
-  const [dateDetails, setDateDetails] = useState(initialDate);
-  const [vehicleRoutes, setVehicleRoutes] = useState({});
-  const [getStops, setGetStops] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  console.log("dateeee",dateDetails.startDate);
-
+  console.log("vehicleDetails222", vehicleDetails);
+  console.log("busname", vehicleDetails?.guid);
   const navigation = useNavigation();
   const { colors } = useTheme();
   const styles = makeStyles(colors);
 
+  const [date, setDate] = useState({
+    startDate: moment().format("YYYY-MM-DD"),
+  });
+  const [stops, setStops] = useState([]);
+  const [routes, setRoutes] = useState();
+
+  // console.log("startDate",initialDate.startDate);
+
+  const [getVehiclesData, setGetVehiclesData] = useState({});
+  // const [dateDetails, setDateDetails] = useState(initialDate);
+  const [vehicleRoutes, setVehicleRoutes] = useState();
+  const [getStops, setGetStops] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+
+  // console.log("dateeee",dateDetails.startDate);
+
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state: any) => state.loading?.isLoading);
+
   const dateChangeHandler = (date) => {
-console.log('date',date)
-    setDateDetails((prev) => {
-      return { ...prev, startDate: moment(date).format("YYYY-MM-DD") };
+    console.log("date", date);
+    setDate((prev) => {
+      return { ...prev, startDate: date };
     });
   };
 
   useEffect(() => {
     const getVehicles = async () => {
+      dispatch(loadingActions.enableLoading());
       const vehicleResponse = await getVehicleDetails(vehicleDetails?.guid);
       console.log("&&&&&vehicleResponse", vehicleResponse);
-      console.log("vehicleGuid",vehicleDetails?.guid);
-      
+      console.log("vehicleGuid", moment(date.startDate).format("YYYY-MM-DD"));
+
       const vehiclesRes = vehicleResponse?.body;
       setGetVehiclesData(vehiclesRes);
 
-      const routesRespp = await getRoutesOfVehicle(
+      let routesRespp = null;
+      routesRespp = await getRoutesOfVehicle(
         vehicleDetails?.guid,
-        dateDetails.startDate
+        moment(date.startDate).format("YYYY-MM-DD")
       );
-      const vehicleRoutes = routesRespp?.body;
-      console.log("getVehicleRoutes", vehicleRoutes);
-      setVehicleRoutes(vehicleRoutes);
+      // const vehicleRoutes = routesRespp?.body;
+      console.log("getVehicleRoutes", routesRespp?.body);
+      setVehicleRoutes(routesRespp?.body);
+      setStops(new Array(routesRespp?.body?.length));
 
-      const stopsResponse = await getStopsOfRoute(vehicleRoutes[0]?.route_guid);
-      console.log("routeStops", stopsResponse);
-      const vehicleStops = stopsResponse?.body;
-      console.log("vehicleStops", vehicleStops);
+      dispatch(loadingActions.disableLoading());
 
-      const stop = vehicleStops;
-      console.log("stops", stop);
-      const routeName=vehicleStops?.route?.name
-      console.log("routename",vehicleStops?.route?.name);
-      
+      // const stopsResponse = await getStopsOfRoute(routesRespp?.body[0]?.route_guid);
+      // console.log("routeStops", stopsResponse);
+      // const vehicleStops = stopsResponse?.body;
+      // console.log("vehicleStops", vehicleStops);
+
+      // const stop = vehicleStops;
+      // console.log("stops", stop);
+      // const routeName=vehicleStops?.route?.name
+      // console.log("routename",vehicleStops?.route?.name);
+
       // console.log("vehicleStops",vehicleStops?.route.startstop);
       // const allStops = [
       //   {
@@ -92,16 +112,37 @@ console.log('date',date)
       //   //   eta: vehicleStops?.route.eta,
       //   // }
       // ];
-      console.log("allStops", stop);
-      setGetStops(stop);
+      //   console.log("allStops", stop);
+      //   setGetStops(stop);
+      // };
     };
     getVehicles();
-  }, [dateDetails]);
+  }, [date]);
+
+  const fetchRoute = async (guid, index) => {
+    if (!stops[index]) {
+      const tempData = [...stops];
+
+      const stopsResponse = await getStopsOfRoute(guid);
+
+      const stopsCopy = stopsResponse.body;
+
+      stopsCopy.accordionPosition = index;
+      tempData[index] = stopsCopy;
+      setStops(tempData);
+    }
+  };
+
+  const getRouteName = (index) => {
+    if (stops[index]) {
+      return ` - ${stops[index].route?.name}`;
+    } else return "";
+  };
 
   const goBack = () => NavigationService.goBack();
 
   return (
-    <>
+    <View style={styles.container}>
       <Header
         title={t("myBus.title")}
         leftIcon={<LeftArrow />}
@@ -109,26 +150,115 @@ console.log('date',date)
       />
       <View style={styles.topContainer}>
         <FutureDateTab
-          startDate={dateDetails.startDate}
+          startDate={date.startDate}
           onChangeDate={(date) => dateChangeHandler(date)}
         />
         <View style={styles.busPod}>
           <BusPod
             busNumber={vehicleDetails?.name}
-            plateNumber={vehicleDetails.plate}
-            time={"8:10 AM"}
+            plateNumber={vehicleDetails?.plate}
+            // time={"8:10 AM"}
             attendandName={"Revathi"}
-            // driverName={profileInfo.name}
+            driverName={profileInfo.name}
           />
         </View>
       </View>
-      <RouteListView
+      {isLoading ? (
+        <View style={styles.fullView}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      ) : (
+        <ScrollView>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            {vehicleRoutes?.length > 0 ? (
+              <>
+                {vehicleRoutes?.length === 1 ? (
+                  <Typography.H5Light
+                    style={{
+                      alignSelf: "flex-start",
+                      marginLeft: moderateScale(20),
+                      marginTop: moderateScale(8),
+                    }}
+                  >
+                    {vehicleRoutes?.length} route found on{" "}
+                    {moment(date.startDate).format("DD-MMM-YYYY")}
+                  </Typography.H5Light>
+                ) : (
+                  <Typography.H5Light
+                    style={{
+                      alignSelf: "flex-start",
+                      marginLeft: moderateScale(20),
+                      marginTop: moderateScale(8),
+                    }}
+                  >
+                    {vehicleRoutes?.length} routes found on{" "}
+                    {moment(date.startDate).format("DD-MMM-YYYY")}
+                  </Typography.H5Light>
+                )}
+                {vehicleRoutes?.length > 0 && (
+                  <View style={{ width: "92%", marginTop: moderateScale(6) }}>
+                    {vehicleRoutes?.map((item, index) => (
+                      <>
+              
+                        <ExpandableList
+                          key={index}
+                          title={"Route " + (index + 1) + getRouteName(index)}
+                          titleContainerStyle={styles.titleContainerStyle}
+                          listStyle={styles.listStyle}
+                          titleStyle={styles.titleStyle}
+                          onPress={() => fetchRoute(item.route_guid, index)}
+                        >
+                           
+                          {stops?.length > 0 && stops[index] && (
+                            <>
+                              <RouteListView
+                                profileInfo={profileInfo}
+                                vehicleRoutes={vehicleRoutes}
+                                stops={stops[index]}
+                              />
+                              <View
+                                style={{
+                                  position: "absolute",
+                                  right: 0,
+                                  top: moderateScale(10),
+                                }}
+                              >
+                                <TouchableOpacity>
+                                  <Typography.H5Light
+                                    style={{
+                                      color: AppStyles.color.COLOR_MEDIUM_DARK_BLUE,
+                                    }}
+                                  >
+                                    View on Map
+                                  </Typography.H5Light>
+                                </TouchableOpacity>
+                              </View>
+                            </>
+                          )}
+                       </ExpandableList>
+                      </>
+                    ))}
+                  </View>
+                )}
+              </>
+            ) : (
+              <NoResourceFound title={t("errors.noRouteFound")} />
+            )}
+          </View>
+        </ScrollView>
+      )}
+      {/* <RouteListView
         profileInfo={profileInfo}
         vehicleRoutes={vehicleRoutes}
-        stops={getStops}
-        
-      />
-    </>
+        stops={stops}
+      /> */}
+    </View>
   );
 };
 

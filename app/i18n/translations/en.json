@@ -98,6 +98,9 @@
 },
   "applyLeave":{
     "title":"Apply Leave"
-  },
+},
+ "errors":{
+  "noRouteFound":"No Route Found"
+ }
 
 }

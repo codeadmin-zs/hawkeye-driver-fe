@@ -67,7 +67,7 @@ const Home: React.FC = () => {
       iconBgColor: "#C6C6A0",
       textColor: "#fff",
       onPress: () =>
-        NavigationService.navigate("PickupSchedule", { navType: "pickup" }),
+        NavigationService.navigate("PickupSchedule", { navType: "pickup",profileInfo: profileData }),
       iconName: "Schedule",
       icon: <Schedule />,
     },
