@@ -22,9 +22,12 @@ import BusPod from "../../components/BusPod";
 import RouteListView from "app/components/RouteListView";
 
 const MyBus: React.FC = ({ route }) => {
-  const { profileInfo } = route.params;
-  console.log("profileInfo", profileInfo);
-
+  const { profileInfo,vehicleDetails } = route.params;
+  console.log("profileInfo222", profileInfo);
+  console.log("vehicleDetails222",vehicleDetails);
+  console.log("busname",vehicleDetails?.guid);
+  
+  
   const initialDate = {
     startDate: moment().format("YYYY-MM-DD"),
   };
@@ -51,15 +54,15 @@ console.log('date',date)
 
   useEffect(() => {
     const getVehicles = async () => {
-      const vehicleResponse = await getVehicleDetails(profileInfo?.vehicleGuid);
+      const vehicleResponse = await getVehicleDetails(vehicleDetails?.guid);
       console.log("&&&&&vehicleResponse", vehicleResponse);
-      console.log("profileInfo?.vehicleGuid",profileInfo?.vehicleGuid);
+      console.log("vehicleGuid",vehicleDetails?.guid);
       
       const vehiclesRes = vehicleResponse?.body;
       setGetVehiclesData(vehiclesRes);
 
       const routesRespp = await getRoutesOfVehicle(
-        profileInfo?.vehicleGuid,
+        vehicleDetails?.guid,
         dateDetails.startDate
       );
       const vehicleRoutes = routesRespp?.body;
@@ -111,11 +114,11 @@ console.log('date',date)
         />
         <View style={styles.busPod}>
           <BusPod
-            busNumber={getVehiclesData.name}
-            plateNumber={getVehiclesData.plate}
+            busNumber={vehicleDetails?.name}
+            plateNumber={vehicleDetails.plate}
             time={"8:10 AM"}
             attendandName={"Revathi"}
-            driverName={profileInfo.name}
+            // driverName={profileInfo.name}
           />
         </View>
       </View>

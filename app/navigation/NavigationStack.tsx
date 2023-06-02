@@ -11,6 +11,7 @@ import Home from "app/screens/Home";
 import ForgotPassword from "app/screens/ForgotPassword";
 import PickupSchedule from "app/screens/PickupSchedule";
 import MyBus from 'app/screens/MyBus'
+import MyBusList from "app/screens/MyBusList";
 import HolidayList from "app/screens/HolidayList";
 import Messages from "app/screens/Messages";
 import MyProfile from "app/screens/MyProfile";
@@ -110,6 +111,11 @@ const App: React.FC<IProps> = (props: IProps) => {
               name="MyBus"
               component={MyBus}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+             name="MyBusList"
+             component={MyBusList}
+             options={{ headerShown: false }}
             />
             <Stack.Screen
               name="HolidayList"

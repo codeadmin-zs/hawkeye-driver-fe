@@ -32,3 +32,10 @@ export const getDriverDetails = () => {
       payload: formattedParams,
     });
   };
+
+  export const getDriverVehicles=async (guid)=>{
+    return FetchApi({
+      endpoint: `${ApiConfig.DRIVER}/${guid}/${ApiConfig.VEHICLE}`,
+      method: 'GET',
+    });
+  }

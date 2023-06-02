@@ -24,7 +24,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../../services/myProfile";
 import { moderateScale } from "react-native-size-matters";
 
-
 const dim = Dimensions.Screen;
 const scaledWidth = moderateScale(36);
 const scaledHeight = moderateScale(36);
@@ -87,7 +86,7 @@ const Home: React.FC = () => {
         bgColor: "#E97A73",
         iconBgColor: "#CD6059",
         textColor: "#fff",
-        onPress: () => NavigationService.navigate("MyBus",{profileInfo: profileData}),
+        onPress: () => NavigationService.navigate("MyBusList",{profileInfo: profileData}),
         iconName: "MyBus",
         icon: <MyBus />,
       },

@@ -18,7 +18,7 @@ import { moderateScale } from "react-native-size-matters";
 
 const MyProfile: React.FC = ({ route }) => {
   const { profileInfo } = route.params;
-  console.log("profileInfo",profileInfo);
+  console.log("profileInfo", profileInfo);
   const [busNo, setBusNo] = useState("");
   useEffect(() => {
     const fetchData = async () => {
@@ -117,10 +117,19 @@ const MyProfile: React.FC = ({ route }) => {
               value={profileInfo?.schoolName}
               editable={false}
             />
-<View style={styles.busNo}>
-  <Text style={{ fontSize: moderateScale(11), fontFamily:"poppins" }}>{t("general.busNo")}</Text>
-  <Typography.Link onPress={()=>NavigationService.navigate("MyBus")} style={{ fontFamily:"poppins" }} >{busNo}</Typography.Link>
-</View>
+            <View style={styles.busNo}>
+              <Text
+                style={{ fontSize: moderateScale(11), fontFamily: "poppins" }}
+              >
+                {t("general.busNo")}
+              </Text>
+              <Typography.Link
+                onPress={() => NavigationService.navigate("MyBus")}
+                style={{ fontFamily: "poppins" }}
+              >
+                {busNo}
+              </Typography.Link>
+            </View>
 
             {/* <View style={{marginLeft:"5"}}>
           <Text style={styles.textBox}>bus Number</Text>

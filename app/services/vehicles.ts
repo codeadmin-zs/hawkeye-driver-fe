@@ -45,3 +45,10 @@ export const getStopsOfRoute = (guid: string) => {
     method: "GET",
   });
 };
+
+export const getVehicles = async () => {
+  return FetchApi({
+    endpoint: `${ApiConfig.VEHICLE}_`,
+    method: "GET",
+  });
+};

@@ -45,7 +45,8 @@
   },
   "myBus":{
     "title": "My Bus",
-    "eta":"eta"
+    "eta":"eta",
+    "myBusList":"My Bus List"
   },
   "childProfile": {
     "title": "Children profile",
