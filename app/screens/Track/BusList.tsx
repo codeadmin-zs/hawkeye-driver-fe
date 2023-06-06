@@ -1,52 +1,46 @@
-import React,{useState,useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Button, TextInput, useTheme} from 'react-native-paper';
-import NavigationService from 'app/navigation/NavigationService';
-import {Header} from '../../components';
-import LeftArrow from '../../assets/Svgs/LeftArrow.svg';
-import {Typography} from '../../components/Typography';
-import {BusPod} from '../../components';
-import {moderateScale} from 'react-native-size-matters';
-import commonStyles from './styles';
-import {getVehicleDetails} from 'app/services/vehicles'
+import React, { useState, useEffect } from "react";
+import { View, StyleSheet } from "react-native";
+import { Button, TextInput, useTheme } from "react-native-paper";
+import NavigationService from "app/navigation/NavigationService";
+import { Header } from "../../components";
+import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
+import { Typography } from "../../components/Typography";
+import { BusPod } from "../../components";
+import { moderateScale } from "react-native-size-matters";
+import commonStyles from "./styles";
+import { getVehicleDetails } from "app/services/vehicles";
 
-const BusList: React.FC = ({route}) => {
-  const {profileInfo}=route.params
-  const {colors} = useTheme();
+const BusList: React.FC = ({ route }) => {
+  const { profileInfo } = route.params;
+  const { colors } = useTheme();
   const styles = makeStyles(colors);
-  const[vehicleDetails,setVehicleDetails]=useState({})
-  // const [busNumber, setBusNumber] = useState('');
-  // const [plateNumber, setPlateNumber] = useState('');
+  const [vehicleDetails, setVehicleDetails] = useState({});
 
   const goBack = () => NavigationService.goBack();
 
   useEffect(() => {
     const getVehicles = async () => {
       const response = await getVehicleDetails(profileInfo?.vehicleGuid);
-      console.log("&&&&&response",response);
-      // const { vehicleDetails } = response.body;
-      // setBusNumber(busNumber);
-      // setPlateNumber(plateNumber);
-      setVehicleDetails(response.body)
-    }
-    getVehicles()
+      setVehicleDetails(response.body);
+    };
+    getVehicles();
   }, []);
 
   return (
     <View style={styles.container}>
       <Header
-        title={'Bus list'}
+        title={"Bus list"}
         leftIcon={<LeftArrow />}
         leftIconPress={() => goBack()}
       />
       <View style={styles.contentContainer}>
         <BusPod
           busNumber={vehicleDetails.name}
-          time={'7:58 AM'}
+          time={"7:58 AM"}
           plateNumber={vehicleDetails.plate}
-          attendandName={'Revathi'}
+          attendandName={"Revathi"}
           driverName={profileInfo.name}
-          onPress={() => NavigationService.navigate('Track',{})}
+          onPress={() => NavigationService.navigate("Track", {})}
         />
         {/* <BusPod
           busNumber={'Bus 17'}
@@ -69,21 +63,21 @@ const makeStyles = (colors: any) =>
       flex: 1,
     },
     contentContainer: {
-      width: '100%',
-      padding: '4%',
+      width: "100%",
+      padding: "4%",
     },
     rootContainer: {
       elevaton: 30,
-      width: '100%',
+      width: "100%",
       backgroundColor: colors.surfaceBackground,
       borderRadius: moderateScale(5),
-      marginVertical: '1%',
-      padding: '2%',
+      marginVertical: "1%",
+      padding: "2%",
     },
     fullMessageConatiner: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '100%',
-      paddingHorizontal: '2%',
+      alignItems: "center",
+      justifyContent: "center",
+      width: "100%",
+      paddingHorizontal: "2%",
     },
   });

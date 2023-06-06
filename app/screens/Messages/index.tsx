@@ -40,30 +40,15 @@ const Messages: React.FC = () => {
     fetchMessage();
   }, []);
 
-  // useEffect(() => {
-  //   const _getMessages = async () => {
-  //     setIsLoading(true);
-  //     const resp = await getMessages();
-  //     console.log("getmessages", resp);
-  //     setMessages(resp?.body);
-  //   };
-
-  //   _getMessages();
-  // }, []);
-
   const onPress = (item) => {
     NavigationService.navigate("FullMessage", { data: item });
   };
 
   const searchHandler = (input) => {
     if (input.length === 0) {
-      console.log("searchText", input);
       setFilteredData(messages);
       return;
     }
-
-    console.log("searchText", input);
-
     const filteredData = messages.filter((msg) => {
       for (const detail in msg) {
         if (
@@ -78,7 +63,6 @@ const Messages: React.FC = () => {
       }
     });
 
-    console.log("filteredData", filteredData);
 
     setFilteredData(filteredData);
   };

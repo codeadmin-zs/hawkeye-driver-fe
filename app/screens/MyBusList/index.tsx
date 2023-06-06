@@ -9,14 +9,12 @@ import { getDriverVehicles } from "app/services/driver";
 import { Header } from "app/components";
 import { t } from "../../i18n";
 import { BusPod } from "app/components";
-// import { makeStyles } from "./styles";
 
 const MyBusList: React.FC = ({ route }) => {
 const { colors } = useTheme();
   const styles = makeStyles(colors);
   const { profileInfo } = route.params;
-  console.log("profileInfo2", profileInfo);
-  console.log("guid", profileInfo.guid);
+
 
   const navigation = useNavigation();
   const [vehicleDetails, setVehicleDetails] = useState([]);
@@ -24,12 +22,8 @@ const { colors } = useTheme();
   useEffect(() => {
     const vehicleList = async () => {
       const vehicles = await getDriverVehicles(profileInfo.guid);
-      console.log("vehicleList", vehicles);
       const vehiclesDetails = vehicles.body;
-    //   console.log("xxx", vehicles.length);
       setVehicleDetails(vehiclesDetails);
-    //   console.log("details", vehicleDetails);
-    //   console.log("details2", vehiclesDetails);
     };
     vehicleList();
   }, []);

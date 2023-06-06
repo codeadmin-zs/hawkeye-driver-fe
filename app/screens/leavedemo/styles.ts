@@ -18,10 +18,9 @@ export const makeStyles = (colors: any) =>
       top: '-6%',
     },
     textBoxContainer: {
-      // flex: 1,
+  
       width: '100%',
       alignItems: 'center',
-      // justifyContent: 'space-between',
     },
     textInput: {
       backgroundColor: '#fffff9',

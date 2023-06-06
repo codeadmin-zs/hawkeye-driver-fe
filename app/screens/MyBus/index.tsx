@@ -34,9 +34,6 @@ import RouteListView from "app/components/RouteListView";
 
 const MyBus: React.FC = ({ route }) => {
   const { profileInfo, vehicleDetails = null } = route.params;
-  console.log("profileInfo222", profileInfo);
-  console.log("vehicleDetails222", vehicleDetails);
-  console.log("busname", vehicleDetails?.guid);
   const navigation = useNavigation();
   const { colors } = useTheme();
   const styles = makeStyles(colors);
@@ -47,21 +44,14 @@ const MyBus: React.FC = ({ route }) => {
   const [stops, setStops] = useState([]);
   const [routes, setRoutes] = useState();
 
-  // console.log("startDate",initialDate.startDate);
-
   const [getVehiclesData, setGetVehiclesData] = useState({});
-  // const [dateDetails, setDateDetails] = useState(initialDate);
   const [vehicleRoutes, setVehicleRoutes] = useState();
   const [getStops, setGetStops] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-
-  // console.log("dateeee",dateDetails.startDate);
 
   const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
 
   const dateChangeHandler = (date) => {
-    console.log("date", date);
     setDate((prev) => {
       return { ...prev, startDate: date };
     });
@@ -71,8 +61,6 @@ const MyBus: React.FC = ({ route }) => {
     const getVehicles = async () => {
       dispatch(loadingActions.enableLoading());
       const vehicleResponse = await getVehicleDetails(vehicleDetails?.guid);
-      console.log("&&&vehicleResponse", vehicleResponse);
-      console.log("vehicleGuid", moment(date.startDate).format("YYYY-MM-DD"));
 
       const vehiclesRes = vehicleResponse?.body;
       setGetVehiclesData(vehiclesRes);
@@ -82,39 +70,11 @@ const MyBus: React.FC = ({ route }) => {
         vehicleDetails?.guid,
         moment(date.startDate).format("YYYY-MM-DD")
       );
-      // const vehicleRoutes = routesRespp?.body;
-      console.log("getVehicleRoutes", routesRespp?.body);
       setVehicleRoutes(routesRespp?.body);
       setStops(new Array(routesRespp?.body?.length));
 
       dispatch(loadingActions.disableLoading());
-
-      // const stopsResponse = await getStopsOfRoute(routesRespp?.body[0]?.route_guid);
-      // console.log("routeStops", stopsResponse);
-      // const vehicleStops = stopsResponse?.body;
-      // console.log("vehicleStops", vehicleStops);
-
-      // const stop = vehicleStops;
-      // console.log("stops", stop);
-      // const routeName=vehicleStops?.route?.name
-      // console.log("routename",vehicleStops?.route?.name);
-
-      // console.log("vehicleStops",vehicleStops?.route.startstop);
-      // const allStops = [
-      //   {
-      //     // stopName: vehicleStops?.route?.startstopid,
-      //     // eta: vehicleStops?.route?.eta,
-      //     routename:vehicleStops?.route?.name
-      //   },
-      //   ...stop,
-      //   // {
-      //   //   stopName: vehicleStops?.route.endstopid,
-      //   //   eta: vehicleStops?.route.eta,
-      //   // }
-      // ];
-      //   console.log("allStops", stop);
-      //   setGetStops(stop);
-      // };
+    
     };
     getVehicles();
   }, [date]);
@@ -126,9 +86,6 @@ const MyBus: React.FC = ({ route }) => {
       const stopsResponse = await getStopsOfRoute(guid);
 
       const stopsCopy = stopsResponse.body;
-      console.log("stops123",stopsCopy);
-      // console.log("latitude",stopsCopy[0].latitude);
-      console.log("latitude",stopsCopy.stopsDetail[0].latitude);
 
       stopsCopy.accordionPosition = index;
       tempData[index] = stopsCopy;
@@ -147,7 +104,6 @@ const MyBus: React.FC = ({ route }) => {
       latitude: JSON.parse(stops[0].latitude),
       longitude: JSON.parse(stops[0].longitude),
     };
-    console.log("currentPos",currentPos);
     
     NavigationService.navigate("RouteView", {
       vehicleDetails: vehicleDetails,
@@ -176,7 +132,6 @@ const MyBus: React.FC = ({ route }) => {
           <BusPod
             busNumber={vehicleDetails?.name}
             plateNumber={vehicleDetails?.plate}
-            // time={"8:10 AM"}
             attendandName={"Revathi"}
             driverName={profileInfo.name}
           />
@@ -252,9 +207,7 @@ const MyBus: React.FC = ({ route }) => {
                                       color:
                                         AppStyles.color.COLOR_SECONDARY_BLUE,
                                     }}
-                                    // onPress={() => NavigationService.navigate("RouteView",{vehicleDetails: vehicleDetails,fullTrips:stops,currentPos: currentPos,date:date,profileInfo:profileInfo})}
                                     onPress={() => showRouteOnMap(stops[index].stopsDetail)}
-                                    // onPress={() => NavigationService.navigate("RouteView",{vehicleDetails: vehicleDetails,fullTrips:stops})}
                                   >
                                     {t("map.viewOnMap")}
                                   </Typography.H5Light>

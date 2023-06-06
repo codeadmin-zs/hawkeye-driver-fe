@@ -34,8 +34,6 @@ const WithLogoMenuHeader: FunctionComponent<any> = props => {
   useEffect(() => {
     const fetchData = async () => {
         const driverDetails = await getDriverDetails();
-        console.log("driverDetails", driverDetails);
-        console.log("school",driverDetails.body.schoolName);
         setSchoolName(driverDetails.body.schoolName);
     };
     fetchData();

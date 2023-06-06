@@ -25,7 +25,6 @@ export const FutureDateTab = ({ startDate, onChangeDate}) => {
   useEffect(() => {
     if (startDate !== selectedDate) {
       setSelectedDate(startDate);
-      console.log("startDate",startDate); 
     }
   }, [startDate]);
 

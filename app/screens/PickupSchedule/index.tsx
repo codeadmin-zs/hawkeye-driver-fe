@@ -12,7 +12,13 @@ import { loadingActions } from "../../store/features/loading/slice";
 import { moderateScale } from "react-native-size-matters";
 
 import NavigationService from "app/navigation/NavigationService";
-import { Header, DriverPod, NoResourceFound, RoutePod,BusPod } from "../../components";
+import {
+  Header,
+  DriverPod,
+  NoResourceFound,
+  RoutePod,
+  BusPod,
+} from "../../components";
 import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
 import { Typography } from "../../components/Typography";
 import { TabButton } from "../../components/Buttons/TabButton";
@@ -47,8 +53,6 @@ const PickupSchedule: React.FC = ({ route }) => {
     const fetchData = async () => {
       const vehicleId = storeHelpers.getUserDetails()?.vehicleGuid;
       response = await getPickupRoutes(vehicleId);
-      console.log("vehicleid",response);
-      
       let selectedRoute = response?.body[0]?.pathid;
       let selectedPath = response?.body[0];
       dispatch(loadingActions.disableLoading());

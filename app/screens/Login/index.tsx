@@ -28,7 +28,6 @@ interface IState {
 }
 
 const Login: React.FC = () => {
-  // const id = useSelector((state: IState) => state.loginReducer?.id);
   const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
   const [userName, setUserName] = useState('');
@@ -36,12 +35,6 @@ const Login: React.FC = () => {
   const [isValid, setIsValid] = useState({ userName: false, password: false });
   const userNameRef = React.useRef(null);
   const passwordRef = React.useRef(null);
-  // const {actions} = useLoginSlice();
-
-  // const onLogin = () => NavigationService.navigate('Home');
-  // const handlePasswordChange = text => setPassword(text);
-
-  // const handleUserNameChange = text => setUserName(text);
 
   const onLogin = () => {
 
@@ -64,7 +57,6 @@ const Login: React.FC = () => {
     return null;
   };
 
-  // const onForgot = () => NavigationService.navigate('ForgotPassword');
   return (
     <ImageBackgroundTemplate>
       <View style={styles.containerView}>
@@ -80,11 +72,9 @@ const Login: React.FC = () => {
               placeholder={t('login.userName')}
               style={styles.textInput}
               error={isValid.userName}
-              // value={userName}
               onChangeText={(text) => {
                 setUserName(text);
               }}
-              // left={()=> <Username fill={'red'} />}
               />
               </View>
               <View style={styles.textInputContainer}>
