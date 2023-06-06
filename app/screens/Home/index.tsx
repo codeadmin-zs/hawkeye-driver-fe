@@ -123,7 +123,7 @@ const Home: React.FC = () => {
       iconBgColor: "#913eb8",
       textColor: "#fff",
       onPress: () =>
-        NavigationService.navigate("TripHistory", { profileInfo: profileData }),
+        NavigationService.navigate("TripHistory", { profileInfo: profileData}),
       iconName: "TripHistory",
       icon: (
         <TrackerHistoryIcon

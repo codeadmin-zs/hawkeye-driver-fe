@@ -53,12 +53,14 @@ const TripHistory: React.FC = ({ route }) => {
       setIsLoading(true);
       const response = await getVehicleDetails(profileInfo?.vehicleGuid);
 
-      const vehicle = response.body;
+      const vehicleResponse = response.body;
+      console.log("vehicle",vehicleResponse);
+      
 
-      setVehicle(vehicle);
+      setVehicle(vehicleResponse);
 
       const tripsResponse = await getTrips(
-        vehicle.plate,
+        vehicleResponse.plate,
         moment(dateDetails.startDate).format("YYYY-MM-DD 00:00:00"),
         moment(dateDetails.endDate).format("YYYY-MM-DD 23:59:59")
       );
