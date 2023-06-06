@@ -1,7 +1,6 @@
 import moment from "moment";
 export function formatLeaveApiParams(
   markedDates,
-  //   childData,
   driverData,
   reason,
   absentType
