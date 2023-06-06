@@ -143,7 +143,7 @@ const Home: React.FC = () => {
       {`Your Bus ${t("home.busArrivalMsg")}`}
     </Typography.H5>
     <Typography.Link
-      style={{ textAlign: "center" }}
+      style={{ textAlign: "center",color: AppStyles.color.COLOR_SECONDARY_BLUE,textDecorationLine: "none"}}
       onPress={() =>
         NavigationService.navigate("ApplyLeave",{driverData:profileData})
       }

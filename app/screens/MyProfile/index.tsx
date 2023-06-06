@@ -15,6 +15,7 @@ import { getMyProfile } from "../../services/myProfile";
 import { getVehicleDetails } from "app/services/vehicles";
 import { moderateScale } from "react-native-size-matters";
 import { getDriverVehicles } from "app/services/driver";
+import AppStyles from "../../config/styles";
 // import { Linking } from 'react-native';
 
 const MyProfile: React.FC = ({ route }) => {
@@ -137,11 +138,14 @@ const MyProfile: React.FC = ({ route }) => {
                       vehicleDetails: item
                     })
                   }
-                  style={{ fontFamily: "poppins" }}
+                  style={{ fontFamily: "poppins",  color:
+                  AppStyles.color.COLOR_SECONDARY_BLUE,textDecorationLine: "none" }}
                 >
                   {item.name}
-                </Typography.Link>
+                  </Typography.Link>
+
               ))}
+             
               </View>}
             </View>
 
