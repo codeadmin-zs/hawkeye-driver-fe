@@ -46,7 +46,7 @@ export default function MessageBox({
       >
         <View style={styles.container}>
           <Text style={styles.messageText}>{message}</Text>
-          <Button.Primary onPress={()=> onButtonPress()}>
+          <Button.Primary onPress={()=> onButtonPress()} style={{paddingHorizontal:"5%"}}>
             <Text style={{ color: colors.surface }}>{label}</Text>
           </Button.Primary>
         </View>
@@ -76,7 +76,6 @@ const makeStyles = (colors: any) =>
       justifyContent: "space-around",
       backgroundColor: "white",
       alignItems: "center",
-      //flexDirection:'row',
       borderRadius: moderateScale(5),
     },
     title: { color: "#000", numberOfLines: 1 },

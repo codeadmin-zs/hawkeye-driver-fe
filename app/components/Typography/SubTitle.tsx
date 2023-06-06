@@ -20,7 +20,6 @@ export function SubTitle({
       fontSize: utils.device.s([14, 18]),
       fontFamily: fonts.medium,
       color: '#000',
-      // color: invert ? colors.black : colors.white,
       textShadowColor: textShadow ? 'rgba(0, 0, 0, 0.6)' : null,
       textShadowOffset: textShadow ? {width: 0.5, height: 0.5} : null,
       textShadowRadius: textShadow ? 1 : null,
