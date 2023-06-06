@@ -24,6 +24,7 @@ import FullMessage from "../screens/Messages/FullMessage";
 import BusList from "../screens/Track/BusList";
 import TripHistory from "../screens/TripHistory";
 import TripDetails from "../screens/TripDetails";
+import RouteView from "app/screens/RouteView";
 
 import ThemeController from "../components/ThemeController";
 import { StatusBar } from "react-native";
@@ -116,6 +117,11 @@ const App: React.FC<IProps> = (props: IProps) => {
              name="MyBusList"
              component={MyBusList}
              options={{ headerShown: false }}
+            />
+             <Stack.Screen
+              name="RouteView"
+              component={RouteView}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
               name="HolidayList"

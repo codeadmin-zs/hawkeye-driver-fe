@@ -19,7 +19,6 @@ const { colors } = useTheme();
   console.log("guid", profileInfo.guid);
 
   const navigation = useNavigation();
-
   const [vehicleDetails, setVehicleDetails] = useState([]);
 
   useEffect(() => {

@@ -530,3 +530,104 @@ export const DownArrow = (props) => (
     ></Path>
   </Svg>
 );
+
+export const BusMarkerIcon = (props) => (
+  <View
+    style={{
+      backgroundColor: "#ffd800",
+      height: moderateScale(40),
+      width: moderateScale(40),
+      padding: moderateScale(8),
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: moderateScale(18),
+    }}
+  >
+    <Svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={props.width}
+      height={props.height}
+      viewBox="0 0 32 32"
+      id="bus"
+    >
+      <G transform="translate(143.736 -207.065)">
+        <Path
+          fill={props.color}
+          style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal"
+          d="m -122.09766,233.14844 a 0.50004997,0.50004997 0 0 0 -0.49218,0.50586 l 0,1.93554 c 0,0.81209 0.67032,1.48243 1.48242,1.48243 l 1.96289,0 c 0.8121,0 1.48242,-0.67034 1.48242,-1.48243 l 0,-1.93554 a 0.50004997,0.50004997 0 1 0 -1,0 l 0,1.93554 c 0,0.275 -0.20668,0.48243 -0.48242,0.48243 l -1.96289,0 c -0.27575,0 -0.48242,-0.20743 -0.48242,-0.48243 l 0,-1.93554 a 0.50004997,0.50004997 0 0 0 -0.50782,-0.50586 z"
+          color="#000"
+          font-family="sans-serif"
+          font-weight="400"
+          overflow="visible"
+        ></Path>
+        <Path
+          fill={props.color}
+          fill-rule="evenodd"
+          style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal"
+          d="M-141.73633 215.9375l0 4.18164 1 0 0-3.18164 1.5 0 0-1-2.5 0zM-116.23633 215.9375l0 1 1.5 0 0 3.18164 1 0 0-4.18164-2.5 0z"
+          color="#000"
+          font-family="sans-serif"
+          font-weight="400"
+          overflow="visible"
+        ></Path>
+        <Path
+          fill={props.color}
+          style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal"
+          d="m -137.31641,233.14844 a 0.50004997,0.50004997 0 0 0 -0.49218,0.50586 l 0,1.93554 c 0,0.81209 0.67032,1.48243 1.48242,1.48243 l 1.96289,0 c 0.8121,0 1.48242,-0.67034 1.48242,-1.48243 l 0,-1.93554 a 0.50004997,0.50004997 0 1 0 -1,0 l 0,1.93554 c 0,0.275 -0.20666,0.48243 -0.48242,0.48243 l -1.96289,0 c -0.27575,0 -0.48242,-0.20743 -0.48242,-0.48243 l 0,-1.93554 a 0.50004997,0.50004997 0 0 0 -0.50782,-0.50586 z"
+          color="#000"
+          font-family="sans-serif"
+          font-weight="400"
+          overflow="visible"
+        ></Path>
+        <Path
+          fill={props.color}
+          style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal"
+          d="m -136.76367,209.05664 c -1.65759,0 -3.00781,1.35075 -3.00781,3.00781 l 0,16.34961 a 0.50004997,0.50004997 0 1 0 1,0 l 0,-16.34961 c 0,-1.12004 0.88663,-2.00781 2.00781,-2.00781 l 18.05664,0 c 1.12116,0 2.00781,0.88778 2.00781,2.00781 l 0,16.48438 a 0.50004997,0.50004997 0 1 0 1,0 l 0,-16.48438 c 0,-1.65706 -1.35024,-3.00781 -3.00781,-3.00781 l -18.05664,0 z m 20.55664,22.10547 a 0.50004997,0.50004997 0 0 0 -0.49219,0.50781 l 0,1.44336 -22.07226,0 0,-1.44336 a 0.50004997,0.50004997 0 1 0 -1,0 l 0,1.94336 a 0.50004997,0.50004997 0 0 0 0.5,0.5 l 23.07226,0 a 0.50004997,0.50004997 0 0 0 0.5,-0.5 l 0,-1.94336 a 0.50004997,0.50004997 0 0 0 -0.50781,-0.50781 z"
+          color="#000"
+          font-family="sans-serif"
+          font-weight="400"
+          overflow="visible"
+        ></Path>
+        <Path
+          fill={props.color}
+          style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal"
+          d="m -140.23633,228.07812 a 0.50004997,0.50004997 0 0 0 -0.5,0.5 l 0,3 a 0.50004997,0.50004997 0 0 0 0.5,0.5 l 25,0 a 0.50004997,0.50004997 0 0 0 0.5,-0.5 l 0,-3 a 0.50004997,0.50004997 0 0 0 -0.5,-0.5 l -25,0 z m 0.5,1 24,0 0,2 -24,0 0,-2 z"
+          color="#000"
+          font-family="sans-serif"
+          font-weight="400"
+          overflow="visible"
+        ></Path>
+        <Path
+          fill={props.color}
+          fill-rule="evenodd"
+          style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal"
+          d="M-139.51758 213.9668l0 1 23.56446 0 0-1-23.56446 0zM-139.51758 224.27539l0 1 23.56446 0 0-1-23.56446 0z"
+          color="#000"
+          font-family="sans-serif"
+          font-weight="400"
+          overflow="visible"
+        ></Path>
+        <Path
+          fill={props.color}
+          fill-rule="evenodd"
+          style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal"
+          d="M-137.60938 226.24023l0 1 3 0 0-1-3 0zM-120.91797 226.24023l0 1 3 0 0-1-3 0z"
+          color="#000"
+          font-family="sans-serif"
+          font-weight="400"
+          overflow="visible"
+        ></Path>
+        <Path
+          fill={props.color}
+          fill-rule="evenodd"
+          style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal"
+          d="m -128.23633,214.37695 0,10.30078 1,0 0,-10.30078 -1,0 z"
+          color="black"
+          font-family="sans-serif"
+          font-weight="400"
+          overflow="visible"
+        ></Path>
+      </G>
+    </Svg>
+  </View>
+);

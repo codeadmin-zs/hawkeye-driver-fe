@@ -14,17 +14,21 @@ import { makeStyles } from "./styles";
 import { getMyProfile } from "../../services/myProfile";
 import { getVehicleDetails } from "app/services/vehicles";
 import { moderateScale } from "react-native-size-matters";
+import { getDriverVehicles } from "app/services/driver";
 // import { Linking } from 'react-native';
 
 const MyProfile: React.FC = ({ route }) => {
   const { profileInfo } = route.params;
   console.log("profileInfo", profileInfo);
-  const [busNo, setBusNo] = useState("");
+  console.log("guid", profileInfo.guid);
+  const [vehicleDetails, setVehicleDetails] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
-      const vehicleDetails = await getVehicleDetails(profileInfo.vehicleGuid);
-      console.log("vehicleDetails", vehicleDetails);
-      setBusNo(vehicleDetails.body.name);
+      const vehicles = await getDriverVehicles(profileInfo.guid);
+      console.log("vehicleDetails", vehicles);
+      const vehiclesDetails = vehicles.body;
+      setVehicleDetails(vehiclesDetails);
     };
     fetchData();
   }, []);
@@ -121,14 +125,24 @@ const MyProfile: React.FC = ({ route }) => {
               <Text
                 style={{ fontSize: moderateScale(11), fontFamily: "poppins" }}
               >
-                {t("general.busNo")}
+                {t("profile.busNo")}
               </Text>
-              <Typography.Link
-                onPress={() => NavigationService.navigate("MyBusList",{profileInfo: profileData})}
-                style={{ fontFamily: "poppins" }}
-              >
-                {busNo}
-              </Typography.Link>
+              {vehicleDetails.length>0 &&<View style={styles.contentContainer}>
+        {vehicleDetails?.map((item, index) => (
+                <Typography.Link
+                  key={index}
+                  onPress={() =>
+                    NavigationService.navigate("MyBus", {
+                      profileInfo: profileData,
+                      vehicleDetails: item
+                    })
+                  }
+                  style={{ fontFamily: "poppins" }}
+                >
+                  {item.name}
+                </Typography.Link>
+              ))}
+              </View>}
             </View>
 
             {/* <View style={{marginLeft:"5"}}>

@@ -71,7 +71,7 @@ const MyBus: React.FC = ({ route }) => {
     const getVehicles = async () => {
       dispatch(loadingActions.enableLoading());
       const vehicleResponse = await getVehicleDetails(vehicleDetails?.guid);
-      console.log("&&&&&vehicleResponse", vehicleResponse);
+      console.log("&&&vehicleResponse", vehicleResponse);
       console.log("vehicleGuid", moment(date.startDate).format("YYYY-MM-DD"));
 
       const vehiclesRes = vehicleResponse?.body;
@@ -126,6 +126,9 @@ const MyBus: React.FC = ({ route }) => {
       const stopsResponse = await getStopsOfRoute(guid);
 
       const stopsCopy = stopsResponse.body;
+      console.log("stops123",stopsCopy);
+      // console.log("latitude",stopsCopy[0].latitude);
+      console.log("latitude",stopsCopy.stopsDetail[0].latitude);
 
       stopsCopy.accordionPosition = index;
       tempData[index] = stopsCopy;
@@ -137,6 +140,22 @@ const MyBus: React.FC = ({ route }) => {
     if (stops[index]) {
       return ` - ${stops[index].route?.name}`;
     } else return "";
+  };
+
+  const showRouteOnMap = (stops) => {
+    const currentPos = {
+      latitude: JSON.parse(stops[0].latitude),
+      longitude: JSON.parse(stops[0].longitude),
+    };
+    console.log("currentPos",currentPos);
+    
+    NavigationService.navigate("RouteView", {
+      vehicleDetails: vehicleDetails,
+      fullTrips: stops,
+      currentPos: currentPos,
+      date: date,
+      profileInfo: profileInfo,
+    });
   };
 
   const goBack = () => NavigationService.goBack();
@@ -205,7 +224,6 @@ const MyBus: React.FC = ({ route }) => {
                   <View style={{ width: "92%", marginTop: moderateScale(6) }}>
                     {vehicleRoutes?.map((item, index) => (
                       <>
-              
                         <ExpandableList
                           key={index}
                           title={"Route " + (index + 1) + getRouteName(index)}
@@ -214,7 +232,6 @@ const MyBus: React.FC = ({ route }) => {
                           titleStyle={styles.titleStyle}
                           onPress={() => fetchRoute(item.route_guid, index)}
                         >
-                           
                           {stops?.length > 0 && stops[index] && (
                             <>
                               <RouteListView
@@ -232,16 +249,20 @@ const MyBus: React.FC = ({ route }) => {
                                 <TouchableOpacity>
                                   <Typography.H5Light
                                     style={{
-                                      color: AppStyles.color.COLOR_MEDIUM_DARK_BLUE,
+                                      color:
+                                        AppStyles.color.COLOR_SECONDARY_BLUE,
                                     }}
+                                    // onPress={() => NavigationService.navigate("RouteView",{vehicleDetails: vehicleDetails,fullTrips:stops,currentPos: currentPos,date:date,profileInfo:profileInfo})}
+                                    onPress={() => showRouteOnMap(stops[index].stopsDetail)}
+                                    // onPress={() => NavigationService.navigate("RouteView",{vehicleDetails: vehicleDetails,fullTrips:stops})}
                                   >
-                                    View on Map
+                                    {t("map.viewOnMap")}
                                   </Typography.H5Light>
                                 </TouchableOpacity>
                               </View>
                             </>
                           )}
-                       </ExpandableList>
+                        </ExpandableList>
                       </>
                     ))}
                   </View>

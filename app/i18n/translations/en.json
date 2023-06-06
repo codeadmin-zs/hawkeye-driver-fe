@@ -74,7 +74,8 @@
     "busNo":"Bus Number"
   },
   "profile": {
-    "details": "My Details"
+    "details": "My Details",
+    "busNo":"Bus Number(s)"
   },
   "holidays": {
     "title": "Holidays",
@@ -101,6 +102,9 @@
 },
  "errors":{
   "noRouteFound":"No Route Found"
+ },
+ "map":{
+  "viewOnMap":"View On Map"
  }
 
 }
