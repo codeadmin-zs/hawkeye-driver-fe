@@ -32,6 +32,7 @@ const LiveLocation = ({ route }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   const [coords, setCoords] = useState([]);
+  const [vehicleRoutes,setVehicleRoutes]=useState()
 
   const [markerState, setMarkerState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -76,6 +77,7 @@ const LiveLocation = ({ route }) => {
 
       const routes = routesResponse.body;
       console.log("routes", routesResponse.body);
+      setVehicleRoutes(routes)
 
       if (routes.length === 0) {
         setIsLoading(false);
@@ -195,7 +197,14 @@ const LiveLocation = ({ route }) => {
                 </TouchableOpacity>
               </>
             )}
-            {activeTab === 1 && <RouteListView stops={coords} />}
+            {/* {activeTab === 1 && 
+            <RouteListView stops={coords} />} */}
+            {activeTab===1 && 
+            <RouteListView
+            profileInfo={profileInfo}
+            vehicleRoutes={vehicleRoutes}
+            stops={coords}
+          />}
           </View>
         </>
       )}
