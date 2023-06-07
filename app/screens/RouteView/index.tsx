@@ -11,7 +11,7 @@ import { Typography } from "../../components/Typography";
 
 const RouteView: React.FC = ({ route }) => {
   // currentPos is required to make the RouteViewPod component work here
-  const { fullTrips, currentPos, vehicleDetails, childData, date } = route.params;
+  const { fullTrips, currentPos, vehicleDetails, date } = route.params;
 
   console.log("vehicleDetails",vehicleDetails);
   console.log("fullTrips",fullTrips);

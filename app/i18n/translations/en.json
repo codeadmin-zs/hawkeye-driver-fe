@@ -46,7 +46,9 @@
   "myBus":{
     "title": "My Bus",
     "eta":"eta",
-    "myBusList":"My Bus List"
+    "myBusList":"My Bus List",
+    "scheduleEvery":"Schedule - Every ",
+    "schedule":"Schedule"
   },
   "childProfile": {
     "title": "Children profile",

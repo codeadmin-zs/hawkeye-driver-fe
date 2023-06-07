@@ -45,9 +45,9 @@ const MyBus: React.FC = ({ route }) => {
     startDate: moment().format("YYYY-MM-DD"),
   });
   const [stops, setStops] = useState([]);
+  const [stopsCoordinates, setStopsCoordinates] = useState([]);
   const [routes, setRoutes] = useState();
-
-  // console.log("startDate",initialDate.startDate);
+  const [isDateClickedOnce, setIsDateClickedOnce] = useState(false);
 
   const [getVehiclesData, setGetVehiclesData] = useState({});
   // const [dateDetails, setDateDetails] = useState(initialDate);
@@ -73,31 +73,24 @@ const MyBus: React.FC = ({ route }) => {
       const vehicleResponse = await getVehicleDetails(vehicleDetails?.guid);
       console.log("&&&vehicleResponse", vehicleResponse);
       console.log("vehicleGuid", moment(date.startDate).format("YYYY-MM-DD"));
-
       const vehiclesRes = vehicleResponse?.body;
       setGetVehiclesData(vehiclesRes);
 
       let routesRespp = null;
-      routesRespp = await getRoutesOfVehicle(
-        vehicleDetails?.guid,
-        moment(date.startDate).format("YYYY-MM-DD")
-      );
+      if (isDateClickedOnce) {
+        routesRespp = await getRoutesOfVehicle(
+          vehicleDetails?.guid,
+          moment(date.startDate).format("YYYY-MM-DD")
+        );
+      } else {
+        routesRespp = await getRoutesOfVehicle(vehicleDetails?.guid, null);
+      }
       // const vehicleRoutes = routesRespp?.body;
       console.log("getVehicleRoutes", routesRespp?.body);
       setVehicleRoutes(routesRespp?.body);
       setStops(new Array(routesRespp?.body?.length));
 
       dispatch(loadingActions.disableLoading());
-
-      // const stopsResponse = await getStopsOfRoute(routesRespp?.body[0]?.route_guid);
-      // console.log("routeStops", stopsResponse);
-      // const vehicleStops = stopsResponse?.body;
-      // console.log("vehicleStops", vehicleStops);
-
-      // const stop = vehicleStops;
-      // console.log("stops", stop);
-      // const routeName=vehicleStops?.route?.name
-      // console.log("routename",vehicleStops?.route?.name);
 
       // console.log("vehicleStops",vehicleStops?.route.startstop);
       // const allStops = [
@@ -119,36 +112,37 @@ const MyBus: React.FC = ({ route }) => {
     getVehicles();
   }, [date]);
 
+  //fetchRoute is to make api call only once the route is pressed
   const fetchRoute = async (guid, index) => {
+    //if condition to avoid unnecessary api call on repeated press of route
     if (!stops[index]) {
       const tempData = [...stops];
 
       const stopsResponse = await getStopsOfRoute(guid);
 
       const stopsCopy = stopsResponse.body;
-      console.log("stops123",stopsCopy);
-      // console.log("latitude",stopsCopy[0].latitude);
-      console.log("latitude",stopsCopy.stopsDetail[0].latitude);
-
-      stopsCopy.accordionPosition = index;
+      // stopsCopy.accordionPosition = index;
       tempData[index] = stopsCopy;
       setStops(tempData);
     }
   };
 
-  const getRouteName = (index) => {
-    if (stops[index]) {
-      return ` - ${stops[index].route?.name}`;
-    } else return "";
-  };
+  // const getRouteName = (index) => {
+  //   if (stops[index]) {
+  //     return ` - ${stops[index].route?.name}`;
+  //   } else return "";
+  // };
 
   const showRouteOnMap = (stops) => {
+    console.log("stops[0]",stops[0].latitude);
+    
     const currentPos = {
       latitude: JSON.parse(stops[0].latitude),
       longitude: JSON.parse(stops[0].longitude),
     };
-    console.log("currentPos",currentPos);
-    
+
+    console.log("currentPos", currentPos);
+
     NavigationService.navigate("RouteView", {
       vehicleDetails: vehicleDetails,
       fullTrips: stops,
@@ -157,7 +151,64 @@ const MyBus: React.FC = ({ route }) => {
       profileInfo: profileInfo,
     });
   };
+  const findRouteNoun = () => {
+    if (routes?.length === 1) {
+      return "route";
+    } else {
+      return "routes";
+    }
+  };
 
+  const findDateOfRoute = () => {
+    if (isDateClickedOnce) {
+      return (
+        <Typography.H6Light
+          style={{
+            alignSelf: "flex-start",
+            marginLeft: moderateScale(20),
+            marginTop: moderateScale(8),
+            color: AppStyles.color.COLOR_DARK_GREY,
+          }}
+        >
+          {" "}
+          on {moment(date.startDate).format("DD-MMM-YYYY")}
+        </Typography.H6Light>
+      );
+    }
+  };
+
+  const renderRouteHeader = (routeName, startDate, endDate, repeatedDays) => {
+    if (repeatedDays) {
+      return (
+        <View
+          style={{
+            marginTop: moderateScale(8),
+            marginBottom: moderateScale(4),
+          }}
+        >
+          <Typography.H5>{routeName}</Typography.H5>
+          <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
+            {t("myBus.scheduleEvery")}{repeatedDays.replace(/,/g, ", ")}
+          </Typography.H6>
+        </View>
+      );
+    } else {
+      return (
+        <View
+          style={{
+            marginTop: moderateScale(8),
+            marginBottom: moderateScale(4),
+          }}
+        >
+          <Typography.H5>{routeName}</Typography.H5>
+          <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
+           {t("myBus.schedule")} - {moment(startDate).format("DD-MMM-YYYY")} {"to"}{" "}
+            {moment(endDate).format("DD-MMM-YYYY")}
+          </Typography.H6>
+        </View>
+      );
+    }
+  };
   const goBack = () => NavigationService.goBack();
 
   return (
@@ -171,6 +222,8 @@ const MyBus: React.FC = ({ route }) => {
         <FutureDateTab
           startDate={date.startDate}
           onChangeDate={(date) => dateChangeHandler(date)}
+          isDateClickedOnce={isDateClickedOnce}
+          setIsDateClickedOnce={setIsDateClickedOnce}
         />
         <View style={styles.busPod}>
           <BusPod
@@ -197,8 +250,22 @@ const MyBus: React.FC = ({ route }) => {
           >
             {vehicleRoutes?.length > 0 ? (
               <>
-                {vehicleRoutes?.length === 1 ? (
-                  <Typography.H5Light
+                <>
+                  <Typography.H6Light
+                    style={{
+                      alignSelf: "flex-start",
+                      marginLeft: moderateScale(20),
+                      marginTop: moderateScale(8),
+                      color: AppStyles.color.COLOR_DARK_GREY,
+                    }}
+                  >
+                    {vehicleRoutes?.length} {findRouteNoun()} found
+                    {isDateClickedOnce ? findDateOfRoute() : ""}
+                  </Typography.H6Light>
+                </>
+                {/* <></> */}
+                {/* {vehicleRoutes?.length === 1 ? ( */}
+                {/* <Typography.H5Light
                     style={{
                       alignSelf: "flex-start",
                       marginLeft: moderateScale(20),
@@ -207,8 +274,8 @@ const MyBus: React.FC = ({ route }) => {
                   >
                     {vehicleRoutes?.length} route found on{" "}
                     {moment(date.startDate).format("DD-MMM-YYYY")}
-                  </Typography.H5Light>
-                ) : (
+                  </Typography.H5Light> */}
+                {/* ) : (
                   <Typography.H5Light
                     style={{
                       alignSelf: "flex-start",
@@ -219,50 +286,68 @@ const MyBus: React.FC = ({ route }) => {
                     {vehicleRoutes?.length} routes found on{" "}
                     {moment(date.startDate).format("DD-MMM-YYYY")}
                   </Typography.H5Light>
-                )}
+                )} */}
                 {vehicleRoutes?.length > 0 && (
                   <View style={{ width: "92%", marginTop: moderateScale(6) }}>
                     {vehicleRoutes?.map((item, index) => (
                       <>
-                        <ExpandableList
+                        <View>
+                          <View
+                            style={{ marginBottom: moderateScale(4) }}
+                          ></View>
+                          {/* <ExpandableList
                           key={index}
                           title={"Route " + (index + 1) + getRouteName(index)}
                           titleContainerStyle={styles.titleContainerStyle}
                           listStyle={styles.listStyle}
                           titleStyle={styles.titleStyle}
                           onPress={() => fetchRoute(item.route_guid, index)}
-                        >
-                          {stops?.length > 0 && stops[index] && (
-                            <>
-                              <RouteListView
-                                profileInfo={profileInfo}
-                                vehicleRoutes={vehicleRoutes}
-                                stops={stops[index]}
-                              />
-                              <View
-                                style={{
-                                  position: "absolute",
-                                  right: 0,
-                                  top: moderateScale(10),
-                                }}
-                              >
-                                <TouchableOpacity>
-                                  <Typography.H5Light
-                                    style={{
-                                      color:
-                                        AppStyles.color.COLOR_SECONDARY_BLUE,
-                                    }}
-                                    // onPress={() => NavigationService.navigate("RouteView",{vehicleDetails: vehicleDetails,fullTrips:stops,currentPos: currentPos,date:date,profileInfo:profileInfo})}
-                                    onPress={() => showRouteOnMap(stops[index].stopsDetail)}
-                                    // onPress={() => NavigationService.navigate("RouteView",{vehicleDetails: vehicleDetails,fullTrips:stops})}
-                                  >
-                                    {t("map.viewOnMap")}
-                                  </Typography.H5Light>
-                                </TouchableOpacity>
-                              </View>
-                            </>
-                          )}
-                        </ExpandableList>
+                        > */}
+                          <ExpandableList
+                            key={index}
+                            title={renderRouteHeader(
+                              item.routeName,
+                              item.startdate,
+                              item.enddate,
+                              item.repeateddays
+                            )}
+                            titleContainerStyle={styles.titleContainerStyle}
+                            listStyle={styles.listStyle}
+                            titleStyle={styles.titleStyle}
+                            onPress={() => fetchRoute(item.route_guid, index)}
+                          >
+                            {stops?.length > 0 && stops[index] && (
+                              <>
+                                <View
+                                  style={{
+                                    position: "absolute",
+                                    right: 0,
+                                    top: moderateScale(10),
+                                  }}
+                                >
+                                  <TouchableOpacity>
+                                    <Typography.H5Light
+                                      style={{
+                                        color:
+                                          AppStyles.color.COLOR_SECONDARY_BLUE,
+                                      }}
+                                      onPress={() =>
+                                        showRouteOnMap(stops[index].stopsDetail)
+                                      }
+                                    >
+                                      {t("map.viewOnMap")}
+                                    </Typography.H5Light>
+                                  </TouchableOpacity>
+                                </View>
+                                <RouteListView
+                                  profileInfo={profileInfo}
+                                  vehicleRoutes={vehicleRoutes}
+                                  stops={stops[index]}
+                                />
+                              </>
+                            )}
+                          </ExpandableList>
+                        </View>
                       </>
                     ))}
                   </View>
@@ -274,11 +359,6 @@ const MyBus: React.FC = ({ route }) => {
           </View>
         </ScrollView>
       )}
-      {/* <RouteListView
-        profileInfo={profileInfo}
-        vehicleRoutes={vehicleRoutes}
-        stops={stops}
-      /> */}
     </View>
   );
 };
@@ -287,6 +367,11 @@ const styles = StyleSheet.create({
   text: {
     color: "black",
     fontSize: moderateScale(32),
+  },
+  titleContainerStyle: {
+    borderColor: AppStyles.color.COLOR_MEDIUM_LIGHT_GREY,
+    borderWidth: 12,
+    // backgroundColor:"red"
   },
 });
 

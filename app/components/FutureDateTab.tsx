@@ -15,25 +15,30 @@ const day = initialDate.getDate();
 const formattedMonth = month < 10 ? `0${month}` : month; // add leading zero if month is less than 10
 const formattedDate = `${year}-${formattedMonth}-${day}`;
 
-export const FutureDateTab = ({ startDate, onChangeDate}) => {
+export const FutureDateTab = ({
+  startDate,
+  onChangeDate,
+  isDateClickedOnce = false,
+  setIsDateClickedOnce,
+}) => {
   const [selectedDate, setSelectedDate] = useState(formattedDate);
   const [openModal, setOpenModal] = useState(false);
 
   let unchangedDate;
-  const dateComponent = []; 
+  const dateComponent = [];
 
   useEffect(() => {
     if (startDate !== selectedDate) {
       setSelectedDate(startDate);
-      console.log("startDate",startDate); 
+      console.log("startDate", startDate);
     }
   }, [startDate]);
 
   const setMoment = (noOfDays, previosDate) => {
     let addedDays = moment().add(noOfDays, "days");
     if (!previosDate) {
-        addedDays = moment(selectedDate).add(noOfDays, "days");
-    } 
+      addedDays = moment(selectedDate).add(noOfDays, "days");
+    }
     return {
       displayDate: addedDays.calendar(null, {
         sameDay: "[Today]",
@@ -63,7 +68,12 @@ export const FutureDateTab = ({ startDate, onChangeDate}) => {
     }
     const { displayDate, actualDate } = setMoment(i);
 
-    const activeDate = moment(selectedDate).isSame(actualDate, "date");
+    let activeDate;
+     if (isDateClickedOnce) {
+      activeDate = moment(selectedDate).isSame(actualDate, "date");
+    } else {
+      activeDate = false;
+    }
 
     dateComponent.push(
       <View
@@ -74,6 +84,7 @@ export const FutureDateTab = ({ startDate, onChangeDate}) => {
           style={styles.DateTextStyle(activeDate)}
           onPress={async () => {
             await onChangeDate(actualDate);
+            setIsDateClickedOnce(true);
             setSelectedDate(actualDate);
           }}
         >
@@ -83,7 +94,12 @@ export const FutureDateTab = ({ startDate, onChangeDate}) => {
     );
   }
   const { displayDate, actualDate } = setMoment(0, true);
-  const activeDate = moment(selectedDate).isSame(actualDate, "date");
+  let activeDate;
+  if (isDateClickedOnce) {
+    activeDate = moment(selectedDate).isSame(actualDate, "date");
+  } else {
+    activeDate = false;
+  }
 
   unchangedDate = (
     <View
@@ -94,6 +110,7 @@ export const FutureDateTab = ({ startDate, onChangeDate}) => {
         style={styles.DateTextStyle(activeDate)}
         onPress={async () => {
           await onChangeDate(actualDate);
+          setIsDateClickedOnce(true);
           setSelectedDate(actualDate);
         }}
       >
@@ -126,6 +143,7 @@ export const FutureDateTab = ({ startDate, onChangeDate}) => {
           customHeaderIOS="Pick a date"
           onConfirm={async (date) => {
             setOpenModal(false);
+            setIsDateClickedOnce(true);
             await onChangeDate(date);
             setSelectedDate(date);
           }}

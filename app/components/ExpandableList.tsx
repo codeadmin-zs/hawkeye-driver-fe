@@ -5,7 +5,16 @@ import { Typography } from "./Typography";
 import { moderateScale } from "react-native-size-matters";
 import { DownArrow } from "./svgComponents";
 
-function ExpandableList(props) {
+interface ExpandableListProps {
+  title: string | React.ReactNode;
+  titleContainerStyle?: object;
+  titleStyle?: object;
+  listStyle?: object;
+  onPress?: () => void;
+  children?: any;
+}
+
+function ExpandableList(props:ExpandableListProps) {
   const [expandList, setExpandList] = useState(false);
 
   function toggleList() {
@@ -21,9 +30,14 @@ function ExpandableList(props) {
         <View
           style={{ ...styles.titleContainer, ...props.titleContainerStyle }}
         >
-          <Typography.H5Light style={{ ...props.titleStyle }}>
-            {props.title}
-          </Typography.H5Light>
+            {typeof props.title === "string" ? (
+ <Typography.H5Light style={{ ...props.titleStyle }}>
+ {props.title}
+</Typography.H5Light>
+            ):(
+              props.title
+            )}
+         
           <View
             style={{
               transform: expandList
@@ -65,6 +79,7 @@ const styles = StyleSheet.create({
     paddingVertical: "1%",
     marginBottom: "2%",
     width: "100%",
+    
   },
   listContainer: {
     backgroundColor: "#f3fcff",

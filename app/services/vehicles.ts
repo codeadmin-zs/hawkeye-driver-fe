@@ -33,10 +33,18 @@ export const getTripDetails = async (plate, starttime, endtime) => {
 };
 
 export const getRoutesOfVehicle = (guid: string, date: string) => {
-  return FetchApi({
-    endpoint: `${ApiConfig.VEHICLE}/${guid}/${ApiConfig.ROUTES}?${ApiConfig.DATE}=${date}`,
-    method: "GET",
-  });
+  if(date){
+    return FetchApi({
+      endpoint: `${ApiConfig.VEHICLE}/${guid}/${ApiConfig.ROUTES}?${ApiConfig.DATE}=${date}`,
+      method: "GET",
+    });
+  }else{
+    return FetchApi({
+      endpoint: `${ApiConfig.VEHICLE}/${guid}/${ApiConfig.ROUTES}`,
+      method: "GET",
+    });
+  }
+ 
 };
 
 export const getStopsOfRoute = (guid: string) => {

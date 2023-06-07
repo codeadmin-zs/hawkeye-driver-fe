@@ -18,6 +18,7 @@ const AppStyles = {
     COLOR_GREY_TRANSP: "rgba(67, 85, 85, 0.7)",
     COLOR_MEDIUM_DARK_GREY: "#505050",
     COLOR_DARK_GREY: "#4d4d4d",
+    COLOR_MEDIUM_LIGHT_GREY: "#abaeb0",
 
     //greens
     COLOR_GREEN: "green",
