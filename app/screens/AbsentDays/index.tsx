@@ -14,7 +14,7 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import moment from 'moment';
 
 const AbsentDays: React.FC = ({route}) => {
-  const {leavesData,childData} = route.params;
+  const {leavesData,driverData} = route.params;
   
   const [isParentDetails, setIsParentDetails] = useState(false);
   const {colors} = useTheme();
@@ -30,7 +30,7 @@ const AbsentDays: React.FC = ({route}) => {
       />
       <View style={styles.fillBox} />
       <View style={styles.StudentPodContainer}>
-        <StudentPod data={childData} />
+        <StudentPod data={driverData} />
       </View>
       <View style={{paddingHorizontal: '4%', top: '-4%'}}>
         <Typography.H4 style={{color: '#000'}}>

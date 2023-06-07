@@ -22,26 +22,12 @@ const persistConfig = {
 };
 
 const devMode = process.env.NODE_ENV === 'development';
-
-// const rootReducer = {
-//   login: loginReducer,
-//   loading: loadingReducer,
-//   theme: themeReducer,
-// };
-
-// const middleware = [];
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [...getDefaultMiddleware({thunk: false}), sagaMiddleware];
 
 if (devMode) {
   middleware.push(logger);
 }
-
-// middleware.push(sagaMiddleware);
-
-// if (__DEV__) {
-//   middleware.push(createLogger());
-// }
 
 const persistedReducer = persistCombineReducers(persistConfig, rootReducer);
 

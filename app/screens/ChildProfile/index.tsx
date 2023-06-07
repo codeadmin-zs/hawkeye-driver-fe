@@ -22,6 +22,8 @@ import {
   getParentDetailsOfChild,
 } from '../../services/children';
 
+
+
 const ChildProfile: React.FC = ({route}) => {
   const {childeInfo} = route.params;
   const dispatch = useDispatch();
@@ -58,11 +60,11 @@ const ChildProfile: React.FC = ({route}) => {
 
   const goBack = () => NavigationService.goBack();
   const gotoApplyLeave = () =>
-    NavigationService.navigate('ApplyLeave', {childData: childeInfo});
+    NavigationService.navigate('ApplyLeave', {driverData: childeInfo});
   const gotoAttendanceSheet = () =>
-    NavigationService.navigate('AttendanceSheet', {childData: childeInfo});
+    NavigationService.navigate('AttendanceSheet', {driverData: childeInfo});
   const gotoTrack = () =>
-    NavigationService.navigate('ApplyLeave', {childData: childeInfo});
+    NavigationService.navigate('ApplyLeave', {driverData: childeInfo});
   const gotoAbsentDays = () =>
     NavigationService.navigate('AbsentDays', {
       leavesData: leaves,

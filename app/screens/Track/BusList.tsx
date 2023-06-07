@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Button, TextInput, useTheme} from 'react-native-paper';
 import NavigationService from 'app/navigation/NavigationService';
@@ -7,14 +7,30 @@ import LeftArrow from '../../assets/Svgs/LeftArrow.svg';
 import {Typography} from '../../components/Typography';
 import {BusPod} from '../../components';
 import {moderateScale} from 'react-native-size-matters';
-
 import commonStyles from './styles';
+import {getVehicleDetails} from 'app/services/vehicles'
 
-const BusList: React.FC = () => {
+const BusList: React.FC = ({route}) => {
+  const {profileInfo}=route.params
   const {colors} = useTheme();
   const styles = makeStyles(colors);
+  const[vehicleDetails,setVehicleDetails]=useState({})
+  // const [busNumber, setBusNumber] = useState('');
+  // const [plateNumber, setPlateNumber] = useState('');
 
   const goBack = () => NavigationService.goBack();
+
+  useEffect(() => {
+    const getVehicles = async () => {
+      const response = await getVehicleDetails(profileInfo?.vehicleGuid);
+      console.log("&&&&&response",response);
+      // const { vehicleDetails } = response.body;
+      // setBusNumber(busNumber);
+      // setPlateNumber(plateNumber);
+      setVehicleDetails(response.body)
+    }
+    getVehicles()
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -25,21 +41,21 @@ const BusList: React.FC = () => {
       />
       <View style={styles.contentContainer}>
         <BusPod
-          busNumber={'Bus 16'}
+          busNumber={vehicleDetails.name}
           time={'7:58 AM'}
-          plateNumber={'KL 15-A 1'}
-          attendandName={'Saji'}
-          driverName={'Rajeevan'}
-          onPress={() => NavigationService.navigate('Track')}
+          plateNumber={vehicleDetails.plate}
+          attendandName={'Revathi'}
+          driverName={profileInfo.name}
+          onPress={() => NavigationService.navigate('Track',{})}
         />
-        <BusPod
+        {/* <BusPod
           busNumber={'Bus 17'}
           time={'8:10 AM'}
           plateNumber={'KL 15-A 3'}
           attendandName={'Revathi'}
           driverName={'Roopesh'}
           onPress={() => NavigationService.navigate('Track')}
-        />
+        /> */}
       </View>
     </View>
   );

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, ScrollView, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Text,
+  FlatList,
+  Alert,
+} from "react-native";
 import { TextInput, useTheme } from "react-native-paper";
 import moment from "moment";
 import NavigationService from "app/navigation/NavigationService";
@@ -12,47 +19,118 @@ import { makeStyles } from "./styles";
 import { Button } from "../../components/Buttons/button";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { t } from "../../i18n";
-import { applyLeave } from "../../services/children";
 import { loadingActions } from "../../store/features/loading/slice";
 import { useDispatch, useSelector } from "react-redux";
+import { formatLeaveApiParams } from "../../utils/formatParams";
+import { Picker } from "@react-native-picker/picker";
+import { fonts } from "../../config/fonts";
+import { applyDriverLeave } from "../../services/driver";
 
 const ApplyLeave: React.FC = ({ route }) => {
-  const { childData } = route.params;
+  const { driverData } = route.params;
+  console.log("driverData", driverData);
+
   const dispatch = useDispatch();
 
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
   const [leaveReason, setLeaveReason] = useState("");
-  const [selectedDate, seSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
   const [markedDates, setMarkedDates] = useState({});
   const [showSuccess, setShowSuccess] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [absentType, setAbsentType] = useState("Sick");
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const [errorStatus, setErrorStatus] = useState("");
 
   const { colors } = useTheme();
   const styles = makeStyles(colors);
+
+  function validationFunc() {
+    if (
+      absentType &&
+      leaveReason.length > 0 &&
+      Object.keys(markedDates).length > 0 &&
+      true
+    ) {
+      console.log("form is VALID");
+      setIsFormValid(true);
+      return true;
+    } else {
+      console.log("form is still not valid");
+      setIsFormValid(false);
+      return false;
+    }
+  }
   const getSelectedDayEvents = (date) => {
-    let markedDates = {};
-    markedDates[date] = {
-      selected: true,
-      selectedColor: "#00B0BF",
-      selectedTextColor: "#FFFFFF",
-    };
-    let serviceDate = moment(date);
-    serviceDate = serviceDate.format("DD.MM.YYYY");
-    seSelectedDate(serviceDate);
-    setMarkedDates(markedDates);
-  };
-  const goBack = () => {NavigationService.goBack();}
-  const onApplyLeave =  async() => {
-    
-    //  dispatch(loadingActions.enableLoading());
-    const resp =   await applyLeave(childData?.guid, selectedDate, leaveReason);
-    //  dispatch(loadingActions.disableLoading());
-    if(resp?.status === 201){
-      setShowSuccess(true);
+    if (!startDate || (startDate && endDate)) {
+      // if there's no start date selected, or if both start and end dates are selected
+      setStartDate(date);
+      setEndDate(null);
+      setMarkedDates({
+        [date]: { startingDay: true, color: "#00BFFF", date: date },
+      });
+    } else {
+      // if there's already a start date selected
+      const range = {
+        // [startDate]: { startingDay: true, color: "#00BFFF" },
+      };
+      const endDateObj = new Date(date);
+      const startDateObj = new Date(startDate);
+      const days =
+        (endDateObj.getTime() - startDateObj.getTime()) / (1000 * 3600 * 24);
+
+      for (let i = 1; i <= days; i++) {
+        const tempDate = new Date(startDateObj);
+        console.log("tempDate", tempDate);
+        tempDate.setDate(tempDate.getDate() + i);
+        console.log("tempDate after adding", tempDate);
+        const tempDateStr = tempDate.toISOString().slice(0, 10);
+        range[tempDateStr] = { color: "#00BFFF", date: tempDateStr };
+        console.log("range", range);
+      }
+
+      setEndDate(date);
+      setMarkedDates({
+        ...markedDates,
+        ...range,
+        [date]: { endingDay: true, color: "#00BFFF", date: date },
+      });
     }
   };
 
-  
+  console.log("markedDates", markedDates);
+  const goBack = () => {
+    NavigationService.goBack();
+  };
+  const onApplyLeave = async () => {
+      setShowWarning(false);
+      const validationResult = validationFunc();
+      if (validationResult) {
+        dispatch(loadingActions.enableLoading());
+        const formattedParams = formatLeaveApiParams(
+          markedDates,
+          driverData,
+          leaveReason,
+          absentType
+        );
+        console.log("formattedParams", formattedParams);
 
+        const resp = await applyDriverLeave(driverData?.guid, formattedParams);
+        dispatch(loadingActions.disableLoading());
+        console.log("ressppp==", resp);
+        if (resp?.status === 201) {
+          // console.log("ressppp==", resp);
+          setShowSuccess(true);
+        } else if (resp?.status === 409) {
+          setErrorStatus(resp?.body?.detail);
+          console.log("reached the error part");
+        }
+      } else {
+        setShowWarning(true);
+      }
+  };
   return (
     <View style={styles.container}>
       <Header
@@ -61,14 +139,26 @@ const ApplyLeave: React.FC = ({ route }) => {
         leftIconPress={goBack}
       />
       {isLoading && <HudView />}
+
       <MessageBox
         showMessage={showSuccess}
         label={"Close"}
-        message={`Leave application on ${selectedDate} is successful.`}
+        message={`${absentType} Leave applied for ${startDate} to ${endDate} is successful.`}
       />
+      {showWarning && (
+        <MessageBox
+          showMessage={!isFormValid}
+          label={"Close"}
+          message={`Please fill all the fields.`}
+        />
+      )}
+      {errorStatus?.length > 0 && (
+        <MessageBox showMessage={true} label={"Close"} message={errorStatus} />
+      )}
+
       <View style={styles.fillBox} />
       <View style={styles.StudentPodContainer}>
-        <StudentPod data={childData} />
+        <StudentPod data={driverData} />
       </View>
 
       <ScrollView
@@ -78,24 +168,13 @@ const ApplyLeave: React.FC = ({ route }) => {
       >
         <View style={{ width: "92%" }}>
           <Calendar
-            markingType={"multi-dot"}
+            markingType={"period"}
             markedDates={markedDates}
             onDayPress={(day) => {
+              console.log("selected day", day);
               getSelectedDayEvents(day.dateString);
             }}
             theme={{
-              // backgroundColor: "#ffffff",
-              // calendarBackground: "#ffffff",
-              // todayTextColor: "#ffffff",
-              // dayTextColor: "#222222",
-              // textDisabledColor: "#d9e1e8",
-              // monthTextColor: "#222222",
-              // arrowColor: "#57B9BB",
-              // textDayFontWeight: "300",
-              // textMonthFontWeight: "bold",
-              // textDayHeaderFontWeight: "500",
-              // textDayFontSize: 16,
-              // textMonthFontSize: 18,
               selectedDayBackgroundColor: "#fff",
               selectedDayTextColor: "#222",
             }}
@@ -122,24 +201,50 @@ const ApplyLeave: React.FC = ({ route }) => {
               }}
             >
               <Typography.H4 style={{ textAlign: "left", paddingBottom: "2%" }}>
-                Apply leave on :
+                Apply leave on <Text style={{ color: "red" }}>*</Text>:
               </Typography.H4>
-              <Typography.H4
+              <FlatList
+                data={Object.values(markedDates)}
+                renderItem={({ item }) => (
+                  <Typography.H4
+                    style={{ textAlign: "right", marginBottom: "2%" }}
+                  >
+                    {moment(item.date).format("DD-MMM-YYYY")}
+                  </Typography.H4>
+                )}
+              />
+            </View>
+            <View style={{ marginBottom: "2%" }}>
+              <Typography.H4 style={{ textAlign: "left", paddingBottom: "2%" }}>
+                Leave Type <Text style={{ color: "red" }}>*</Text> :
+              </Typography.H4>
+              <Picker
+                selectedValue={absentType}
+                onValueChange={(itemValue) => {
+                  setAbsentType(itemValue);
+                  console.log("absent type selected is ", itemValue);
+                }}
+                mode={"dropdown"}
                 style={{
-                  textAlign: "left",
-                  paddingBottom: "2%",
-                  paddingLeft: "20%",
+                  backgroundColor: "white",
+                  fontWeight: 600,
+                  borderRadius: "2%",
                 }}
               >
-                {moment(selectedDate, "DD.MM.YYYY").format("DD-MMM-YYYY")}
-              </Typography.H4>
+                <Picker.Item label="Sick" value="Sick" />
+                <Picker.Item label="Casual" value="Casual" />
+                <Picker.Item label="Emergency" value="Emergency" />
+              </Picker>
             </View>
             <TextInput
               placeholder={t("general.reason")}
               style={styles.textInput}
               multiline={true}
               maxLength={256}
-              onChangeText={(text) => setLeaveReason(text)}
+              onChangeText={(text) => {
+                setLeaveReason(text);
+                // validationFunc();
+              }}
             />
             <Typography.H5Light
               style={{ textAlign: "right", color: "#3D3A3A" }}
