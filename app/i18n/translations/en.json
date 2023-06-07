@@ -16,7 +16,9 @@
     "events": "Events",
     "reason": "Reason",
     "busNo":"Bus Number",
-    "schoolName":"School Name"
+    "schoolName":"School Name",
+    "mapView":"Map view",
+    "listView":"List view"
   },
   "home": {
     "track": "Track",
@@ -33,7 +35,8 @@
   "track": {
     "title": "Bus Track",
     "mapView": "Map view",
-    "listView": "List view"
+    "listView": "List view",
+    "busList":"Bus List"
   },
   "pickUpSchedule": {
     "title": "Pickup Schedule",
@@ -107,6 +110,9 @@
  },
  "map":{
   "viewOnMap":"View On Map"
+ },
+ "liveLocation":{
+  "title":"Live Location"
  }
 
 }

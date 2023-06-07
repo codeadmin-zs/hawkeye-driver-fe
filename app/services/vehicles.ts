@@ -33,18 +33,17 @@ export const getTripDetails = async (plate, starttime, endtime) => {
 };
 
 export const getRoutesOfVehicle = (guid: string, date: string) => {
-  if(date){
+  if (date) {
     return FetchApi({
       endpoint: `${ApiConfig.VEHICLE}/${guid}/${ApiConfig.ROUTES}?${ApiConfig.DATE}=${date}`,
       method: "GET",
     });
-  }else{
+  } else {
     return FetchApi({
       endpoint: `${ApiConfig.VEHICLE}/${guid}/${ApiConfig.ROUTES}`,
       method: "GET",
     });
   }
- 
 };
 
 export const getStopsOfRoute = (guid: string) => {
@@ -58,5 +57,13 @@ export const getVehicles = async () => {
   return FetchApi({
     endpoint: `${ApiConfig.VEHICLE}_`,
     method: "GET",
+  });
+};
+
+export const assetLiveInfo = (carIds) => {
+  return FetchApi({
+    endpoint: `${ApiConfig.ASSETS}/carids=${carIds}`,
+    method: "GET",
+    isGtrackit: true,
   });
 };

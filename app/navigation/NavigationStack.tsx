@@ -25,6 +25,7 @@ import BusList from "../screens/Track/BusList";
 import TripHistory from "../screens/TripHistory";
 import TripDetails from "../screens/TripDetails";
 import RouteView from "app/screens/RouteView";
+import LiveLocation from "app/screens/LiveLocation"
 
 import ThemeController from "../components/ThemeController";
 import { StatusBar } from "react-native";
@@ -166,6 +167,11 @@ const App: React.FC<IProps> = (props: IProps) => {
             <Stack.Screen
               name="Track"
               component={Track}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="LiveLocation"
+              component={LiveLocation}
               options={{ headerShown: false }}
             />
             <Stack.Screen
