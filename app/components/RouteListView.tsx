@@ -56,12 +56,12 @@ function RouteListView(props) {
           <Typography.H3 style={{ color: AppStyles.color.COLOR_BLACK }}>
             {props?.profileInfo?.schoolName}
           </Typography.H3>
-          <Typography.H4 style={{ color: AppStyles.color.COLOR_BLACK_TRANSP }}>
+          {/* <Typography.H4 style={{ color: AppStyles.color.COLOR_BLACK_TRANSP }}>
             {props?.stops?.route?.name}
-          </Typography.H4>
+          </Typography.H4> */}
           <Separator style={{ marginVertical: "2%", marginRight: "8%" }} />
           <View style={styles.dot}></View>
-          {stops?.stopsDetail?.map((item, index) => (
+          {stops?.map((item, index) => (
             <>
               <View
                 style={{
@@ -74,7 +74,7 @@ function RouteListView(props) {
               >
                 <View style={styles.dot}></View>
                 <Typography.H5 style={{ color: AppStyles.color.COLOR_BLACK }}>
-                  {item.stopName}
+                  {item?.stopName}
                 </Typography.H5>
                 <Typography.H6 style={{ color: AppStyles.color.COLOR_GREY }}>
                   {t("myBus.eta")} :

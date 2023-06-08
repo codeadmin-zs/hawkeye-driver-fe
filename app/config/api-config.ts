@@ -23,7 +23,8 @@ const ApiConfig = {
   PLATES: "plates",
   USERS:"users",
   ROUTES:"routes",
-  DATE:"date"
+  DATE:"date",
+  ASSETS:"assets"
 };
 
 export default ApiConfig;

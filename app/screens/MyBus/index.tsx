@@ -119,6 +119,7 @@ const MyBus: React.FC = ({ route }) => {
       const tempData = [...stops];
 
       const stopsResponse = await getStopsOfRoute(guid);
+console.log("stopsResponse",stopsResponse);
 
       const stopsCopy = stopsResponse.body;
       // stopsCopy.accordionPosition = index;
@@ -134,8 +135,8 @@ const MyBus: React.FC = ({ route }) => {
   // };
 
   const showRouteOnMap = (stops) => {
-    console.log("stops[0]",stops[0].latitude);
-    
+    console.log("stops[0]", stops[0].latitude);
+    console.log("stops-mybus",stops);
     const currentPos = {
       latitude: JSON.parse(stops[0].latitude),
       longitude: JSON.parse(stops[0].longitude),
@@ -188,7 +189,8 @@ const MyBus: React.FC = ({ route }) => {
         >
           <Typography.H5>{routeName}</Typography.H5>
           <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
-            {t("myBus.scheduleEvery")}{repeatedDays.replace(/,/g, ", ")}
+            {t("myBus.scheduleEvery")}
+            {repeatedDays.replace(/,/g, ", ")}
           </Typography.H6>
         </View>
       );
@@ -202,8 +204,8 @@ const MyBus: React.FC = ({ route }) => {
         >
           <Typography.H5>{routeName}</Typography.H5>
           <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
-           {t("myBus.schedule")} - {moment(startDate).format("DD-MMM-YYYY")} {"to"}{" "}
-            {moment(endDate).format("DD-MMM-YYYY")}
+            {t("myBus.schedule")} - {moment(startDate).format("DD-MMM-YYYY")}{" "}
+            {"to"} {moment(endDate).format("DD-MMM-YYYY")}
           </Typography.H6>
         </View>
       );
@@ -332,7 +334,9 @@ const MyBus: React.FC = ({ route }) => {
                                           AppStyles.color.COLOR_SECONDARY_BLUE,
                                       }}
                                       onPress={() =>
-                                        showRouteOnMap(stops[index].stopsDetail)
+                                       { showRouteOnMap(stops[index].stopsDetail)
+                                      console.log("button pressed");
+                                      }
                                       }
                                     >
                                       {t("map.viewOnMap")}
@@ -342,7 +346,7 @@ const MyBus: React.FC = ({ route }) => {
                                 <RouteListView
                                   profileInfo={profileInfo}
                                   vehicleRoutes={vehicleRoutes}
-                                  stops={stops[index]}
+                                  stops={stops[index]?.stopsDetail}
                                 />
                               </>
                             )}

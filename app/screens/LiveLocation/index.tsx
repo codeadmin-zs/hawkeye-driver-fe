@@ -30,9 +30,10 @@ const LiveLocation = ({ route }) => {
   console.log("liveLocation-vehicleDetails", vehicleDetails);
   const [liveLocation, setLiveLocation] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
+  const [liveLocationData,setLiveLocationData]=useState()
 
   const [coords, setCoords] = useState([]);
-  const [vehicleRoutes,setVehicleRoutes]=useState()
+  const [vehicleRoutes, setVehicleRoutes] = useState();
 
   const [markerState, setMarkerState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -56,28 +57,12 @@ const LiveLocation = ({ route }) => {
       let vehicleResponse = null;
       let routesResponse = null;
 
-        // if (vehicleDetails && profileInfo) {
-        //   console.log("vehicleData", vehicleDetails);
-        //   routesResponse = await getRoutesOfVehicle(vehicleDetails.guid, date);
-        // } else {
-        //   let targetVehicleGuid = null;
-        //   vehicleResponse = await getVehicles();
-        //   console.log("vehicleData", vehicleResponse);
-        //   for (const vehicle of vehicleResponse.body) {
-        //     if (vehicle.id === childData.vehicle_id) {
-        //       targetVehicleGuid = vehicle.guid;
-        //       break;
-        //     }
-        //   }
-        //   routesResponse = await getRoutesOfVehicle(targetVehicleGuid, date);
-        //   console.log("route response", routesResponse);
-        // }
       routesResponse = await getRoutesOfVehicle(vehicleDetails.guid, today);
       console.log("routesResponse-live", routesResponse);
 
       const routes = routesResponse.body;
       console.log("routes", routesResponse.body);
-      setVehicleRoutes(routes)
+      setVehicleRoutes(routes);
 
       if (routes.length === 0) {
         setIsLoading(false);
@@ -88,8 +73,11 @@ const LiveLocation = ({ route }) => {
       const routeGuid = routes[0].route_guid;
 
       const stopsResponse = await getStopsOfRoute(routeGuid);
-
+      console.log("--stopsResponse",stopsResponse);
+      
       const completeStops = stopsResponse.body.stopsDetail;
+      console.log("completeStops",completeStops);
+      
 
       if (completeStops.length === 0) {
         setIsLoading(false);
@@ -103,11 +91,15 @@ const LiveLocation = ({ route }) => {
           longitude: JSON.parse(item.longitude),
         };
       });
+      console.log("stopsArr", stopsArr);
 
       setCoords(stopsArr);
-      // commentented now since the asset live location is currently unavailable
-      //   const assetResponse = await assetLiveInfo(id);
-      //   const liveLocation = assetResponse.body;
+
+      // commented now since the asset live location is currently unavailable
+        // const assetResponse = await assetLiveInfo(id);
+        // const liveLocationResponse = assetResponse.body;
+        // setLiveLocationData(liveLocationResponse)
+
 
       setLiveLocation(data);
       const currentPositionData = data[0];
@@ -146,7 +138,13 @@ const LiveLocation = ({ route }) => {
   }
 
   useEffect(() => {
-    getLiveLocation();
+    // getLiveLocation();
+    const interval = setInterval(() => {
+      getLiveLocation();
+    }
+      , 60000);
+      return () => clearInterval(interval);
+    
   }, []);
 
   return (
@@ -199,12 +197,13 @@ const LiveLocation = ({ route }) => {
             )}
             {/* {activeTab === 1 && 
             <RouteListView stops={coords} />} */}
-            {activeTab===1 && 
-            <RouteListView
-            profileInfo={profileInfo}
-            vehicleRoutes={vehicleRoutes}
-            stops={coords}
-          />}
+            {activeTab === 1 && (
+              <RouteListView
+                profileInfo={profileInfo}
+                vehicleRoutes={vehicleRoutes}
+                stops={coords}
+              />
+            )}
           </View>
         </>
       )}
