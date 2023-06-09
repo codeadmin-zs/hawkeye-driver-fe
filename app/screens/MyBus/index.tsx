@@ -89,6 +89,7 @@ const MyBus: React.FC = ({ route }) => {
       console.log("getVehicleRoutes", routesRespp?.body);
       setVehicleRoutes(routesRespp?.body);
       setStops(new Array(routesRespp?.body?.length));
+      // setStopsCoordinates(new Array(routeResponse.body?.length));
 
       dispatch(loadingActions.disableLoading());
 
@@ -128,12 +129,6 @@ console.log("stopsResponse",stopsResponse);
     }
   };
 
-  // const getRouteName = (index) => {
-  //   if (stops[index]) {
-  //     return ` - ${stops[index].route?.name}`;
-  //   } else return "";
-  // };
-
   const showRouteOnMap = (stops) => {
     console.log("stops[0]", stops[0].latitude);
     console.log("stops-mybus",stops);
@@ -172,7 +167,7 @@ console.log("stopsResponse",stopsResponse);
           }}
         >
           {" "}
-          on {moment(date.startDate).format("DD-MMM-YYYY")}
+          {t("myBus.on")} {moment(date.startDate).format("DD-MMM-YYYY")}
         </Typography.H6Light>
       );
     }
@@ -205,7 +200,7 @@ console.log("stopsResponse",stopsResponse);
           <Typography.H5>{routeName}</Typography.H5>
           <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
             {t("myBus.schedule")} - {moment(startDate).format("DD-MMM-YYYY")}{" "}
-            {"to"} {moment(endDate).format("DD-MMM-YYYY")}
+            {t("myBus.to")} {moment(endDate).format("DD-MMM-YYYY")}
           </Typography.H6>
         </View>
       );
@@ -232,8 +227,8 @@ console.log("stopsResponse",stopsResponse);
             busNumber={vehicleDetails?.name}
             plateNumber={vehicleDetails?.plate}
             // time={"8:10 AM"}
-            attendandName={"Revathi"}
             driverName={profileInfo.name}
+            // showDots={true}
           />
         </View>
       </View>
@@ -265,30 +260,6 @@ console.log("stopsResponse",stopsResponse);
                     {isDateClickedOnce ? findDateOfRoute() : ""}
                   </Typography.H6Light>
                 </>
-                {/* <></> */}
-                {/* {vehicleRoutes?.length === 1 ? ( */}
-                {/* <Typography.H5Light
-                    style={{
-                      alignSelf: "flex-start",
-                      marginLeft: moderateScale(20),
-                      marginTop: moderateScale(8),
-                    }}
-                  >
-                    {vehicleRoutes?.length} route found on{" "}
-                    {moment(date.startDate).format("DD-MMM-YYYY")}
-                  </Typography.H5Light> */}
-                {/* ) : (
-                  <Typography.H5Light
-                    style={{
-                      alignSelf: "flex-start",
-                      marginLeft: moderateScale(20),
-                      marginTop: moderateScale(8),
-                    }}
-                  >
-                    {vehicleRoutes?.length} routes found on{" "}
-                    {moment(date.startDate).format("DD-MMM-YYYY")}
-                  </Typography.H5Light>
-                )} */}
                 {vehicleRoutes?.length > 0 && (
                   <View style={{ width: "92%", marginTop: moderateScale(6) }}>
                     {vehicleRoutes?.map((item, index) => (
@@ -297,14 +268,6 @@ console.log("stopsResponse",stopsResponse);
                           <View
                             style={{ marginBottom: moderateScale(4) }}
                           ></View>
-                          {/* <ExpandableList
-                          key={index}
-                          title={"Route " + (index + 1) + getRouteName(index)}
-                          titleContainerStyle={styles.titleContainerStyle}
-                          listStyle={styles.listStyle}
-                          titleStyle={styles.titleStyle}
-                          onPress={() => fetchRoute(item.route_guid, index)}
-                        > */}
                           <ExpandableList
                             key={index}
                             title={renderRouteHeader(
@@ -320,11 +283,19 @@ console.log("stopsResponse",stopsResponse);
                           >
                             {stops?.length > 0 && stops[index] && (
                               <>
-                                <View
+                                {/* <View
                                   style={{
                                     position: "absolute",
                                     right: 0,
                                     top: moderateScale(10),
+                                  }}
+                                > */}
+                                <View
+                                  style={{
+                                    width: "100%",
+                                    flexDirection: "row",
+                                    justifyContent: "flex-end",
+                                    alignItems: "center",
                                   }}
                                 >
                                   <TouchableOpacity>

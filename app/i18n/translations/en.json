@@ -41,7 +41,9 @@
   "pickUpSchedule": {
     "title": "Pickup Schedule",
     "toSchool": "To School",
-    "fromSchool": "From School"
+    "fromSchool": "From School",
+    "scheduleEvery":"Schedule - Every ",
+    "schedule":"Schedule"
   },
   "children": {
     "title": "Children"
@@ -51,7 +53,9 @@
     "eta":"eta",
     "myBusList":"My Bus List",
     "scheduleEvery":"Schedule - Every ",
-    "schedule":"Schedule"
+    "schedule":"Schedule",
+    "on":"on",
+    "to":"to"
   },
   "childProfile": {
     "title": "Children profile",

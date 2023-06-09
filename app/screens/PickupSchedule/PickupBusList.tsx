@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import NavigationService from "app/navigation/NavigationService";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme,ActivityIndicator } from "react-native-paper";
+import { moderateScale } from "react-native-size-matters";
 
 import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
 import { getDriverVehicles } from "app/services/driver";
@@ -12,10 +13,10 @@ import { BusPod } from "app/components";
 import MenuPressPopup from "app/components/MenuPressPopup";
 import {NoResourceFound} from "app/components";
 
-const MyBusList: React.FC = ({ route }) => {
+const PickupBusList: React.FC = ({route}) => {
   const { colors } = useTheme();
   const styles = makeStyles(colors);
-  const { profileInfo,showDots} = route.params;
+  const { profileInfo } = route.params;
   console.log("profileInfo2", profileInfo);
   console.log("guid", profileInfo.guid);
 
@@ -41,6 +42,7 @@ const MyBusList: React.FC = ({ route }) => {
   ];
 
   useEffect(() => {
+    
     const vehicleList = async () => {
       const vehicles = await getDriverVehicles(profileInfo.guid);
       setIsLoading(true);
@@ -48,6 +50,9 @@ const MyBusList: React.FC = ({ route }) => {
       const vehiclesDetails = vehicles.body;
       setVehicleDetails(vehiclesDetails);
       setIsLoading(false);
+      if(vehiclesDetails?.length===1){
+        NavigationService.navigate("PickupSchedule")
+      }
     };
     vehicleList();
   }, []);
@@ -66,7 +71,7 @@ const MyBusList: React.FC = ({ route }) => {
   return (
     <View style={styles.container}>
       <Header
-        title={t("myBus.myBusList")}
+        title={t("track.busList")}
         leftIcon={<LeftArrow />}
         leftIconPress={() => goBack()}
       />
@@ -93,10 +98,10 @@ const MyBusList: React.FC = ({ route }) => {
                     id={index + item?.plate}
                     busNumber={item?.name}
                     plateNumber={item?.plate}
-                    showDots={true}
                     driverName={profileInfo.name}
+                    showDots={false}
                     onPress={() =>
-                      NavigationService.navigate("MyBus", {
+                      NavigationService.navigate("PickupSchedule", {
                         profileInfo: profileInfo,
                         vehicleDetails: item,
                       })
@@ -126,7 +131,7 @@ const MyBusList: React.FC = ({ route }) => {
   );
 };
 
-export default MyBusList;
+export default PickupBusList;
 
 const makeStyles = (colors: any) =>
   StyleSheet.create({
@@ -134,7 +139,21 @@ const makeStyles = (colors: any) =>
       flex: 1,
     },
     contentContainer: {
-      width: "100%",
-      padding: "4%",
+      width: '100%',
+      padding: '4%',
+    },
+    rootContainer: {
+      elevaton: 30,
+      width: '100%',
+      backgroundColor: colors.surfaceBackground,
+      borderRadius: moderateScale(5),
+      marginVertical: '1%',
+      padding: '2%',
+    },
+    fullMessageConatiner: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      paddingHorizontal: '2%',
     },
   });

@@ -25,7 +25,8 @@ import BusList from "../screens/Track/BusList";
 import TripHistory from "../screens/TripHistory";
 import TripDetails from "../screens/TripDetails";
 import RouteView from "app/screens/RouteView";
-import LiveLocation from "app/screens/LiveLocation"
+import LiveLocation from "app/screens/LiveLocation";
+import PickupBusList from "app/screens/PickupSchedule/PickupBusList";
 
 import ThemeController from "../components/ThemeController";
 import { StatusBar } from "react-native";
@@ -108,6 +109,11 @@ const App: React.FC<IProps> = (props: IProps) => {
               name="PickupSchedule"
               component={PickupSchedule}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+            name="PickupBusList"
+            component={PickupBusList}
+            options={{ headerShown: false }}
             />
             <Stack.Screen
               name="MyBus"

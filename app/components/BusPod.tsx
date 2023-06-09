@@ -30,6 +30,7 @@ interface BusPodProps {
   driverName: string;
   onPress?: any;
   onMenuPress?: any;
+  showDots: boolean;
 }
 
 const BusPod: FunctionComponent<any> = ({
@@ -40,11 +41,12 @@ const BusPod: FunctionComponent<any> = ({
   driverName,
   onPress,
   onMenuPress,
+  showDots = false,
 }: BusPodProps) => {
   const { colors } = useTheme();
 
   const styles = makeStyles(colors);
-
+  // const showDots=false;
   // console.log(colors);
   return (
     <>
@@ -100,7 +102,9 @@ const BusPod: FunctionComponent<any> = ({
                 </Typography.H6>
                 <Phone />
               </TouchableOpacity>
-              <TouchableOpacity
+
+   {/* API is not ready for driver attendant */}
+              {/* <TouchableOpacity
                 style={styles.bottomDataContainer}
                 onPress={() => Linking.openURL(`tel:5511`)}
               >
@@ -117,8 +121,10 @@ const BusPod: FunctionComponent<any> = ({
                   {attendandName}
                 </Typography.H6Light>
                 <Phone />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
+            <>
+            {showDots ? (
             <View
               style={{
                 padding: 5,
@@ -134,9 +140,22 @@ const BusPod: FunctionComponent<any> = ({
                 }}
                 hitSlop={{ top: 4, bottom: 4, left: 8, right: 8 }}
               >
-                <Dots />
+                 <Dots />
+                
               </TouchableOpacity>
             </View>
+            ):(
+              <View
+              style={{
+                padding: 5,
+                width: moderateScale(16),
+                flex: 0.2,
+                height: moderateScale(30)
+              }}
+            ></View>
+            )
+             }
+            </>
           </View>
         </View>
       </TouchableOpacity>

@@ -9,6 +9,7 @@ import { t } from "../i18n";
 import moment from "moment";
 import Separator from "./Separator";
 import { getRoutesOfVehicle, getStopsOfRoute } from "app/services/vehicles";
+import { Colors } from "react-native-paper";
 
 const dim = Dimensions.Screen;
 

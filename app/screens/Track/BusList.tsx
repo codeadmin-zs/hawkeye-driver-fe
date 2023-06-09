@@ -98,8 +98,8 @@ const BusList: React.FC = ({route}) => {
                     id={index + item?.plate}
                     busNumber={item?.name}
                     plateNumber={item?.plate}
-                    attendandName={"Revathi"}
                     driverName={profileInfo.name}
+                    showDots={true}
                     onPress={() =>
                       NavigationService.navigate("LiveLocation", {
                         profileInfo: profileInfo,

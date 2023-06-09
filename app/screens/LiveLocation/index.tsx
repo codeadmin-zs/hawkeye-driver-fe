@@ -159,7 +159,7 @@ const LiveLocation = ({ route }) => {
           />
 
           <View
-            style={{ flex: 1, backgroundColor: AppStyles.color.COLOR_WHITE }}
+            style={{ flex: 1, backgroundColor: AppStyles.color.COLOR_GREY_WHITE }}
           >
             {activeTab === 0 && (
               <>
