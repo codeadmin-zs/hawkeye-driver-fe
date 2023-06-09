@@ -42,6 +42,7 @@ const BusList: React.FC = ({route}) => {
   ];
 
   useEffect(() => {
+    
     const vehicleList = async () => {
       const vehicles = await getDriverVehicles(profileInfo.guid);
       setIsLoading(true);
@@ -49,6 +50,9 @@ const BusList: React.FC = ({route}) => {
       const vehiclesDetails = vehicles.body;
       setVehicleDetails(vehiclesDetails);
       setIsLoading(false);
+      if(vehiclesDetails?.length===1){
+        NavigationService.navigate("LiveLocation")
+      }
     };
     vehicleList();
   }, []);

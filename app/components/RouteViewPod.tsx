@@ -124,7 +124,7 @@ const RouteViewPod: FunctionComponent<any> = (props) => {
                 bottom: 10,
                 left: 10,
               },
-              animated: true,
+              // animated: true,
             });
           }
         }}

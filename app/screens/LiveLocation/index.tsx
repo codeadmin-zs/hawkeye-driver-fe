@@ -30,7 +30,7 @@ const LiveLocation = ({ route }) => {
   console.log("liveLocation-vehicleDetails", vehicleDetails);
   const [liveLocation, setLiveLocation] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
-  const [liveLocationData,setLiveLocationData]=useState()
+  const [liveLocationData, setLiveLocationData] = useState();
 
   const [coords, setCoords] = useState([]);
   const [vehicleRoutes, setVehicleRoutes] = useState();
@@ -73,11 +73,10 @@ const LiveLocation = ({ route }) => {
       const routeGuid = routes[0].route_guid;
 
       const stopsResponse = await getStopsOfRoute(routeGuid);
-      console.log("--stopsResponse",stopsResponse);
-      
+      console.log("--stopsResponse", stopsResponse);
+
       const completeStops = stopsResponse.body.stopsDetail;
-      console.log("completeStops",completeStops);
-      
+      console.log("completeStops", completeStops);
 
       if (completeStops.length === 0) {
         setIsLoading(false);
@@ -96,10 +95,9 @@ const LiveLocation = ({ route }) => {
       setCoords(stopsArr);
 
       // commented now since the asset live location is currently unavailable
-        // const assetResponse = await assetLiveInfo(id);
-        // const liveLocationResponse = assetResponse.body;
-        // setLiveLocationData(liveLocationResponse)
-
+      // const assetResponse = await assetLiveInfo(id);
+      // const liveLocationResponse = assetResponse.body;
+      // setLiveLocationData(liveLocationResponse)
 
       setLiveLocation(data);
       const currentPositionData = data[0];
@@ -138,13 +136,11 @@ const LiveLocation = ({ route }) => {
   }
 
   useEffect(() => {
-    // getLiveLocation();
+    getLiveLocation();
     const interval = setInterval(() => {
       getLiveLocation();
-    }
-      , 60000);
-      return () => clearInterval(interval);
-    
+    }, 60000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
