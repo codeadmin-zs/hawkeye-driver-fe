@@ -133,23 +133,32 @@ const Home: React.FC = () => {
         />
       ),
     },
+    {
+      title: t("home.applyLeave"),
+      bgColor: "#5DD261",
+      iconBgColor: "#3EB843",
+      textColor: "#fff",
+      onPress: () => NavigationService.navigate("ApplyLeave",{driverData:profileData}),
+      iconName: "Holiday",
+      icon: <Holiday />,
+    },
   ];
 
   return (
     <View style={styles.container}>
     <WithLogoMenuHeader />
     <UserDetailsInfo userName={profileData?.name} />
-    <Typography.H5 style={{ color: "red", textAlign: "center" }}>
+    {/* <Typography.H5 style={{ color: "red", textAlign: "center" }}>
       {`Your Bus ${t("home.busArrivalMsg")}`}
-    </Typography.H5>
-    <Typography.Link
+    </Typography.H5> */}
+    {/* <Typography.Link
       style={{ textAlign: "center",color: AppStyles.color.COLOR_SECONDARY_BLUE,textDecorationLine: "none"}}
       onPress={() =>
         NavigationService.navigate("ApplyLeave",{driverData:profileData})
       }
     >
       {t("home.applyLeave")}
-      </Typography.Link>
+      </Typography.Link> */}
       <FlatList
         style={styles.tileContainer}
         contentContainerStyle={styles.tileContentContainer}
