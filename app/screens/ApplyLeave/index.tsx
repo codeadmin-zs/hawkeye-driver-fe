@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   ScrollView,
@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { formatLeaveApiParams } from "../../utils/formatParams";
 import { Picker } from "@react-native-picker/picker";
 import { fonts } from "../../config/fonts";
-import { applyDriverLeave } from "../../services/driver";
+import { applyDriverLeave, getLeavesData } from "../../services/driver";
 
 const ApplyLeave: React.FC = ({ route }) => {
   const { driverData } = route.params;
@@ -36,13 +36,14 @@ const ApplyLeave: React.FC = ({ route }) => {
   const [leaveReason, setLeaveReason] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [markedDates, setMarkedDates] = useState({});
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccess, setShowSuccess] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [absentType, setAbsentType] = useState("Sick");
   const [isFormValid, setIsFormValid] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-  const [errorStatus, setErrorStatus] = useState("");
+  const [errorStatus, setErrorStatus] = useState(false);
+  const [appliedLeaves, setAppliedLeaves] = useState([]);
 
   const { colors } = useTheme();
   const styles = makeStyles(colors);
@@ -105,32 +106,59 @@ const ApplyLeave: React.FC = ({ route }) => {
     NavigationService.goBack();
   };
   const onApplyLeave = async () => {
-      setShowWarning(false);
-      const validationResult = validationFunc();
-      if (validationResult) {
-        dispatch(loadingActions.enableLoading());
-        const formattedParams = formatLeaveApiParams(
-          markedDates,
-          driverData,
-          leaveReason,
-          absentType
-        );
-        console.log("formattedParams", formattedParams);
+    setShowWarning(false);
+    const validationResult = validationFunc();
+    if (validationResult) {
+      dispatch(loadingActions.enableLoading());
+      const formattedParams = formatLeaveApiParams(
+        markedDates,
+        driverData,
+        leaveReason,
+        absentType
+      );
+      console.log("formattedParams", formattedParams);
 
-        const resp = await applyDriverLeave(driverData?.guid, formattedParams);
-        dispatch(loadingActions.disableLoading());
-        console.log("ressppp==", resp);
-        if (resp?.status === 201) {
-          // console.log("ressppp==", resp);
-          setShowSuccess(true);
-        } else if (resp?.status === 409) {
-          setErrorStatus(resp?.body?.detail);
-          console.log("reached the error part");
+      const resp = await applyDriverLeave(driverData?.guid, formattedParams);
+      dispatch(loadingActions.disableLoading());
+      console.log("ressppp==", resp);
+      if (resp?.status === 201) {
+        if (startDate && endDate) {
+          setShowSuccess(
+            `${absentType} Leave applied for ${startDate} to ${endDate} is successful.`
+          );
+        } else if (startDate) {
+          setShowSuccess(
+            `${absentType} Leave applied for ${startDate} is successful.`
+          );
         }
-      } else {
-        setShowWarning(true);
+
+        // Update markedDates state with the applied leave dates
+        const appliedLeaveDates = Object.keys(markedDates);
+        const updatedMarkedDates = {
+          ...markedDates,
+          ...appliedLeaveDates.reduce((acc, date) => {
+            return {
+              ...acc,
+              [date]: { color: "green", textColor: "white" },
+            };
+          }, {}),
+        };
+        setMarkedDates(updatedMarkedDates);
+      } else if (resp?.status === 409) {
+        setErrorStatus(true);
+        console.log("reached the error part");
       }
+    } else {
+      setShowWarning(true);
+    }
   };
+  useEffect(() => {
+    const getDriverLeaves = async () => {
+      const leaveResponse = await getLeavesData();
+      console.log("leaveResponse", leaveResponse);
+    };
+    getDriverLeaves();
+  }, []);
   return (
     <View style={styles.container}>
       <Header
@@ -139,12 +167,9 @@ const ApplyLeave: React.FC = ({ route }) => {
         leftIconPress={goBack}
       />
       {isLoading && <HudView />}
-
-      <MessageBox
-        showMessage={showSuccess}
-        label={"Close"}
-        message={`${absentType} Leave applied for ${startDate} to ${endDate} is successful.`}
-      />
+      {showSuccess && (
+        <MessageBox showMessage={true} label={"Close"} message={showSuccess} />
+      )}
       {showWarning && (
         <MessageBox
           showMessage={!isFormValid}
@@ -152,8 +177,12 @@ const ApplyLeave: React.FC = ({ route }) => {
           message={`Please fill all the fields.`}
         />
       )}
-      {errorStatus?.length > 0 && (
-        <MessageBox showMessage={true} label={"Close"} message={errorStatus} />
+      {errorStatus && (
+        <MessageBox
+          showMessage={true}
+          label={"Close"}
+          message={`You have already applied leave for this dates`}
+        />
       )}
 
       <View style={styles.fillBox} />
@@ -169,7 +198,16 @@ const ApplyLeave: React.FC = ({ route }) => {
         <View style={{ width: "92%" }}>
           <Calendar
             markingType={"period"}
-            markedDates={markedDates}
+            // markedDates={markedDates}
+            markedDates={{
+              ...markedDates,
+              ...appliedLeaves.reduce((acc, date) => {
+                return {
+                  ...acc,
+                  [date]: { color: "green", textColor: "white" },
+                };
+              }, {}),
+            }}
             onDayPress={(day) => {
               console.log("selected day", day);
               getSelectedDayEvents(day.dateString);

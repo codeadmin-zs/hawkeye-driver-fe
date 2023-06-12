@@ -53,8 +53,6 @@ const MyBus: React.FC = ({ route }) => {
   // const [dateDetails, setDateDetails] = useState(initialDate);
   const [vehicleRoutes, setVehicleRoutes] = useState();
   const [getStops, setGetStops] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-
   // console.log("dateeee",dateDetails.startDate);
 
   const dispatch = useDispatch();
@@ -283,13 +281,6 @@ console.log("stopsResponse",stopsResponse);
                           >
                             {stops?.length > 0 && stops[index] && (
                               <>
-                                {/* <View
-                                  style={{
-                                    position: "absolute",
-                                    right: 0,
-                                    top: moderateScale(10),
-                                  }}
-                                > */}
                                 <View
                                   style={{
                                     width: "100%",

@@ -148,6 +148,7 @@ const Home: React.FC = () => {
     <View style={styles.container}>
     <WithLogoMenuHeader />
     <UserDetailsInfo userName={profileData?.name} />
+    
     {/* <Typography.H5 style={{ color: "red", textAlign: "center" }}>
       {`Your Bus ${t("home.busArrivalMsg")}`}
     </Typography.H5> */}
