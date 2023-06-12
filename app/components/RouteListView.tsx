@@ -7,7 +7,7 @@ import Dimensions from "../utils/helper";
 import { Typography } from "./Typography";
 import { t } from "../i18n";
 import moment from "moment";
-import Separator from "./Separator";
+import Separator from "./Separator"
 import { getRoutesOfVehicle, getStopsOfRoute } from "app/services/vehicles";
 import { Colors } from "react-native-paper";
 
