@@ -14,7 +14,7 @@ import { Header } from "../../components";
 import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
 import UserIcon from "../../assets/Svgs/UserIcon.svg";
 import { Typography } from "../../components/Typography";
-import { StudentPod, HudView, MessageBox } from "../../components";
+import { StudentPod, HudView, MessageBox,DriverPod } from "../../components";
 import { makeStyles } from "./styles";
 import { Button } from "../../components/Buttons/button";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
@@ -139,13 +139,13 @@ const ApplyLeave: React.FC = ({ route }) => {
 
         //Update markedDates state with the applied leave dates
         const appliedLeaveDates = Object.keys(markedDates);
-        console.log("appliedLeaveDates", appliedLeaveDates);
+        // console.log("appliedLeaveDates", appliedLeaveDates);
         const updatedMarkedDates = {
           ...markedDates,
           ...appliedLeaveDates.reduce((acc, date) => {
             return {
               ...acc,
-              // [date]: { color: "red", textColor: "white" },
+              [date]: { color: "pink", textColor: "white" },
             };
           }, {}),
         };
@@ -170,38 +170,75 @@ const ApplyLeave: React.FC = ({ route }) => {
         // setAppliedLeaves(leaveResponse?.body);
         setAppliedLeaves([leaveResponse.body]);
       }
-      //Update markedDates state with the applied leave dates
+    
+      const leaveDates = leaveResponse.body.map((leave) => {
+        const startDate = new Date(leave.start_date);
+        // console.log("sssstartDate",startDate);
+        
+        const endDate = new Date(leave.end_date);
+        const inBetweenDates = [];
       //  const appliedLeaveDates = Object.keys(appliedLeaves);
       //  console.log("appliedLeaveDates2",appliedLeaveDates);
-      const updatedMarkedDates = {
-        ...markedDates,
-        ...leaveResponse.body.reduce((acc, date) => {
-          const tranformedDate = moment(date.start_date).format("YYYY-MM-DD");
-          return {
-            ...acc,
-            [tranformedDate]: {
-              color: AppStyles.color.COLOR_RED_IDLE,
-              textColor: "white",
-              markingType: "period",
-              disableTouchEvent: true
-              // customStyles: {
-              //   container: {
-              //     borderRadius: 10, // Adjust the border radius value as needed
-              //   },
-              //   text: {
-              //     color: "white",
-              //     fontWeight: "bold",
-              //   },
-              // },
-            },
-          };
-        }, {}),
+
+       // Generate in-between dates
+       const currentDate = new Date(startDate);
+       while (currentDate <= endDate) {
+         inBetweenDates.push(new Date(currentDate));
+         currentDate.setDate(currentDate.getDate() + 1);
+       }
+
+       return {
+        startDate,
+        endDate,
+        inBetweenDates,
       };
-      console.log("updatedMarkedDates2", updatedMarkedDates);
-      setAlreadyMarkedDates(updatedMarkedDates);
-    };
-    getDriverLeaves();
-  }, []);
+    });
+
+    const updatedMarkedDates = leaveDates.reduce((acc, leave) => {
+      const startDateFormat = moment(leave.startDate).format("YYYY-MM-DD");
+      const endDateFormat = moment(leave.endDate).format("YYYY-MM-DD");
+
+      const leaveDates = {
+        ...acc,
+        [startDateFormat]: {
+          color: AppStyles.color.COLOR_RED_IDLE,
+          textColor: "white",
+          markingType: "period",
+          disableTouchEvent: true,
+        },
+        [endDateFormat]: {
+          color: AppStyles.color.COLOR_RED_IDLE,
+          textColor: "white",
+          markingType: "period",
+          disableTouchEvent: true,
+        },
+      };
+
+      const inBetweenDates = leave.inBetweenDates.reduce((dates, date) => {
+        const formattedDate = moment(date).format("YYYY-MM-DD");
+        return {
+          ...dates,
+          [formattedDate]: {
+            color: AppStyles.color.COLOR_RED_IDLE,
+            textColor: "white",
+            markingType: "period",
+            disableTouchEvent: true,
+          },
+        };
+      }, {});
+
+      return {
+        ...leaveDates,
+        ...inBetweenDates,
+      };
+    }, {});
+
+    console.log("updatedMarkedDates", updatedMarkedDates);
+    setAlreadyMarkedDates(updatedMarkedDates);
+  };
+
+  getDriverLeaves();
+}, []);
   return (
     <View style={styles.container}>
       <Header
@@ -230,7 +267,7 @@ const ApplyLeave: React.FC = ({ route }) => {
 
       <View style={styles.fillBox} />
       <View style={styles.StudentPodContainer}>
-        <StudentPod data={driverData} />
+        <DriverPod data={driverData} />
       </View>
 
       <ScrollView
@@ -241,7 +278,7 @@ const ApplyLeave: React.FC = ({ route }) => {
         <View style={{ width: "92%" }}>
           <Calendar
             markingType={"period"}
-            markedDates={{ ...markedDates, ...alreadyMarkedDates }}
+            markedDates={{...markedDates, ...alreadyMarkedDates }}
             onDayPress={(day) => {
               console.log("selected day", day);
               getSelectedDayEvents(day.dateString);

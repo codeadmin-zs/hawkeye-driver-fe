@@ -19,6 +19,9 @@ const dim = Dimensions.Screen;
 const DriverPod: FunctionComponent<any> = (props) => {
   const { colors } = useTheme();
   const { data, vehicle } = props;
+  console.log("data",data.name);
+  console.log("vehicle",vehicle);
+
 
   if (!data) {
     return null;
@@ -35,19 +38,31 @@ const DriverPod: FunctionComponent<any> = (props) => {
           {data.name}
         </Typography.H3>
         <View style={styles.busDetails}>
+        <Typography.H5Light
+            style={{ color: AppStyles.color.COLOR_DARK_GREY }}
+          >
+            Id : {data.employeeid}
+          </Typography.H5Light>
+          </View>
+          <View>
           <Typography.H5Light
             style={{ color: AppStyles.color.COLOR_DARK_GREY }}
           >
-            Bus : {vehicle.name}
+            School : {data.schoolName}
           </Typography.H5Light>
-          <Typography.H5Light
+          {/* <Typography.H5Light
+            style={{ color: AppStyles.color.COLOR_DARK_GREY }}
+          >
+            Bus : {vehicle.name}
+          </Typography.H5Light> */}
+          {/* <Typography.H5Light
             style={{
               color: AppStyles.color.COLOR_DARK_GREY,
               marginLeft: moderateScale(20),
             }}
           >
             Plate : {vehicle.plate}
-          </Typography.H5Light>
+          </Typography.H5Light> */}
         </View>
       </View>
     </TouchableOpacity>
