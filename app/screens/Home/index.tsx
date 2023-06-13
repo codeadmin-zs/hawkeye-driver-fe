@@ -44,9 +44,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     let response = null;
     const fetchData = async () => {
-      const response = await getDriverDetails();
-      console.log("======response",response);
-      
+      const response = await getDriverDetails();      
       setProfileData(response?.body);
     };
     fetchData();

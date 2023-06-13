@@ -1,12 +1,10 @@
 import moment from "moment";
 export function formatLeaveApiParams(
   markedDates,
-  //   childData,
   driverData,
   reason,
   absentType
 ) {
-    
   const dateArr = Object.values(markedDates); // because, the incoming 'markedDates' is an object of objects
 
   //extracting the start date and end date
@@ -14,8 +12,7 @@ export function formatLeaveApiParams(
   const [endDateObj] = dateArr.filter((item) => item.endingDay === true);
   // to handle single date selections
   //also, if user clicks on a single date twice, the startingDay becomes endingDay in the incoming data.
-  
- 
+
   if (dateArr.length === 1) {
     if (startDateObj) {
       startDateObj.date = moment(startDateObj.date).format(
@@ -28,16 +25,13 @@ export function formatLeaveApiParams(
       driverData.start_date = endDateObj.date;
       driverData.end_date = endDateObj.date;
     }
-  } 
-  else if (dateArr.length > 1) {  //when multiple dates are selected
+  } else if (dateArr.length > 1) {
+    //when multiple dates are selected
     startDateObj.date = moment(startDateObj.date).format("YYYY-MM-DD 00:00:00");
     endDateObj.date = moment(endDateObj.date).format("YYYY-MM-DD 23:59:59");
     driverData.start_date = startDateObj.date;
     driverData.end_date = endDateObj.date;
-    console.log("###### inaisw if markedDates####",startDateObj,endDateObj, absentType,reason );
   }
-
-  console.log("######markedDates####",dateArr,absentType,reason );
 
   driverData.reason = reason;
   function getAbsentType(absentType) {
@@ -45,11 +39,8 @@ export function formatLeaveApiParams(
     else if (absentType === "Casual") return 1;
     else if (absentType === "Emergency") return 2;
   }
-  console.log("###### before getAbsentType markedDates####",dateArr,absentType,reason );
   driverData.absent_type = getAbsentType(absentType);
-  console.log("###### after getAbsentType markedDates####",dateArr,absentType,reason );
 
-  console.log("driverData from formatparams");
   return {
     ...(driverData.guid ? { guid: driverData.guid } : {}),
 

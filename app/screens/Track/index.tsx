@@ -35,9 +35,7 @@ const dim = Dimensions.Screen;
 this.map = "";
 
 const Track: React.FC = ({ route, navigation }) => {
-  const { routeParam } = route.params;
-  console.log("trackpage",routeParam);
-  
+  const { routeParam } = route.params;  
   const { stations } = routeParam;
   const driverName = storeHelpers.getUserDetails()?.name;
   const [wayPoints, setWayPoints] = useState([]);
@@ -232,7 +230,6 @@ const Track: React.FC = ({ route, navigation }) => {
                   latitude: JSON.parse(destination?.latitude),
                   longitude: JSON.parse(destination?.longitude),
                 }}
-                // pinColor="red"
                 onPress={() => showModal(destination, routes?.length)}
               >
                 <StopTrackIcon

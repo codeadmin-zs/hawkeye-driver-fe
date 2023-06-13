@@ -7,7 +7,7 @@ import Dimensions from "../utils/helper";
 import { Typography } from "./Typography";
 import { t } from "../i18n";
 import moment from "moment";
-import Separator from "./Separator"
+import Separator from "./Separator";
 import { getRoutesOfVehicle, getStopsOfRoute } from "app/services/vehicles";
 import { Colors } from "react-native-paper";
 
@@ -20,11 +20,6 @@ const negativeMargin = (-1 * (widthOfMarkerContainer + widthOfDot)) / 2;
 
 function RouteListView(props) {
   const { stops } = props;
-  console.log("SDWED", props);
-  console.log("routename",props?.stops?.route?.name);
-  
-  // console.log("startstop",props.stops[0].startstop);
-  // console.log("props.getStop",props);
 
   return (
     <ScrollView

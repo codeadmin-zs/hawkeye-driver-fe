@@ -20,14 +20,11 @@ import AppStyles from "../../config/styles";
 
 const MyProfile: React.FC = ({ route }) => {
   const { profileInfo } = route.params;
-  console.log("profileInfo", profileInfo);
-  console.log("guid", profileInfo.guid);
   const [vehicleDetails, setVehicleDetails] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const vehicles = await getDriverVehicles(profileInfo.guid);
-      console.log("vehicleDetails", vehicles);
       const vehiclesDetails = vehicles.body;
       setVehicleDetails(vehiclesDetails);
     };

@@ -46,8 +46,6 @@ const ApplyLeave: React.FC = ({ route }) => {
     
     //  dispatch(loadingActions.enableLoading());
     const resp =   await applyDriverLeave(driverData?.guid, selectedDate, leaveReason);
-console.log("...resp apply leave...",resp);
-
 
     //  dispatch(loadingActions.disableLoading());
     if(resp?.status === 201){
