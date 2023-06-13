@@ -107,7 +107,10 @@
     "rfid":"RFID"
 },
   "applyLeave":{
-    "title":"Apply Leave"
+    "title":"Apply Leave",
+    "applyLeaveOn":"Apply leave on",
+    "*":"*",
+    "leaveType":"Leave type"
 },
  "errors":{
   "noRouteFound":"No Route Found"

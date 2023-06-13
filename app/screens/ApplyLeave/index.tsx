@@ -25,7 +25,7 @@ import { formatLeaveApiParams } from "../../utils/formatParams";
 import { Picker } from "@react-native-picker/picker";
 import { fonts } from "../../config/fonts";
 import { applyDriverLeave, getLeavesData } from "../../services/driver";
-
+import AppStyles from "app/config/styles";
 const ApplyLeave: React.FC = ({ route }) => {
   const { driverData } = route.params;
   console.log("driverData", driverData);
@@ -36,6 +36,7 @@ const ApplyLeave: React.FC = ({ route }) => {
   const [leaveReason, setLeaveReason] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [markedDates, setMarkedDates] = useState({});
+  const [alreadyMarkedDates, setAlreadyMarkedDates] = useState({});
   const [showSuccess, setShowSuccess] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -88,7 +89,11 @@ const ApplyLeave: React.FC = ({ route }) => {
         tempDate.setDate(tempDate.getDate() + i);
         console.log("tempDate after adding", tempDate);
         const tempDateStr = tempDate.toISOString().slice(0, 10);
-        range[tempDateStr] = { color: "#00BFFF", date: tempDateStr };
+        console.log("tempDateStr",tempDateStr);
+        const dates = Object.keys(alreadyMarkedDates)
+        if(!dates.includes(tempDateStr)){
+          range[tempDateStr] = { color: "#00BFFF", date: tempDateStr };
+        }
         console.log("range", range);
       }
 
@@ -99,7 +104,7 @@ const ApplyLeave: React.FC = ({ route }) => {
         [date]: { endingDay: true, color: "#00BFFF", date: date },
       });
     }
-  };
+  };  
 
   console.log("markedDates", markedDates);
   const goBack = () => {
@@ -132,17 +137,19 @@ const ApplyLeave: React.FC = ({ route }) => {
           );
         }
 
-        // Update markedDates state with the applied leave dates
+        //Update markedDates state with the applied leave dates
         const appliedLeaveDates = Object.keys(markedDates);
+        console.log("appliedLeaveDates", appliedLeaveDates);
         const updatedMarkedDates = {
           ...markedDates,
           ...appliedLeaveDates.reduce((acc, date) => {
             return {
               ...acc,
-              [date]: { color: "green", textColor: "white" },
+              // [date]: { color: "red", textColor: "white" },
             };
           }, {}),
         };
+        console.log("updatedMarkedDates", updatedMarkedDates);
         setMarkedDates(updatedMarkedDates);
       } else if (resp?.status === 409) {
         setErrorStatus(true);
@@ -155,7 +162,43 @@ const ApplyLeave: React.FC = ({ route }) => {
   useEffect(() => {
     const getDriverLeaves = async () => {
       const leaveResponse = await getLeavesData();
-      console.log("leaveResponse", leaveResponse);
+      console.log("leaveResponse.start_date", leaveResponse);
+      if (
+        Array.isArray(leaveResponse?.body) &&
+        leaveResponse?.body?.length > 0
+      ) {
+        // setAppliedLeaves(leaveResponse?.body);
+        setAppliedLeaves([leaveResponse.body]);
+      }
+      //Update markedDates state with the applied leave dates
+      //  const appliedLeaveDates = Object.keys(appliedLeaves);
+      //  console.log("appliedLeaveDates2",appliedLeaveDates);
+      const updatedMarkedDates = {
+        ...markedDates,
+        ...leaveResponse.body.reduce((acc, date) => {
+          const tranformedDate = moment(date.start_date).format("YYYY-MM-DD");
+          return {
+            ...acc,
+            [tranformedDate]: {
+              color: AppStyles.color.COLOR_RED_IDLE,
+              textColor: "white",
+              markingType: "period",
+              disableTouchEvent: true
+              // customStyles: {
+              //   container: {
+              //     borderRadius: 10, // Adjust the border radius value as needed
+              //   },
+              //   text: {
+              //     color: "white",
+              //     fontWeight: "bold",
+              //   },
+              // },
+            },
+          };
+        }, {}),
+      };
+      console.log("updatedMarkedDates2", updatedMarkedDates);
+      setAlreadyMarkedDates(updatedMarkedDates);
     };
     getDriverLeaves();
   }, []);
@@ -198,16 +241,7 @@ const ApplyLeave: React.FC = ({ route }) => {
         <View style={{ width: "92%" }}>
           <Calendar
             markingType={"period"}
-            // markedDates={markedDates}
-            markedDates={{
-              ...markedDates,
-              ...appliedLeaves.reduce((acc, date) => {
-                return {
-                  ...acc,
-                  [date]: { color: "green", textColor: "white" },
-                };
-              }, {}),
-            }}
+            markedDates={{ ...markedDates, ...alreadyMarkedDates }}
             onDayPress={(day) => {
               console.log("selected day", day);
               getSelectedDayEvents(day.dateString);
@@ -239,10 +273,13 @@ const ApplyLeave: React.FC = ({ route }) => {
               }}
             >
               <Typography.H4 style={{ textAlign: "left", paddingBottom: "2%" }}>
-                Apply leave on <Text style={{ color: "red" }}>*</Text>:
+                {t("applyLeave.applyLeaveOn")}
+                <Text style={{ color: "red" }}>{t("applyLeave.*")}</Text>:
               </Typography.H4>
+
               <FlatList
                 data={Object.values(markedDates)}
+                keyExtractor={(item, index) => index.toString()} // Provide a unique key for each item
                 renderItem={({ item }) => (
                   <Typography.H4
                     style={{ textAlign: "right", marginBottom: "2%" }}
@@ -254,7 +291,8 @@ const ApplyLeave: React.FC = ({ route }) => {
             </View>
             <View style={{ marginBottom: "2%" }}>
               <Typography.H4 style={{ textAlign: "left", paddingBottom: "2%" }}>
-                Leave Type <Text style={{ color: "red" }}>*</Text> :
+                {t("applyLeave.leaveType")}{" "}
+                <Text style={{ color: "red" }}>{t("applyLeave.*")}</Text> :
               </Typography.H4>
               <Picker
                 selectedValue={absentType}

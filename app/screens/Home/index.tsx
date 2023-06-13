@@ -14,6 +14,7 @@ import Children from "../../assets/Svgs/Children.svg";
 import Messages from "../../assets/Svgs/Messages.svg";
 import Holiday from "../../assets/Svgs/Holiday.svg";
 import MyBus from "../../assets/Svgs/MyBus.svg"
+import Calendar from "../../assets/Svgs/Calendar.svg"
 import { TrackerHistoryIcon } from "app/components/svgComponents";
 import { t } from "../../i18n";
 import { getDriverDetails } from "../../services/driver";
@@ -23,6 +24,7 @@ import AppStyles from "app/config/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../../services/myProfile";
 import { moderateScale } from "react-native-size-matters";
+import { DatePickerCalender } from "app/components/svgComponents";
 
 const dim = Dimensions.Screen;
 const scaledWidth = moderateScale(36);
@@ -135,12 +137,12 @@ const Home: React.FC = () => {
     },
     {
       title: t("home.applyLeave"),
-      bgColor: "#5DD261",
-      iconBgColor: "#3EB843",
+      bgColor: "#f081b1",
+      iconBgColor: "#b56085",
       textColor: "#fff",
       onPress: () => NavigationService.navigate("ApplyLeave",{driverData:profileData}),
-      iconName: "Holiday",
-      icon: <Holiday />,
+      iconName: "ApplyLeave",
+      icon:  <Calendar width={30} height={30}/>
     },
   ];
 
