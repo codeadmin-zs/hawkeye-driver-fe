@@ -5,6 +5,7 @@ import {
   FlatList,
   ActivityIndicator,
   TouchableOpacity,
+  Text,
 } from "react-native";
 import { useTheme } from "react-native-paper";
 
@@ -23,6 +24,7 @@ import { makeStyles } from "./styles";
 import { getHolidaysList, getEventsList } from "../../services/holiday";
 import { t } from "../../i18n";
 import { moderateScale } from "react-native-size-matters";
+import AppStyles from "app/config/styles";
 
 const HolidayList: React.FC = () => {
   const [holidayList, setHolidayList] = useState([]);
@@ -33,11 +35,24 @@ const HolidayList: React.FC = () => {
   const [markedEvents, setMarkedEvents] = useState({});
   const [holidayText, setHolidayText] = useState("");
   const [eventText, setEventText] = useState("");
+  const [selectedDate, setSelectedDate] = React.useState(
+    moment().format("YYYY-MM-DD")
+  );
 
   const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
   const { colors } = useTheme();
   const styles = makeStyles(colors);
+  const currentDay = moment().format("YYYY-MM-DD");
+  const dateDisplay = moment().format("DD-MM-YYYY");
+
+  const markedCurrentDate = {
+    [currentDay]: {
+      selected: true,
+      selectedColor: AppStyles.color.COLOR_MEDIUM_DARK_BLUE,
+      selectedTextColor: "#FFFFFF",
+    },
+  };
 
   useEffect(() => {
     let markedEventDates: any = {};
@@ -46,7 +61,8 @@ const HolidayList: React.FC = () => {
       holidayList?.forEach((holiday) => {
         markedHolidayDates[holiday.holiday_on] = {
           selected: true,
-          selectedColor: "#00B0BF",
+          selectedColor: AppStyles.color.COLOR_RED_IDLE,
+          // selectedColor: "green",
           selectedTextColor: "#FFFFFF",
           selectedHolidayText: holiday?.text,
         };
@@ -57,7 +73,7 @@ const HolidayList: React.FC = () => {
       eventList?.forEach((event) => {
         markedEventDates[event.event_on] = {
           selected: true,
-          selectedColor: "#00B0BF",
+          selectedColor: AppStyles.color.COLOR_RED_IDLE,
           selectedTextColor: "#FFFFFF",
           selectedEventText: event?.text,
         };
@@ -95,6 +111,7 @@ const HolidayList: React.FC = () => {
   }, []);
 
   const goBack = () => NavigationService.goBack();
+
   return (
     <View style={styles.container}>
       <Header
@@ -104,19 +121,25 @@ const HolidayList: React.FC = () => {
       />
       <ScrollView style={styles.contentContainer}>
         <View style={styles.headerContainer}>
-          <Typography.H1 style={{ paddingRight: "2%", top: "1%" }}>
-            {t("holidays.title")}
-          </Typography.H1>
-          <TouchableOpacity
-            onPress={() => setShowHolidayCalender(!showHolidayCalender)}
-          >
-            {showHolidayCalender ? <CalendarListIcon /> : <CalendarIcon />}
-          </TouchableOpacity>
+          <View style={styles.holidayHeader}>
+            <Typography.H1 style={{ paddingRight: "2%", top: "1%" }}>
+              {t("holidays.title")}
+            </Typography.H1>
+            <TouchableOpacity
+              onPress={() => setShowHolidayCalender(!showHolidayCalender)}
+            >
+              {showHolidayCalender ? <CalendarListIcon /> : <CalendarIcon />}
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Typography.H4>{dateDisplay}</Typography.H4>
+          </View>
         </View>
         {showHolidayCalender ? (
           <Calendar
+            initialDate={moment().format("YYYY-MM-DD")}
+            markedDates={{ ...markedCurrentDate, ...markedHolidays }}
             markingType={"multi-dot"}
-            markedDates={markedHolidays}
             onDayPress={(day) => {
               const holidayText =
                 markedHolidays?.[day.dateString]?.selectedHolidayText;
@@ -132,8 +155,6 @@ const HolidayList: React.FC = () => {
               selectedDayBackgroundColor: "#fff",
               selectedDayTextColor: "#222",
             }}
-            initialDate={moment().format("YYYY-MM-DD")}
-            // minDate={moment().format("YYYY-MM-DD")}
           />
         ) : isLoading ? (
           <View style={styles.fullView}>
@@ -160,7 +181,7 @@ const HolidayList: React.FC = () => {
             <Typography.H5>{holidayText}</Typography.H5>
           </View>
         )}
-        <View style={styles.headerContainer}>
+        <View style={styles.headerContainerEvents}>
           <Typography.H1 style={{ paddingRight: "2%", top: "1%" }}>
             {t("holidays.events")}
           </Typography.H1>
@@ -173,7 +194,7 @@ const HolidayList: React.FC = () => {
         {showEventCalender ? (
           <Calendar
             markingType={"multi-dot"}
-            markedDates={markedEvents}
+            markedDates={{ ...markedCurrentDate, ...markedEvents }}
             onDayPress={(day) => {
               const eventText =
                 markedEvents?.[day.dateString]?.selectedEventText;
@@ -187,8 +208,6 @@ const HolidayList: React.FC = () => {
               selectedDayBackgroundColor: "#fff",
               selectedDayTextColor: "#222",
             }}
-            initialDate={moment().format("YYYY-MM-DD")}
-            // minDate={moment().format("YYYY-MM-DD")}
           />
         ) : isLoading ? (
           <View style={styles.fullView}>
@@ -196,7 +215,6 @@ const HolidayList: React.FC = () => {
           </View>
         ) : (
           <FlatList
-            //   style={{width:'100%',paddingVertical: 10}}
             contentContainerStyle={{ alignItems: "center" }}
             data={eventList}
             renderItem={({ item, index, separators }) => (

@@ -104,14 +104,11 @@ export const makeStyles = (colors: any) =>
       flexDirection: "row",
     },
     dataItemContainer: {
-      marginVertical: "2%",
-     
-    //   marginRight: "1%",
+      marginVertical: "2%", 
     },
     dataItemBox: {
       flex: 1,
       justifyContent: "space-between",
-    //   paddingBottom: "1%",
       paddingRight: "4%",
       paddingLeft:'1%'
     },

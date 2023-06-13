@@ -14,14 +14,14 @@ import {AttendanceBox} from '../../components';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 const AttendanceSheet: React.FC = ({route}) => {
-  const {childData} = route.params;
+  const {driverData} = route.params;
   const [isParentDetails, setIsParentDetails] = useState(false);
   const {colors} = useTheme();
   const styles = makeStyles(colors, isParentDetails);
 
   const goBack = () => NavigationService.goBack();
   const gotoAbsentDays = () =>
-    NavigationService.navigate('AbsentDays', {childData});
+    NavigationService.navigate('AbsentDays', {driverData});
   return (
     <View style={styles.container}>
       <Header
@@ -31,7 +31,7 @@ const AttendanceSheet: React.FC = ({route}) => {
       />
       <View style={styles.fillBox} />
       <View style={styles.StudentPodContainer}>
-        <StudentPod data={childData} />
+        <StudentPod data={driverData} />
       </View>
       <ScrollView
         style={{top: '-4%'}}

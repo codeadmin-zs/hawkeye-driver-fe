@@ -8,7 +8,6 @@ export const TabButton = props => {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      // disabled={props.disabled}
       style={[
         styles.tabButtonContainer,
         {
@@ -69,7 +68,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: moderateScale(15),
-    // backgroundColor:'#bfbfbf',
     borderRadius: moderateScale(10),
   },
   buttonWhiteTouchable: {
@@ -83,13 +81,9 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(0),
   },
   tabButtonContainer: {
-    // height: moderateScale(40),
     width: '46%',
     justifyContent: 'center',
     alignItems: 'center',
-    // paddingHorizontal: moderateScale(15),
-    // paddingBottom
-    // borderRadius: moderateScale(0),
   },
   tabButtonText: {
     fontSize: moderateScale(14),
