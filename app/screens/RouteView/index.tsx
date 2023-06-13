@@ -12,9 +12,6 @@ import { Typography } from "../../components/Typography";
 const RouteView: React.FC = ({ route }) => {
   // currentPos is required to make the RouteViewPod component work here
   const { fullTrips, currentPos, vehicleDetails, date } = route.params;
-
-  console.log("vehicleDetails",vehicleDetails);
-  console.log("fullTrips",fullTrips);
   
   const { colors } = useTheme();
   const styles = makeStyles(colors);
@@ -33,8 +30,6 @@ const RouteView: React.FC = ({ route }) => {
           <BusPod
             busNumber={vehicleDetails?.name}
             plateNumber={vehicleDetails?.plate}
-            // time={"8:10 AM"}
-            // driverName={profileInfo.name}
           />
         </View>
       </View>

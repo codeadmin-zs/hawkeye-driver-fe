@@ -5,7 +5,7 @@ import {
   FlatList,
   ActivityIndicator,
   TouchableOpacity,
-  Text
+  Text,
 } from "react-native";
 import { useTheme } from "react-native-paper";
 
@@ -44,7 +44,7 @@ const HolidayList: React.FC = () => {
   const { colors } = useTheme();
   const styles = makeStyles(colors);
   const currentDay = moment().format("YYYY-MM-DD");
-  const dateDisplay= moment().format("DD-MM-YYYY");
+  const dateDisplay = moment().format("DD-MM-YYYY");
 
   const markedCurrentDate = {
     [currentDay]: {
@@ -91,10 +91,7 @@ const HolidayList: React.FC = () => {
 
     const fetchData = async () => {
       holidayResponse = await getHolidaysList();
-      console.log("holidayResponse", holidayResponse);
       eventResponse = await getEventsList();
-      console.log("eventResponse", eventResponse);
-
       dispatch(loadingActions.disableLoading());
       if (
         Array.isArray(holidayResponse?.body) &&
@@ -125,25 +122,23 @@ const HolidayList: React.FC = () => {
       <ScrollView style={styles.contentContainer}>
         <View style={styles.headerContainer}>
           <View style={styles.holidayHeader}>
-          <Typography.H1 style={{ paddingRight: "2%", top: "1%" }}>
-            {t("holidays.title")}
-          </Typography.H1>
-          <TouchableOpacity
-            onPress={() => setShowHolidayCalender(!showHolidayCalender)}
-          >
-            {showHolidayCalender ? <CalendarListIcon /> : <CalendarIcon />}
-          </TouchableOpacity>
+            <Typography.H1 style={{ paddingRight: "2%", top: "1%" }}>
+              {t("holidays.title")}
+            </Typography.H1>
+            <TouchableOpacity
+              onPress={() => setShowHolidayCalender(!showHolidayCalender)}
+            >
+              {showHolidayCalender ? <CalendarListIcon /> : <CalendarIcon />}
+            </TouchableOpacity>
           </View>
           <View>
-          <Typography.H4>{dateDisplay}</Typography.H4>
-
+            <Typography.H4>{dateDisplay}</Typography.H4>
           </View>
-
         </View>
         {showHolidayCalender ? (
           <Calendar
             initialDate={moment().format("YYYY-MM-DD")}
-            markedDates={{...markedCurrentDate,...markedHolidays}}
+            markedDates={{ ...markedCurrentDate, ...markedHolidays }}
             markingType={"multi-dot"}
             onDayPress={(day) => {
               const holidayText =
@@ -199,7 +194,7 @@ const HolidayList: React.FC = () => {
         {showEventCalender ? (
           <Calendar
             markingType={"multi-dot"}
-            markedDates={{...markedCurrentDate,...markedEvents}}
+            markedDates={{ ...markedCurrentDate, ...markedEvents }}
             onDayPress={(day) => {
               const eventText =
                 markedEvents?.[day.dateString]?.selectedEventText;
@@ -213,7 +208,6 @@ const HolidayList: React.FC = () => {
               selectedDayBackgroundColor: "#fff",
               selectedDayTextColor: "#222",
             }}
-           
           />
         ) : isLoading ? (
           <View style={styles.fullView}>

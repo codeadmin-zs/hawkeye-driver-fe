@@ -28,7 +28,6 @@ import { applyDriverLeave } from "../../services/driver";
 
 const ApplyLeave: React.FC = ({ route }) => {
   const { driverData } = route.params;
-  console.log("driverData", driverData);
 
   const dispatch = useDispatch();
 
@@ -54,11 +53,9 @@ const ApplyLeave: React.FC = ({ route }) => {
       Object.keys(markedDates).length > 0 &&
       true
     ) {
-      console.log("form is VALID");
       setIsFormValid(true);
       return true;
     } else {
-      console.log("form is still not valid");
       setIsFormValid(false);
       return false;
     }
@@ -83,12 +80,9 @@ const ApplyLeave: React.FC = ({ route }) => {
 
       for (let i = 1; i <= days; i++) {
         const tempDate = new Date(startDateObj);
-        console.log("tempDate", tempDate);
         tempDate.setDate(tempDate.getDate() + i);
-        console.log("tempDate after adding", tempDate);
         const tempDateStr = tempDate.toISOString().slice(0, 10);
         range[tempDateStr] = { color: "#00BFFF", date: tempDateStr };
-        console.log("range", range);
       }
 
       setEndDate(date);
@@ -100,7 +94,6 @@ const ApplyLeave: React.FC = ({ route }) => {
     }
   };
 
-  console.log("markedDates", markedDates);
   const goBack = () => {
     NavigationService.goBack();
   };
@@ -115,17 +108,13 @@ const ApplyLeave: React.FC = ({ route }) => {
           leaveReason,
           absentType
         );
-        console.log("formattedParams", formattedParams);
 
         const resp = await applyDriverLeave(driverData?.guid, formattedParams);
         dispatch(loadingActions.disableLoading());
-        console.log("ressppp==", resp);
         if (resp?.status === 201) {
-          // console.log("ressppp==", resp);
           setShowSuccess(true);
         } else if (resp?.status === 409) {
           setErrorStatus(resp?.body?.detail);
-          console.log("reached the error part");
         }
       } else {
         setShowWarning(true);
@@ -171,7 +160,6 @@ const ApplyLeave: React.FC = ({ route }) => {
             markingType={"period"}
             markedDates={markedDates}
             onDayPress={(day) => {
-              console.log("selected day", day);
               getSelectedDayEvents(day.dateString);
             }}
             theme={{
@@ -222,7 +210,6 @@ const ApplyLeave: React.FC = ({ route }) => {
                 selectedValue={absentType}
                 onValueChange={(itemValue) => {
                   setAbsentType(itemValue);
-                  console.log("absent type selected is ", itemValue);
                 }}
                 mode={"dropdown"}
                 style={{

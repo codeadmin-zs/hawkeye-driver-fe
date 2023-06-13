@@ -25,7 +25,6 @@ export const makeStyles = (colors: any) =>
     },
     holidayHeader:{
       flexDirection: 'row',
-      // justifyContent:"space-between",
       alignItems:"center"
       
     }

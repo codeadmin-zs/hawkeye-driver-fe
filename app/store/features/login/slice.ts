@@ -26,16 +26,12 @@ const loginSlice = createSlice({
     },
     loginRequest(state: LoginState, action: any) {
       state.userName = action.payload.userName;
-      console.log("state.userName",state.userName);  
     },
     loginError(state: LoginState) {
       state.isLoggedIn = false;
-      console.log("loginError",loginError); 
     },
     logoutRequest(state: LoginState) {
-      console.log("login state before logout", state.isLoggedIn);
       state.isLoggedIn = false;
-      console.log("logging out", state.isLoggedIn);
     },
   },
 });

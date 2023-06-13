@@ -26,8 +26,6 @@ import RouteListView from "../../components/RouteListView";
 
 const LiveLocation = ({ route }) => {
   const { profileInfo, vehicleDetails = null } = route.params;
-  console.log("liveLocation-profileinfo", profileInfo);
-  console.log("liveLocation-vehicleDetails", vehicleDetails);
   const [liveLocation, setLiveLocation] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [liveLocationData, setLiveLocationData] = useState();
@@ -58,25 +56,20 @@ const LiveLocation = ({ route }) => {
       let routesResponse = null;
 
       routesResponse = await getRoutesOfVehicle(vehicleDetails.guid, today);
-      console.log("routesResponse-live", routesResponse);
 
       const routes = routesResponse.body;
-      console.log("routes", routesResponse.body);
       setVehicleRoutes(routes);
 
       if (routes.length === 0) {
         setIsLoading(false);
-        console.log("no route found", t("errors.noRouteFound"));
         throw new Error(t("errors.noRouteFound"));
       }
 
       const routeGuid = routes[0].route_guid;
 
       const stopsResponse = await getStopsOfRoute(routeGuid);
-      console.log("--stopsResponse", stopsResponse);
 
       const completeStops = stopsResponse.body.stopsDetail;
-      console.log("completeStops", completeStops);
 
       if (completeStops.length === 0) {
         setIsLoading(false);
@@ -90,14 +83,8 @@ const LiveLocation = ({ route }) => {
           longitude: JSON.parse(item.longitude),
         };
       });
-      console.log("stopsArr", stopsArr);
 
       setCoords(stopsArr);
-
-      // commented now since the asset live location is currently unavailable
-      // const assetResponse = await assetLiveInfo(id);
-      // const liveLocationResponse = assetResponse.body;
-      // setLiveLocationData(liveLocationResponse)
 
       setLiveLocation(data);
       const currentPositionData = data[0];

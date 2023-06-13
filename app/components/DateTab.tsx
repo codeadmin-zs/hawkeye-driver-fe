@@ -18,7 +18,6 @@ const formattedMonth = month < 10 ? `0${month}` : month; // add leading zero if 
 const formattedDate = `${year}-${formattedMonth}-${day}`;
 
 export const DateTab = ({ startDate, onChangeDate }) => {
-
   const [selectedDate, setSelectedDate] = useState(formattedDate);
   const [openModal, setOpenModal] = useState(false);
 
@@ -29,7 +28,6 @@ export const DateTab = ({ startDate, onChangeDate }) => {
     if (startDate !== selectedDate) {
       setSelectedDate(startDate);
     }
-    console.log('startDate',startDate);
   }, [startDate]);
 
   const setMoment = (noOfDays, previosDate) => {

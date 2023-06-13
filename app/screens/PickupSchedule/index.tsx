@@ -47,7 +47,6 @@ const PickupSchedule: React.FC = ({ route }) => {
     const fetchData = async () => {
       const vehicleId = storeHelpers.getUserDetails()?.vehicleGuid;
       response = await getPickupRoutes(vehicleId);
-      console.log("vehicleid",response);
       
       let selectedRoute = response?.body[0]?.pathid;
       let selectedPath = response?.body[0];

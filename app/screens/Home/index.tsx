@@ -45,8 +45,6 @@ const Home: React.FC = () => {
     let response = null;
     const fetchData = async () => {
       const response = await getDriverDetails();
-      console.log("======response",response);
-      
       setProfileData(response?.body);
     };
     fetchData();
@@ -108,15 +106,6 @@ const Home: React.FC = () => {
       iconName: "Holiday",
       icon: <Holiday />,
     },
-    // {
-    //   title: t("home.applyLeave"),
-    //   bgColor: "#5DD261",
-    //   iconBgColor: "#3EB843",
-    //   textColor: "#fff",
-    //   onPress: () => NavigationService.navigate("HolidayList"),
-    //   iconName: "Holiday",
-    //   icon: <Holiday />,
-    // },
     {
       title: t("home.trips"),
       bgColor: "#ad60d1",
