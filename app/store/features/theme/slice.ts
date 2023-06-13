@@ -24,7 +24,3 @@ const themeSlice = createSlice({
 export const {actions: themeActions} = themeSlice;
 export default themeSlice.reducer;
 
-// export const useThemeSlice = () => {
-//   useInjectReducer({key: slice.name, reducer: slice.reducer});
-//   return {actions: slice.actions};
-// };

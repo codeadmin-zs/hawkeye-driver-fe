@@ -28,4 +28,17 @@ export const makeStyles = (colors: any) =>
       width: '100%',
       height: '100%',
     },
+    buttonContainer: {
+      backgroundColor: "#144072",
+      width: "25%",
+      height: "7%",
+      borderRadius: 10, // added borderRadius
+      marginTop: 16,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    busNo:{
+      marginLeft:"4%",
+      marginTop: '3%',
+    },
   });
