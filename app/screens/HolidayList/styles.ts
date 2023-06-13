@@ -13,7 +13,8 @@ export const makeStyles = (colors: any) =>
       height: '100%',
     },
     contentContainer: {width: '100%', paddingHorizontal: '4%'},
-    headerContainer: {flexDirection: 'row', alignItems: 'center'},
+    headerContainer: {flexDirection: 'row', alignItems: 'center', justifyContent:"space-between"},
+    headerContainerEvents:{flexDirection: 'row', alignItems: 'center'},
     messageText: {
       width: "100%",
       backgroundColor: "white",
@@ -21,5 +22,10 @@ export const makeStyles = (colors: any) =>
       paddingLeft: "5%",
       marginVertical: "3%",
       paddingVertical: "3%",
+    },
+    holidayHeader:{
+      flexDirection: 'row',
+      alignItems:"center"
+      
     }
   });

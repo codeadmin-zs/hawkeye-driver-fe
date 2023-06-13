@@ -1,14 +1,15 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {Button, TextInput, useTheme} from 'react-native-paper';
-import NavigationService from 'app/navigation/NavigationService';
-import {Header} from '../../components';
-import LeftArrow from '../../assets/Svgs/LeftArrow.svg';
-import {Typography} from '../../components/Typography';
-import {MessagePod} from '../../components';
-import {moderateScale} from 'react-native-size-matters';
+import React, { useEffect, useState } from "react";
+import { View, FlatList,StyleSheet} from "react-native";
+import { Button, TextInput,useTheme } from "react-native-paper";
+import NavigationService from "app/navigation/NavigationService";
+import { Header } from "../../components";
+import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
+import { Typography } from "../../components/Typography";
+import { MessagePod } from "../../components";
+import { getMessages } from "../../services/message";
 import moment from 'moment'; 
 import commonStyles from './styles';
+import { moderateScale } from "react-native-size-matters";
 
 const FullMessage: React.FC = (props:any) => {
   const {colors} = useTheme();
@@ -17,11 +18,28 @@ const FullMessage: React.FC = (props:any) => {
   const styles = makeStyles(colors);
 
   const goBack = () => NavigationService.goBack();
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await getMessages();
+        setMessages(response?.data);
+      } catch (error) {
+      }
+    };
+
+    fetchMessages();
+  }, []);
+
+  const onPressMessage = (item: any) => {
+    NavigationService.navigate("FullMessage", { data: item });
+  };
 
   return (
-    <View style={commonStyles.container}>
+    <View style={styles.container}>
       <Header
-        title={'Message'}
+        title={"Messages"}
         leftIcon={<LeftArrow />}
         leftIconPress={() => goBack()}
       />
@@ -40,7 +58,6 @@ const FullMessage: React.FC = (props:any) => {
     </View>
   );
 };
-
 export default FullMessage;
 
 const makeStyles = (colors: any) =>
@@ -55,9 +72,8 @@ const makeStyles = (colors: any) =>
       height: '80%'
     },
     fullMessageConatiner: {
-      // alignItems: 'center',
-      // justifyContent: 'center',
       width: '100%',
       paddingHorizontal: '2%',
     },
   });
+
