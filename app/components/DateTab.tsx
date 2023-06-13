@@ -1,10 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-// import { VehicleInfoStyles } from "./VehicleInfo";
 import { moderateScale } from "react-native-size-matters";
 import moment from "moment";
 import { DatePickerCalender } from "./svgComponents";
-// import {TouchableOpacity} from 'react-native-gesture-handler';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const initialDate = new Date();
@@ -29,7 +27,6 @@ export const DateTab = ({ startDate, onChangeDate }) => {
     if (startDate !== selectedDate) {
       setSelectedDate(startDate);
     }
-    console.log('startDate',startDate);
   }, [startDate]);
 
   const setMoment = (noOfDays, previosDate) => {

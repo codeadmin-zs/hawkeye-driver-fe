@@ -38,7 +38,6 @@ export default function AssetBottomSheet(props) {
     const [filteredState] = getAssetFilters().filter(
       (item) => item.id === state
     );
-    console.log("filteredState", filteredState);
     setAssetState(filteredState);
   }
 

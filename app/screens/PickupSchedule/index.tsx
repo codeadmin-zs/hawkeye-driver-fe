@@ -34,9 +34,6 @@ import RouteListView from "app/components/RouteListView";
 
 const PickupSchedule: React.FC = ({ route }) => {
   const { profileInfo, vehicleDetails = null } = route.params;
-  console.log("profileInfo222", profileInfo);
-  console.log("vehicleDetails222", vehicleDetails);
-  console.log("busname", vehicleDetails?.guid);
   const navigation = useNavigation();
   const { colors } = useTheme();
   const styles = makeStyles(colors);
@@ -50,18 +47,13 @@ const PickupSchedule: React.FC = ({ route }) => {
   const [isDateClickedOnce, setIsDateClickedOnce] = useState(false);
 
   const [getVehiclesData, setGetVehiclesData] = useState({});
-  // const [dateDetails, setDateDetails] = useState(initialDate);
   const [vehicleRoutes, setVehicleRoutes] = useState();
   const [getStops, setGetStops] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-
-  // console.log("dateeee",dateDetails.startDate);
 
   const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
 
   const dateChangeHandler = (date) => {
-    console.log("date", date);
     setDate((prev) => {
       return { ...prev, startDate: date };
     });
@@ -71,8 +63,6 @@ const PickupSchedule: React.FC = ({ route }) => {
     const getVehicles = async () => {
       dispatch(loadingActions.enableLoading());
       const vehicleResponse = await getVehicleDetails(vehicleDetails?.guid);
-      console.log("&&&vehicleResponse", vehicleResponse);
-      console.log("vehicleGuid", moment(date.startDate).format("YYYY-MM-DD"));
       const vehiclesRes = vehicleResponse?.body;
       setGetVehiclesData(vehiclesRes);
 
@@ -85,30 +75,10 @@ const PickupSchedule: React.FC = ({ route }) => {
       } else {
         routesRespp = await getRoutesOfVehicle(vehicleDetails?.guid, null);
       }
-      // const vehicleRoutes = routesRespp?.body;
-      console.log("getVehicleRoutes", routesRespp?.body);
       setVehicleRoutes(routesRespp?.body);
       setStops(new Array(routesRespp?.body?.length));
-      // setStopsCoordinates(new Array(routeResponse.body?.length));
-
       dispatch(loadingActions.disableLoading());
 
-      // console.log("vehicleStops",vehicleStops?.route.startstop);
-      // const allStops = [
-      //   {
-      //     // stopName: vehicleStops?.route?.startstopid,
-      //     // eta: vehicleStops?.route?.eta,
-      //     routename:vehicleStops?.route?.name
-      //   },
-      //   ...stop,
-      //   // {
-      //   //   stopName: vehicleStops?.route.endstopid,
-      //   //   eta: vehicleStops?.route.eta,
-      //   // }
-      // ];
-      //   console.log("allStops", stop);
-      //   setGetStops(stop);
-      // };
     };
     getVehicles();
   }, [date]);
@@ -120,30 +90,18 @@ const PickupSchedule: React.FC = ({ route }) => {
       const tempData = [...stops];
 
       const stopsResponse = await getStopsOfRoute(guid);
-console.log("stopsResponse",stopsResponse);
-
       const stopsCopy = stopsResponse.body;
-      // stopsCopy.accordionPosition = index;
       tempData[index] = stopsCopy;
       setStops(tempData);
     }
   };
 
-  // const getRouteName = (index) => {
-  //   if (stops[index]) {
-  //     return ` - ${stops[index].route?.name}`;
-  //   } else return "";
-  // };
 
   const showRouteOnMap = (stops) => {
-    console.log("stops[0]", stops[0].latitude);
-    console.log("stops-mybus",stops);
     const currentPos = {
       latitude: JSON.parse(stops[0].latitude),
       longitude: JSON.parse(stops[0].longitude),
     };
-
-    console.log("currentPos", currentPos);
 
     NavigationService.navigate("RouteView", {
       vehicleDetails: vehicleDetails,
@@ -232,7 +190,6 @@ console.log("stopsResponse",stopsResponse);
           <BusPod
             busNumber={vehicleDetails?.name}
             plateNumber={vehicleDetails?.plate}
-            // time={"8:10 AM"}
             driverName={profileInfo.name}
             showDots={true}
           />
@@ -336,7 +293,6 @@ console.log("stopsResponse",stopsResponse);
                                       }}
                                       onPress={() =>
                                        { showRouteOnMap(stops[index].stopsDetail)
-                                      console.log("button pressed");
                                       }
                                       }
                                     >
@@ -376,7 +332,6 @@ const styles = StyleSheet.create({
   titleContainerStyle: {
     borderColor: AppStyles.color.COLOR_MEDIUM_LIGHT_GREY,
     borderWidth: 12,
-    // backgroundColor:"red"
   },
 });
 

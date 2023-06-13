@@ -19,9 +19,6 @@ const dim = Dimensions.Screen;
 const DriverPod: FunctionComponent<any> = (props) => {
   const { colors } = useTheme();
   const { data, vehicle } = props;
-  console.log("data",data.name);
-  console.log("vehicle",vehicle);
-
 
   if (!data) {
     return null;

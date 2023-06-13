@@ -26,7 +26,6 @@ const FullMessage: React.FC = (props:any) => {
         const response = await getMessages();
         setMessages(response?.data);
       } catch (error) {
-        console.error("Error fetching messages:", error);
       }
     };
 

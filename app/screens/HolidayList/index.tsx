@@ -62,7 +62,6 @@ const HolidayList: React.FC = () => {
         markedHolidayDates[holiday.holiday_on] = {
           selected: true,
           selectedColor: AppStyles.color.COLOR_RED_IDLE,
-          // selectedColor: "green",
           selectedTextColor: "#FFFFFF",
           selectedHolidayText: holiday?.text,
         };
@@ -91,10 +90,7 @@ const HolidayList: React.FC = () => {
 
     const fetchData = async () => {
       holidayResponse = await getHolidaysList();
-      console.log("holidayResponse", holidayResponse);
       eventResponse = await getEventsList();
-      console.log("eventResponse", eventResponse);
-
       dispatch(loadingActions.disableLoading());
       if (
         Array.isArray(holidayResponse?.body) &&

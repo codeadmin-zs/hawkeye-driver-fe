@@ -34,10 +34,7 @@ export function formatLeaveApiParams(
     endDateObj.date = moment(endDateObj.date).format("YYYY-MM-DD 23:59:59");
     driverData.start_date = startDateObj.date;
     driverData.end_date = endDateObj.date;
-    console.log("###### inaisw if markedDates####",startDateObj,endDateObj, absentType,reason );
   }
-
-  console.log("######markedDates####",dateArr,absentType,reason );
 
   driverData.reason = reason;
   function getAbsentType(absentType) {
@@ -45,11 +42,8 @@ export function formatLeaveApiParams(
     else if (absentType === "Casual") return 1;
     else if (absentType === "Emergency") return 2;
   }
-  console.log("###### before getAbsentType markedDates####",dateArr,absentType,reason );
   driverData.absent_type = getAbsentType(absentType);
-  console.log("###### after getAbsentType markedDates####",dateArr,absentType,reason );
 
-  console.log("driverData from formatparams");
   return {
     ...(driverData.guid ? { guid: driverData.guid } : {}),
 
