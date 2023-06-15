@@ -48,7 +48,6 @@ const Home: React.FC = () => {
     const fetchData = async () => {
       const response = await getDriverDetails();
       console.log("======response",response);
-      
       setProfileData(response?.body);
     };
     fetchData();
@@ -69,7 +68,7 @@ const Home: React.FC = () => {
       iconBgColor: "#C6C6A0",
       textColor: "#fff",
       onPress: () =>
-        NavigationService.navigate("PickupBusList", { navType: "pickup",profileInfo: profileData }),
+        NavigationService.navigate("PickupBusList", {profileInfo: profileData }),
       iconName: "Schedule",
       icon: <Schedule />,
     },

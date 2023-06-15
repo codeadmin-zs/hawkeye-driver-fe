@@ -51,7 +51,7 @@ const BusList: React.FC = ({route}) => {
       setVehicleDetails(vehiclesDetails);
       setIsLoading(false);
       if(vehiclesDetails?.length===1){
-        NavigationService.navigate("LiveLocation")
+        NavigationService.navigate("LiveLocation",{profileInfo:profileInfo,vehicleDetails:vehicleDetails})
       }
     };
     vehicleList();

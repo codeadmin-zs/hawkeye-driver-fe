@@ -51,7 +51,7 @@ const PickupBusList: React.FC = ({route}) => {
       setVehicleDetails(vehiclesDetails);
       setIsLoading(false);
       if(vehiclesDetails?.length===1){
-        NavigationService.navigate("PickupSchedule")
+        NavigationService.navigate("PickupSchedule",{profileInfo:profileInfo,vehiclesDetails:vehiclesDetails})
       }
     };
     vehicleList();

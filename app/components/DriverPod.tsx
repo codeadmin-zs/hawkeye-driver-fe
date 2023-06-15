@@ -50,19 +50,19 @@ const DriverPod: FunctionComponent<any> = (props) => {
           >
             School : {data.schoolName}
           </Typography.H5Light>
-          {/* <Typography.H5Light
+          <Typography.H5Light
             style={{ color: AppStyles.color.COLOR_DARK_GREY }}
           >
             Bus : {vehicle.name}
-          </Typography.H5Light> */}
-          {/* <Typography.H5Light
+          </Typography.H5Light>
+          <Typography.H5Light
             style={{
               color: AppStyles.color.COLOR_DARK_GREY,
               marginLeft: moderateScale(20),
             }}
           >
             Plate : {vehicle.plate}
-          </Typography.H5Light> */}
+          </Typography.H5Light>
         </View>
       </View>
     </TouchableOpacity>
