@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMyProfile } from "../../services/myProfile";
 import { moderateScale } from "react-native-size-matters";
 import { DatePickerCalender } from "app/components/svgComponents";
+import ExpandableList from "app/components/ExpandableList";
 
 const dim = Dimensions.Screen;
 const scaledWidth = moderateScale(36);
@@ -149,6 +150,7 @@ const Home: React.FC = () => {
     <View style={styles.container}>
     <WithLogoMenuHeader />
     <UserDetailsInfo userName={profileData?.name} />
+    <ExpandableList />
     
     {/* <Typography.H5 style={{ color: "red", textAlign: "center" }}>
       {`Your Bus ${t("home.busArrivalMsg")}`}
