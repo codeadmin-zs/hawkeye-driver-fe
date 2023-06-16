@@ -129,129 +129,131 @@ const MyBus: React.FC = ({ route }) => {
   //   }
   // };
 
-  const showRouteOnMap = (stops) => {
-    console.log("stops[0]", stops[0].latitude);
-    console.log("stops-mybus", stops);
-    const currentPos = {
-      latitude: JSON.parse(stops[0].latitude),
-      longitude: JSON.parse(stops[0].longitude),
-    };
+  // const showRouteOnMap = (stops) => {
+  //   console.log("stops[0]", stops[0].latitude);
+  //   console.log("stops-mybus", stops);
+  //   const currentPos = {
+  //     latitude: JSON.parse(stops[0].latitude),
+  //     longitude: JSON.parse(stops[0].longitude),
+  //   };
 
-    console.log("currentPos", currentPos);
+  //   console.log("currentPos", currentPos);
 
-    NavigationService.navigate("RouteView", {
-      vehicleDetails: vehicleDetails,
-      fullTrips: stops,
-      currentPos: currentPos,
-      date: date,
-      profileInfo: profileInfo,
-    });
-  }
-    // const findRouteNoun = () => {
-    //   if (routes?.length === 1) {
-    //     return "route";
-    //   } else {
-    //     return "routes";
-    //   }
-    // };
+  //   NavigationService.navigate("RouteView", {
+  //     vehicleDetails: vehicleDetails,
+  //     fullTrips: stops,
+  //     currentPos: currentPos,
+  //     date: date,
+  //     profileInfo: profileInfo,
+  //   });
+  // };
+  // const findRouteNoun = () => {
+  //   if (routes?.length === 1) {
+  //     return "route";
+  //   } else {
+  //     return "routes";
+  //   }
+  // };
 
-    // const findDateOfRoute = () => {
-    //   if (isDateClickedOnce) {
-    //     return (
-    //       <Typography.H6Light
-    //         style={{
-    //           alignSelf: "flex-start",
-    //           marginLeft: moderateScale(20),
-    //           marginTop: moderateScale(8),
-    //           color: AppStyles.color.COLOR_DARK_GREY,
-    //         }}
-    //       >
-    //         {" "}
-    //         {t("myBus.on")} {moment(date.startDate).format("DD-MMM-YYYY")}
-    //       </Typography.H6Light>
-    //     );
-    //   }
-    // };
+  // const findDateOfRoute = () => {
+  //   if (isDateClickedOnce) {
+  //     return (
+  //       <Typography.H6Light
+  //         style={{
+  //           alignSelf: "flex-start",
+  //           marginLeft: moderateScale(20),
+  //           marginTop: moderateScale(8),
+  //           color: AppStyles.color.COLOR_DARK_GREY,
+  //         }}
+  //       >
+  //         {" "}
+  //         {t("myBus.on")} {moment(date.startDate).format("DD-MMM-YYYY")}
+  //       </Typography.H6Light>
+  //     );
+  //   }
+  // };
 
-    // const renderRouteHeader = (routeName, startDate, endDate, repeatedDays) => {
-    //   if (repeatedDays) {
-    //     return (
-    //       <View
-    //         style={{
-    //           marginTop: moderateScale(8),
-    //           marginBottom: moderateScale(4),
-    //         }}
-    //       >
-    //         <Typography.H5>{routeName}</Typography.H5>
-    //         <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
-    //           {t("myBus.scheduleEvery")}
-    //           {repeatedDays.replace(/,/g, ", ")}
-    //         </Typography.H6>
-    //       </View>
-    //     );
-    //   } else {
-    //     return (
-    //       <View
-    //         style={{
-    //           marginTop: moderateScale(8),
-    //           marginBottom: moderateScale(4),
-    //         }}
-    //       >
-    //         <Typography.H5>{routeName}</Typography.H5>
-    //         <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
-    //           {t("myBus.schedule")} - {moment(startDate).format("DD-MMM-YYYY")}{" "}
-    //           {t("myBus.to")} {moment(endDate).format("DD-MMM-YYYY")}
-    //         </Typography.H6>
-    //       </View>
-    //     );
-    //   }
-    // };
-    const goBack = () => NavigationService.goBack();
+  // const renderRouteHeader = (routeName, startDate, endDate, repeatedDays) => {
+  //   if (repeatedDays) {
+  //     return (
+  //       <View
+  //         style={{
+  //           marginTop: moderateScale(8),
+  //           marginBottom: moderateScale(4),
+  //         }}
+  //       >
+  //         <Typography.H5>{routeName}</Typography.H5>
+  //         <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
+  //           {t("myBus.scheduleEvery")}
+  //           {repeatedDays.replace(/,/g, ", ")}
+  //         </Typography.H6>
+  //       </View>
+  //     );
+  //   } else {
+  //     return (
+  //       <View
+  //         style={{
+  //           marginTop: moderateScale(8),
+  //           marginBottom: moderateScale(4),
+  //         }}
+  //       >
+  //         <Typography.H5>{routeName}</Typography.H5>
+  //         <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
+  //           {t("myBus.schedule")} - {moment(startDate).format("DD-MMM-YYYY")}{" "}
+  //           {t("myBus.to")} {moment(endDate).format("DD-MMM-YYYY")}
+  //         </Typography.H6>
+  //       </View>
+  //     );
+  //   }
+  // };
+  const goBack = () => NavigationService.goBack();
 
-    return (
-      <View style={styles.container}>
-        <Header
-          title={t("myBus.title")}
-          leftIcon={<LeftArrow />}
-          leftIconPress={() => goBack()}
+  return (
+    <View style={styles.container}>
+      <Header
+        title={t("myBus.title")}
+        leftIcon={<LeftArrow />}
+        leftIconPress={() => goBack()}
+      />
+      <View style={styles.topContainer}>
+        <FutureDateTab
+          startDate={date.startDate}
+          onChangeDate={(date) => dateChangeHandler(date)}
+          isDateClickedOnce={isDateClickedOnce}
+          setIsDateClickedOnce={setIsDateClickedOnce}
         />
-        <View style={styles.topContainer}>
-          <FutureDateTab
-            startDate={date.startDate}
-            onChangeDate={(date) => dateChangeHandler(date)}
-            isDateClickedOnce={isDateClickedOnce}
-            setIsDateClickedOnce={setIsDateClickedOnce}
+        <View style={styles.busPod}>
+          <BusPod
+            busNumber={vehicleDetails?.name}
+            plateNumber={vehicleDetails?.plate}
+            // time={"8:10 AM"}
+            driverName={profileInfo.name}
+            // showDots={true}
           />
-          <View style={styles.busPod}>
-            <BusPod
-              busNumber={vehicleDetails?.name}
-              plateNumber={vehicleDetails?.plate}
-              // time={"8:10 AM"}
-              driverName={profileInfo.name}
-              // showDots={true}
-            />
-          </View>
         </View>
-        {isLoading ? (
-          <View style={styles.fullView}>
-            <ActivityIndicator size="large" color={colors.primary} />
-          </View>
-        ) : (
-          <ScrollView>
-            <View
-              style={{
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-              }}
-            >
-              <ScheduledRoutes
-                profileInfo={profileInfo}
-                routesOfvehicle={vehicleRoutes}
-                stops={stops}
-                isDateClickedOnce={false}
-              />
-              {/* {vehicleRoutes?.length > 0 ? (
+      </View>
+      {isLoading ? (
+        <View style={styles.fullView}>
+          <ActivityIndicator size="large" color={colors.primary} />
+        </View>
+      ) : (
+        <ScrollView>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <ScheduledRoutes
+              profileInfo={profileInfo}
+              routesOfvehicle={vehicleRoutes}
+              stops={stops}
+              isDateClickedOnce={false}
+              vehicleDetails={vehicleDetails}
+              date={date}
+            />
+            {/* {vehicleRoutes?.length > 0 ? (
               <>
                 <>
                   <Typography.H6Light
@@ -331,13 +333,12 @@ const MyBus: React.FC = ({ route }) => {
             ) : (
               <NoResourceFound title={t("errors.noRouteFound")} />
             )} */}
-            </View>
-          </ScrollView>
-        )}
-      </View>
-    );
-    
-  };
+          </View>
+        </ScrollView>
+      )}
+    </View>
+  );
+};
 // const styles = StyleSheet.create({
 //   text: {
 //     color: "black",

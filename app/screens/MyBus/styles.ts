@@ -18,17 +18,7 @@ export const makeStyles = (colors: any) =>
     busPod: {
       paddingHorizontal: moderateScale(13)
     },
-    // titleContainerStyle: {
-    //   backgroundColor: AppStyles.color.COLOR_WHITE,
-    //   padding: moderateScale(5),
-    // },
-    titleStyle: {
-      fontSize: moderateScale(14),
-    },
-
-    listStyle: {
-      backgroundColor: "transparent",
-    },
+   
     text: {
       color: "black",
       fontSize: moderateScale(32),

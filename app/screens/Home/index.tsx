@@ -26,6 +26,7 @@ import { getMyProfile } from "../../services/myProfile";
 import { moderateScale } from "react-native-size-matters";
 import { DatePickerCalender } from "app/components/svgComponents";
 import ExpandableList from "app/components/ExpandableList";
+import ScheduledRoutes from "app/components/ScheduledRoutes";
 
 const dim = Dimensions.Screen;
 const scaledWidth = moderateScale(36);
@@ -150,7 +151,15 @@ const Home: React.FC = () => {
     <View style={styles.container}>
     <WithLogoMenuHeader />
     <UserDetailsInfo userName={profileData?.name} />
-    <ExpandableList />
+    {/* <ScheduledRoutes
+      profileInfo={profileData}
+      routesOfvehicle={vehicleRoutes}
+      stops={stops}
+      isDateClickedOnce={false}
+      vehicleDetails={vehicleDetails}
+      date={date}
+    /> */}
+   
     
     {/* <Typography.H5 style={{ color: "red", textAlign: "center" }}>
       {`Your Bus ${t("home.busArrivalMsg")}`}

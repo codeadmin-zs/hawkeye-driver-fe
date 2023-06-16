@@ -28,7 +28,7 @@ function RouteListView(props) {
 
   return (
     <ScrollView
-      style={{ minHeight: dim.height * 0.6 }}
+      style={{marginBottom:moderateScale(15) }}
       contentContainerStyle={{
         marginTop: moderateScale(20),
       }}

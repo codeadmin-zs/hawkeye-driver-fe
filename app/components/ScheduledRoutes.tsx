@@ -1,5 +1,7 @@
-import React, {useState,useEffect } from "react";
-import { View, TouchableOpacity,StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import NavigationService from "app/navigation/NavigationService";
+import { View, TouchableOpacity, StyleSheet,ScrollView} from "react-native";
 import { Typography } from "app/components/Typography";
 import { t } from "app/i18n";
 import { moderateScale } from "react-native-size-matters";
@@ -7,16 +9,16 @@ import AppStyles from "app/config/styles";
 import moment from "moment";
 import ExpandableList from "./ExpandableList";
 import NoResourceFound from "./NoResourceFound";
-import {getStopsOfRoute} from "app/services/vehicles";
+import { getStopsOfRoute } from "app/services/vehicles";
 import RouteListView from "app/components/RouteListView";
 
-
 const ScheduledRoutes: React.FC = (props) => {
-  const { profileInfo, routesOfvehicle, stops, isDateClickedOnce } = props;
+  const { profileInfo, routesOfvehicle, isDateClickedOnce,vehicleDetails,date} = props;
   console.log("profileInfo-sched", profileInfo);
   console.log("routesOfvehicle-scheduled", routesOfvehicle);
 
-  const [stop, setStop] = useState([]);
+  const [stops, setStops] = useState([]);
+  const [allStops, setAllStops] = useState([]);
 
   const findRouteNoun = () => {
     if (routesOfvehicle?.length === 1) {
@@ -85,25 +87,33 @@ const ScheduledRoutes: React.FC = (props) => {
       latitude: JSON.parse(stops[0].latitude),
       longitude: JSON.parse(stops[0].longitude),
     };
+    NavigationService.navigate("RouteView", {
+      vehicleDetails: vehicleDetails,
+      fullTrips: stops,
+      currentPos: currentPos,
+      date: date,
+      profileInfo: profileInfo,
+    });
   };
 
- //fetchRoute is to make api call only once the route is pressed
- const fetchRoute = async (guid, index) => {
-  //if condition to avoid unnecessary api call on repeated press of route
-  if (!stops[index]) {
-    const tempData = [...stops];
+  //fetchRoute is to make api call only once the route is pressed
+  const fetchRoute = async (guid, index) => {
+    //if condition to avoid unnecessary api call on repeated press of route
+    if (!allStops[index]) {
+      const tempData = [...allStops];
 
-    const stopsResponse = await getStopsOfRoute(guid);
-    console.log("stopsResponse", stopsResponse);
+      const stopsResponse = await getStopsOfRoute(guid);
+      console.log("stopsResponse", stopsResponse);
+      // setStops(stopsResponse.body)
 
-    const stopsCopy = stopsResponse.body;
-    // stopsCopy.accordionPosition = index;
-    tempData[index] = stopsCopy;
-    setStop(tempData);
-  }
-};
+      const stopsCopy = stopsResponse.body;
+      // stopsCopy.accordionPosition = index;
+      tempData[index] = stopsCopy;
+      setAllStops(tempData);
+    }
+  };
 
-  // console.log("currentPos", currentPos);
+ 
 
 
   return (
@@ -142,7 +152,7 @@ const ScheduledRoutes: React.FC = (props) => {
                       titleStyle={styles.titleStyle}
                       onPress={() => fetchRoute(item.route_guid, index)}
                     >
-                      {stop?.length > 0 && stop[index] && (
+                      {allStops?.length > 0 && allStops[index] && (
                         <>
                           <View
                             style={{
@@ -158,7 +168,7 @@ const ScheduledRoutes: React.FC = (props) => {
                                   color: AppStyles.color.COLOR_SECONDARY_BLUE,
                                 }}
                                 onPress={() => {
-                                  showRouteOnMap(stops[index].stopsDetail);
+                                  showRouteOnMap(allStops[index]?.stopsDetail);
                                   console.log("button pressed");
                                 }}
                               >
@@ -169,7 +179,7 @@ const ScheduledRoutes: React.FC = (props) => {
                           <RouteListView
                             profileInfo={profileInfo}
                             vehicleRoutes={routesOfvehicle}
-                            stops={stops[index]?.stopsDetail}
+                            stops={allStops[index]?.stopsDetail}
                           />
                         </>
                       )}
@@ -184,6 +194,7 @@ const ScheduledRoutes: React.FC = (props) => {
         <NoResourceFound title={t("errors.noRouteFound")} />
       )}
     </View>
+
   );
 };
 const styles = StyleSheet.create({
@@ -195,12 +206,19 @@ const styles = StyleSheet.create({
     borderColor: AppStyles.color.COLOR_MEDIUM_LIGHT_GREY,
     borderWidth: 1,
     padding: moderateScale(25),
+    backgroundColor: AppStyles.color.COLOR_WHITE,
     // backgroundColor:"red"
   },
-  expandableContainer:{
-    paddingHorizontal:moderateScale(40),
+  expandableContainer: {
+    paddingHorizontal: moderateScale(40),
     paddingBottom: moderateScale(6),
-  }
+  },
+  titleStyle: {
+    fontSize: moderateScale(14),
+  },
+  listStyle: {
+    backgroundColor: "transparent",
+  },
 });
 
 export default ScheduledRoutes;
