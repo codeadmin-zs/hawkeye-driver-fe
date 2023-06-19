@@ -105,10 +105,14 @@ const LiveLocation = ({ route }) => {
 
       let latlang = [];
       latlang = currentPositionData.latlang.split(",");
+      console.log("latlang",latlang);
+      
 
       const lat = JSON.parse(latlang[0]);
       const lang = JSON.parse(latlang[1]);
       let newLatLang = { latitude: lat, longitude: lang };
+      // console.log("newLatLang",newLatLang);
+      
 
       setMarkerState(newLatLang);
       setIsLoading(false);

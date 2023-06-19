@@ -132,7 +132,8 @@ const MyBus: React.FC = ({ route }) => {
             style={{
               alignItems: "center",
               justifyContent: "center",
-              width: "100%",
+              // width: "90%",
+              paddingHorizontal:moderateScale(35)
             }}
           >
             <ScheduledRoutes

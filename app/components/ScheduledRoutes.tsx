@@ -134,7 +134,7 @@ const ScheduledRoutes: React.FC = (props) => {
             </Typography.H6Light>
           </>
           {routesOfvehicle?.length > 0 && (
-            <View style={{ width: "92%", marginTop: moderateScale(6) }}>
+            <View style={{ width: "100%", marginTop: moderateScale(6), marginLeft:'auto', marginRight:'auto' }}>
               {routesOfvehicle?.map((item, index) => (
                 <>
 
@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
   expandableContainer: {
     paddingHorizontal: moderateScale(20),
     paddingBottom: moderateScale(6),
+    // backgroundColor:'green'
   },
   titleStyle: {
     fontSize: moderateScale(14),
