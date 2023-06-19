@@ -26,21 +26,14 @@ import RouteListView from "../../components/RouteListView";
 
 const LiveLocation = ({ route }) => {
   const { profileInfo, vehicleDetails = null } = route.params;
-  console.log("liveLocation-profileinfo", profileInfo);
-  console.log("liveLocation-vehicleDetails", vehicleDetails);
-  console.log("liveLocation-vehicleDetails234", vehicleDetails[0]?.guid);
   const [liveLocation, setLiveLocation] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [liveLocationData, setLiveLocationData] = useState();
-
   const [coords, setCoords] = useState([]);
   const [vehicleRoutes, setVehicleRoutes] = useState();
-
   const [markerState, setMarkerState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
   const [errorMessage, setErrorMessage] = useState(false);
-
   const [activeTab, setActiveTab] = useState(0);
 
   const styles = makeStyles();
@@ -59,25 +52,20 @@ const LiveLocation = ({ route }) => {
       let routesResponse = null;
 
       routesResponse = await getRoutesOfVehicle(vehicleDetails[0]?.guid, today);
-      console.log("routesResponse-live", routesResponse);
 
       const routes = routesResponse.body;
-      console.log("routes", routesResponse.body);
       setVehicleRoutes(routes);
 
       if (routes.length === 0) {
         setIsLoading(false);
-        console.log("no route found", t("errors.noRouteFound"));
         throw new Error(t("errors.noRouteFound"));
       }
 
       const routeGuid = routes[0].route_guid;
 
       const stopsResponse = await getStopsOfRoute(routeGuid);
-      console.log("--stopsResponse", stopsResponse);
 
       const completeStops = stopsResponse.body.stopsDetail;
-      console.log("completeStops", completeStops);
 
       if (completeStops.length === 0) {
         setIsLoading(false);
@@ -91,7 +79,6 @@ const LiveLocation = ({ route }) => {
           longitude: JSON.parse(item.longitude),
         };
       });
-      console.log("stopsArr", stopsArr);
 
       setCoords(stopsArr);
 
@@ -105,14 +92,10 @@ const LiveLocation = ({ route }) => {
 
       let latlang = [];
       latlang = currentPositionData.latlang.split(",");
-      console.log("latlang",latlang);
-      
 
       const lat = JSON.parse(latlang[0]);
       const lang = JSON.parse(latlang[1]);
       let newLatLang = { latitude: lat, longitude: lang };
-      // console.log("newLatLang",newLatLang);
-      
 
       setMarkerState(newLatLang);
       setIsLoading(false);

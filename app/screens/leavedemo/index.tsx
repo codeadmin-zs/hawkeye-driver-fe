@@ -12,7 +12,6 @@ import { makeStyles } from "./styles";
 import { Button } from "../../components/Buttons/button";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { t } from "../../i18n";
-// import { applyLeave } from "../../services/children";
 import { loadingActions } from "../../store/features/loading/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { applyDriverLeave } from "../../services/driver";
@@ -44,12 +43,8 @@ const ApplyLeave: React.FC = ({ route }) => {
   const goBack = () => {NavigationService.goBack();}
   const onApplyLeave =  async() => {
     
-    //  dispatch(loadingActions.enableLoading());
     const resp =   await applyDriverLeave(driverData?.guid, selectedDate, leaveReason);
-console.log("...resp apply leave...",resp);
 
-
-    //  dispatch(loadingActions.disableLoading());
     if(resp?.status === 201){
       setShowSuccess(true);
     }
@@ -88,18 +83,6 @@ console.log("...resp apply leave...",resp);
               getSelectedDayEvents(day.dateString);
             }}
             theme={{
-              // backgroundColor: "#ffffff",
-              // calendarBackground: "#ffffff",
-              // todayTextColor: "#ffffff",
-              // dayTextColor: "#222222",
-              // textDisabledColor: "#d9e1e8",
-              // monthTextColor: "#222222",
-              // arrowColor: "#57B9BB",
-              // textDayFontWeight: "300",
-              // textMonthFontWeight: "bold",
-              // textDayHeaderFontWeight: "500",
-              // textDayFontSize: 16,
-              // textMonthFontSize: 18,
               selectedDayBackgroundColor: "#fff",
               selectedDayTextColor: "#222",
             }}

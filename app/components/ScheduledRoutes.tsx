@@ -14,8 +14,6 @@ import RouteListView from "app/components/RouteListView";
 
 const ScheduledRoutes: React.FC = (props) => {
   const { profileInfo, routesOfvehicle, isDateClickedOnce,vehicleDetails,date} = props;
-  console.log("profileInfo-sched", profileInfo);
-  console.log("routesOfvehicle-scheduled", routesOfvehicle);
 
   const [stops, setStops] = useState([]);
   const [allStops, setAllStops] = useState([]);
@@ -81,8 +79,6 @@ const ScheduledRoutes: React.FC = (props) => {
   };
 
   const showRouteOnMap = (stops) => {
-    console.log("stops[0]", stops[0].latitude);
-    console.log("stops-mybus", stops);
     const currentPos = {
       latitude: JSON.parse(stops[0].latitude),
       longitude: JSON.parse(stops[0].longitude),
@@ -103,11 +99,8 @@ const ScheduledRoutes: React.FC = (props) => {
       const tempData = [...allStops];
 
       const stopsResponse = await getStopsOfRoute(guid);
-      console.log("stopsResponse", stopsResponse);
-      // setStops(stopsResponse.body)
 
       const stopsCopy = stopsResponse.body;
-      // stopsCopy.accordionPosition = index;
       tempData[index] = stopsCopy;
       setAllStops(tempData);
     }
@@ -170,7 +163,6 @@ const ScheduledRoutes: React.FC = (props) => {
                                 }}
                                 onPress={() => {
                                   showRouteOnMap(allStops[index]?.stopsDetail);
-                                  console.log("button pressed");
                                 }}
                               >
                                 {t("map.viewOnMap")}

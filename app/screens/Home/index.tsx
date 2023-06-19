@@ -56,20 +56,17 @@ const Home: React.FC = () => {
   });
   const [getVehiclesData, setGetVehiclesData] = useState({});
   const [vehicleRoutes, setVehicleRoutes] = useState();
-  const [stops,setStops]=useState([])
-  const [vehicleDetails,setVehicleDetails]=useState([])
+  const [stops, setStops] = useState([]);
+  const [vehicleDetails, setVehicleDetails] = useState([]);
   const goBack = () => NavigationService.goBack();
 
   useEffect(() => {
     let response = null;
     const fetchData = async () => {
       const response = await getDriverDetails();
-      console.log("======response", response);
       setProfileData(response?.body);
       const profileInfo = response?.body;
       const vehicles = await getDriverVehicles(profileInfo.guid);
-      console.log("vehicleshome",vehicles.body);
-      console.log("vehiclesid",vehicles?.body);
       setVehicleDetails(vehicles?.body);
 
       vehicles.body.forEach(async (vehicle) => {
@@ -77,28 +74,9 @@ const Home: React.FC = () => {
           vehicle.guid,
           moment(date.startDate).format("YYYY-MM-DD")
         );
-        console.log("routesRespp",routesRespp);  
         setVehicleRoutes(routesRespp?.body);
-      setStops(new Array(routesRespp?.body?.length));
-      }
-      );
-   
-      // const vehicleResponse = await getVehicleDetails(vehicleDetails?.guid);
-      // console.log("&&&vehicleResponse", vehicleResponse);
-      // console.log("vehicleGuid", moment(date.startDate).format("YYYY-MM-DD"));
-      // const vehiclesRes = vehicleResponse?.body;
-      // setGetVehiclesData(vehiclesRes);
-      // const routesRespp = await getRoutesOfVehicle(
-      //   vehicles?.body?.guid,
-      //   moment(date.startDate).format("YYYY-MM-DD")
-      // );
-      // console.log("routesRespp", routesRespp);
-      // const routesOfVehicle = routesRespp?.body;
-      // setVehicleRoutes(routesRespp?.body);
-      // setStops(new Array(routesRespp?.body?.length));
-
-      // const driverDetails=await getVehicleDetails()
-      // console.log("driverDetails",driverDetails);
+        setStops(new Array(routesRespp?.body?.length));
+      });
     };
     fetchData();
   }, []);
@@ -196,27 +174,15 @@ const Home: React.FC = () => {
       <WithLogoMenuHeader />
       <UserDetailsInfo userName={profileData?.name} />
       <View style={styles.schedulesRoutes}>
-      <ScheduledRoutes
-      profileInfo={profileData}
-      routesOfvehicle={vehicleRoutes}
-      stops={stops}
-      isDateClickedOnce={false}
-      vehicleDetails={vehicleDetails}
-      date={date}
-    />
-    </View>
-
-      {/* <Typography.H5 style={{ color: "red", textAlign: "center" }}>
-      {`Your Bus ${t("home.busArrivalMsg")}`}
-    </Typography.H5> */}
-      {/* <Typography.Link
-      style={{ textAlign: "center",color: AppStyles.color.COLOR_SECONDARY_BLUE,textDecorationLine: "none"}}
-      onPress={() =>
-        NavigationService.navigate("ApplyLeave",{driverData:profileData})
-      }
-    >
-      {t("home.applyLeave")}
-      </Typography.Link> */}
+        <ScheduledRoutes
+          profileInfo={profileData}
+          routesOfvehicle={vehicleRoutes}
+          stops={stops}
+          isDateClickedOnce={false}
+          vehicleDetails={vehicleDetails}
+          date={date}
+        />
+      </View>
       <FlatList
         style={styles.tileContainer}
         contentContainerStyle={styles.tileContentContainer}

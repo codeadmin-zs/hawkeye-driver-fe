@@ -17,8 +17,6 @@ const PickupBusList: React.FC = ({route}) => {
   const { colors } = useTheme();
   const styles = makeStyles(colors);
   const { profileInfo } = route.params;
-  console.log("profileInfo2", profileInfo);
-  console.log("guid", profileInfo.guid);
 
   const navigation = useNavigation();
   const [vehicleDetails, setVehicleDetails] = useState([]);
@@ -46,9 +44,7 @@ const PickupBusList: React.FC = ({route}) => {
     const vehicleList = async () => {
       const vehicles = await getDriverVehicles(profileInfo.guid);
       setIsLoading(true);
-      console.log("vehicleList", vehicles);
       const vehiclesDetails = vehicles.body;
-      console.log("vehiclesDetailspick",vehiclesDetails);
       setVehicleDetails(vehiclesDetails);
       setIsLoading(false);
       if(vehiclesDetails?.length===1){
@@ -91,7 +87,6 @@ const PickupBusList: React.FC = ({route}) => {
         <>
           <View style={styles.contentContainer}>
             {vehicleDetails?.length > 0 ? (
-              // <View style={styles.contentContainer}>
               vehicleDetails.map((item, index) => {
                 return (
                   <BusPod
