@@ -26,6 +26,8 @@ import RouteListView from "../../components/RouteListView";
 
 const LiveLocation = ({ route }) => {
   const { profileInfo, vehicleDetails = null } = route.params;
+  console.log("vehicleDetails",vehicleDetails);
+  
   const [liveLocation, setLiveLocation] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [liveLocationData, setLiveLocationData] = useState();
@@ -55,7 +57,8 @@ const LiveLocation = ({ route }) => {
       let vehicleResponse = null;
       let routesResponse = null;
 
-      routesResponse = await getRoutesOfVehicle(vehicleDetails.guid, today);
+      routesResponse = await getRoutesOfVehicle(vehicleDetails[0].guid, today);
+console.log("routesResponse",routesResponse);
 
       const routes = routesResponse.body;
       setVehicleRoutes(routes);

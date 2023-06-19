@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 
-import rootReducer from '../store/rootReducer';  where reducers is a object of reducers
+import rootReducer from '../store/rootReducer';  //where reducers is a object of reducers;
 import sagas from '../store/sagas';
 import loadingReducer from './features/loading/slice';
 import loginReducer from './features/login/slice';
