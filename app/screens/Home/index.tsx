@@ -195,7 +195,8 @@ const Home: React.FC = () => {
     <View style={styles.container}>
       <WithLogoMenuHeader />
       <UserDetailsInfo userName={profileData?.name} />
-      <View style={styles.schedulesRoutes}>
+      <View>
+        <Typography.H5 style={{marginLeft:moderateScale(25)}}>Todays Route:</Typography.H5>
       <ScheduledRoutes
       profileInfo={profileData}
       routesOfvehicle={vehicleRoutes}
@@ -203,6 +204,7 @@ const Home: React.FC = () => {
       isDateClickedOnce={false}
       vehicleDetails={vehicleDetails}
       date={date}
+      showRoutesNumber={false}
     />
     </View>
 

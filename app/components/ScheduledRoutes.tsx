@@ -13,7 +13,7 @@ import { getStopsOfRoute } from "app/services/vehicles";
 import RouteListView from "app/components/RouteListView";
 
 const ScheduledRoutes: React.FC = (props) => {
-  const { profileInfo, routesOfvehicle, isDateClickedOnce,vehicleDetails,date} = props;
+  const { profileInfo, routesOfvehicle, isDateClickedOnce,vehicleDetails,date,showRoutesNumber=false} = props;
   console.log("profileInfo-sched", profileInfo);
   console.log("routesOfvehicle-scheduled", routesOfvehicle);
 
@@ -121,7 +121,9 @@ const ScheduledRoutes: React.FC = (props) => {
       {routesOfvehicle?.length > 0 ? (
         <>
           <>
-            <Typography.H6Light
+          {showRoutesNumber && (
+<View>
+<Typography.H6Light
               style={{
                 alignSelf: "flex-start",
                 marginLeft: moderateScale(25),
@@ -132,6 +134,9 @@ const ScheduledRoutes: React.FC = (props) => {
               {routesOfvehicle?.length} {findRouteNoun()} found
               {isDateClickedOnce ? findDateOfRoute() : ""}
             </Typography.H6Light>
+</View>
+          )}
+           
           </>
           {routesOfvehicle?.length > 0 && (
            <View style={{ width: "100%", marginTop: moderateScale(6), marginLeft:'auto', marginRight:'auto' }}>

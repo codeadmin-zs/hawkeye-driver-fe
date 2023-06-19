@@ -143,6 +143,7 @@ const MyBus: React.FC = ({ route }) => {
               isDateClickedOnce={false}
               vehicleDetails={vehicleDetails}
               date={date}
+              showRoutesNumber={true}
             />
             {/* {vehicleRoutes?.length > 0 ? (
               <>
