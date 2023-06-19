@@ -30,4 +30,11 @@ export const makeStyles = (colors: any) =>
       paddingHorizontal:moderateScale(15)
       // backgroundColor:"red"
     },
+    titleStyle: {
+      fontSize: moderateScale(14),
+    },
+
+    listStyle: {
+      backgroundColor: "transparent",
+    },
   });

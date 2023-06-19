@@ -31,12 +31,13 @@ import {
 } from "../../services/vehicles";
 import BusPod from "../../components/BusPod";
 import RouteListView from "app/components/RouteListView";
+import ScheduledRoutes from "app/components/ScheduledRoutes";
 
 const PickupSchedule: React.FC = ({ route }) => {
-  const { profileInfo, vehicleDetails = null } = route.params;
-  console.log("profileInfo222", profileInfo);
-  console.log("vehicleDetails222", vehicleDetails);
-  console.log("busname", vehicleDetails?.guid);
+  const { profileInfo, vehicleDetails } = route.params;
+  console.log("profileInfo-pick", profileInfo);
+  console.log("vehicleDetails-pick", vehicleDetails);
+  console.log("guid-pick", vehicleDetails[0]?.guid);
   const navigation = useNavigation();
   const { colors } = useTheme();
   const styles = makeStyles(colors);
@@ -70,7 +71,7 @@ const PickupSchedule: React.FC = ({ route }) => {
   useEffect(() => {
     const getVehicles = async () => {
       dispatch(loadingActions.enableLoading());
-      const vehicleResponse = await getVehicleDetails(vehicleDetails?.guid);
+      const vehicleResponse = await getVehicleDetails(vehicleDetails[0]?.guid);
       console.log("&&&vehicleResponse", vehicleResponse);
       console.log("vehicleGuid", moment(date.startDate).format("YYYY-MM-DD"));
       const vehiclesRes = vehicleResponse?.body;
@@ -79,11 +80,11 @@ const PickupSchedule: React.FC = ({ route }) => {
       let routesRespp = null;
       if (isDateClickedOnce) {
         routesRespp = await getRoutesOfVehicle(
-          vehicleDetails?.guid,
+          vehicleDetails[0]?.guid,
           moment(date.startDate).format("YYYY-MM-DD")
         );
       } else {
-        routesRespp = await getRoutesOfVehicle(vehicleDetails?.guid, null);
+        routesRespp = await getRoutesOfVehicle(vehicleDetails[0]?.guid, null);
       }
       // const vehicleRoutes = routesRespp?.body;
       console.log("getVehicleRoutes", routesRespp?.body);
@@ -92,126 +93,109 @@ const PickupSchedule: React.FC = ({ route }) => {
       // setStopsCoordinates(new Array(routeResponse.body?.length));
 
       dispatch(loadingActions.disableLoading());
-
-      // console.log("vehicleStops",vehicleStops?.route.startstop);
-      // const allStops = [
-      //   {
-      //     // stopName: vehicleStops?.route?.startstopid,
-      //     // eta: vehicleStops?.route?.eta,
-      //     routename:vehicleStops?.route?.name
-      //   },
-      //   ...stop,
-      //   // {
-      //   //   stopName: vehicleStops?.route.endstopid,
-      //   //   eta: vehicleStops?.route.eta,
-      //   // }
-      // ];
-      //   console.log("allStops", stop);
-      //   setGetStops(stop);
-      // };
     };
     getVehicles();
   }, [date]);
 
-  //fetchRoute is to make api call only once the route is pressed
-  const fetchRoute = async (guid, index) => {
-    //if condition to avoid unnecessary api call on repeated press of route
-    if (!stops[index]) {
-      const tempData = [...stops];
+//   //fetchRoute is to make api call only once the route is pressed
+//   const fetchRoute = async (guid, index) => {
+//     //if condition to avoid unnecessary api call on repeated press of route
+//     if (!stops[index]) {
+//       const tempData = [...stops];
 
-      const stopsResponse = await getStopsOfRoute(guid);
-console.log("stopsResponse",stopsResponse);
+//       const stopsResponse = await getStopsOfRoute(guid);
+// console.log("stopsResponse",stopsResponse);
 
-      const stopsCopy = stopsResponse.body;
-      // stopsCopy.accordionPosition = index;
-      tempData[index] = stopsCopy;
-      setStops(tempData);
-    }
-  };
+//       const stopsCopy = stopsResponse.body;
+//       // stopsCopy.accordionPosition = index;
+//       tempData[index] = stopsCopy;
+//       setStops(tempData);
+//     }
+//   };
 
-  // const getRouteName = (index) => {
-  //   if (stops[index]) {
-  //     return ` - ${stops[index].route?.name}`;
-  //   } else return "";
-  // };
+//   // const getRouteName = (index) => {
+//   //   if (stops[index]) {
+//   //     return ` - ${stops[index].route?.name}`;
+//   //   } else return "";
+//   // };
 
-  const showRouteOnMap = (stops) => {
-    console.log("stops[0]", stops[0].latitude);
-    console.log("stops-mybus",stops);
-    const currentPos = {
-      latitude: JSON.parse(stops[0].latitude),
-      longitude: JSON.parse(stops[0].longitude),
-    };
+//   const showRouteOnMap = (stops) => {
+//     console.log("stops[0]", stops[0].latitude);
+//     console.log("stops-mybus",stops);
+//     const currentPos = {
+//       latitude: JSON.parse(stops[0].latitude),
+//       longitude: JSON.parse(stops[0].longitude),
+//     };
 
-    console.log("currentPos", currentPos);
+//     console.log("currentPos", currentPos);
 
-    NavigationService.navigate("RouteView", {
-      vehicleDetails: vehicleDetails,
-      fullTrips: stops,
-      currentPos: currentPos,
-      date: date,
-      profileInfo: profileInfo,
-    });
-  };
-  const findRouteNoun = () => {
-    if (routes?.length === 1) {
-      return "route";
-    } else {
-      return "routes";
-    }
-  };
+//     NavigationService.navigate("RouteView", {
+//       vehicleDetails: vehicleDetails,
+//       fullTrips: stops,
+//       currentPos: currentPos,
+//       date: date,
+//       profileInfo: profileInfo,
+//     });
+//   };
+//   const findRouteNoun = () => {
+//     if (routes?.length === 1) {
+//       return "route";
+//     } else {
+//       return "routes";
+//     }
+//   };
 
-  const findDateOfRoute = () => {
-    if (isDateClickedOnce) {
-      return (
-        <Typography.H6Light
-          style={{
-            alignSelf: "flex-start",
-            marginLeft: moderateScale(20),
-            marginTop: moderateScale(8),
-            color: AppStyles.color.COLOR_DARK_GREY,
-          }}
-        >
-          {" "}
-          on {moment(date.startDate).format("DD-MMM-YYYY")}
-        </Typography.H6Light>
-      );
-    }
-  };
+//   const findDateOfRoute = () => {
+//     if (isDateClickedOnce) {
+//       return (
+//         <Typography.H6Light
+//           style={{
+//             alignSelf: "flex-start",
+//             marginLeft: moderateScale(20),
+//             marginTop: moderateScale(8),
+//             color: AppStyles.color.COLOR_DARK_GREY,
+//           }}
+//         >
+//           {" "}
+//           on {moment(date.startDate).format("DD-MMM-YYYY")}
+//         </Typography.H6Light>
+//       );
+//     }
+//   };
 
-  const renderRouteHeader = (routeName, startDate, endDate, repeatedDays) => {
-    if (repeatedDays) {
-      return (
-        <View
-          style={{
-            marginTop: moderateScale(8),
-            marginBottom: moderateScale(4),
-          }}
-        >
-          <Typography.H5>{routeName}</Typography.H5>
-          <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
-            {t("pickUpSchedule.scheduleEvery")}
-            {repeatedDays.replace(/,/g, ", ")}
-          </Typography.H6>
-        </View>
-      );
-    } else {
-      return (
-        <View
-          style={{
-            marginTop: moderateScale(8),
-            marginBottom: moderateScale(4),
-          }}
-        >
-          <Typography.H5>{routeName}</Typography.H5>
-          <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
-            {t("pickUpSchedule.schedule")} - {moment(startDate).format("DD-MMM-YYYY")}{" "}
-            {"to"} {moment(endDate).format("DD-MMM-YYYY")}
-          </Typography.H6>
-        </View>
-      );
-    }
-  };
+//   const renderRouteHeader = (routeName, startDate, endDate, repeatedDays) => {
+//     if (repeatedDays) {
+//       return (
+//         <View
+//           style={{
+//             marginTop: moderateScale(8),
+//             marginBottom: moderateScale(4),
+//           }}
+//         >
+//           <Typography.H5>{routeName}</Typography.H5>
+//           <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
+//             {t("pickUpSchedule.scheduleEvery")}
+//             {repeatedDays.replace(/,/g, ", ")}
+//           </Typography.H6>
+//         </View>
+//       );
+//     } else {
+//       return (
+//         <View
+//           style={{
+//             marginTop: moderateScale(8),
+//             marginBottom: moderateScale(4),
+//           }}
+//         >
+//           <Typography.H5>{routeName}</Typography.H5>
+//           <Typography.H6 style={{ color: AppStyles.color.COLOR_DARK_BLUE }}>
+//             {t("pickUpSchedule.schedule")} - {moment(startDate).format("DD-MMM-YYYY")}{" "}
+//             {"to"} {moment(endDate).format("DD-MMM-YYYY")}
+//           </Typography.H6>
+//         </View>
+//       );
+//     }
+//   };
   const goBack = () => NavigationService.goBack();
 
   return (
@@ -234,7 +218,7 @@ console.log("stopsResponse",stopsResponse);
             plateNumber={vehicleDetails?.plate}
             // time={"8:10 AM"}
             driverName={profileInfo.name}
-            showDots={true}
+            // showDots={true}
           />
         </View>
       </View>
@@ -251,7 +235,16 @@ console.log("stopsResponse",stopsResponse);
               width: "100%",
             }}
           >
-            {vehicleRoutes?.length > 0 ? (
+
+<ScheduledRoutes
+              profileInfo={profileInfo}
+              routesOfvehicle={vehicleRoutes}
+              stops={stops}
+              isDateClickedOnce={false}
+              vehicleDetails={vehicleDetails}
+              date={date}
+            />
+            {/* {vehicleRoutes?.length > 0 ? (
               <>
                 <>
                   <Typography.H6Light
@@ -265,7 +258,7 @@ console.log("stopsResponse",stopsResponse);
                     {vehicleRoutes?.length} {findRouteNoun()} found
                     {isDateClickedOnce ? findDateOfRoute() : ""}
                   </Typography.H6Light>
-                </>
+                </> */}
                 {/* <></> */}
                 {/* {vehicleRoutes?.length === 1 ? ( */}
                 {/* <Typography.H5Light
@@ -290,7 +283,7 @@ console.log("stopsResponse",stopsResponse);
                     {moment(date.startDate).format("DD-MMM-YYYY")}
                   </Typography.H5Light>
                 )} */}
-                {vehicleRoutes?.length > 0 && (
+                {/* {vehicleRoutes?.length > 0 && (
                   <View style={{ width: "92%", marginTop: moderateScale(6) }}>
                     {vehicleRoutes?.map((item, index) => (
                       <>
@@ -312,7 +305,7 @@ console.log("stopsResponse",stopsResponse);
                             onPress={() => fetchRoute(item.route_guid, index)}
                           >
                             {stops?.length > 0 && stops[index] && (
-                              <>
+                              <> */}
                                 {/* <View
                                   style={{
                                     position: "absolute",
@@ -320,7 +313,7 @@ console.log("stopsResponse",stopsResponse);
                                     top: moderateScale(10),
                                   }}
                                 > */}
-                                <View
+                                {/* <View
                                   style={{
                                     width: "100%",
                                     flexDirection: "row",
@@ -360,7 +353,7 @@ console.log("stopsResponse",stopsResponse);
               </>
             ) : (
               <NoResourceFound title={t("errors.noRouteFound")} />
-            )}
+            )} */}
           </View>
         </ScrollView>
       )}
@@ -368,16 +361,16 @@ console.log("stopsResponse",stopsResponse);
   );
 };
 
-const styles = StyleSheet.create({
-  text: {
-    color: "black",
-    fontSize: moderateScale(32),
-  },
-  titleContainerStyle: {
-    borderColor: AppStyles.color.COLOR_MEDIUM_LIGHT_GREY,
-    borderWidth: 12,
-    // backgroundColor:"red"
-  },
-});
+// const styles = StyleSheet.create({
+//   text: {
+//     color: "black",
+//     fontSize: moderateScale(32),
+//   },
+//   titleContainerStyle: {
+//     borderColor: AppStyles.color.COLOR_MEDIUM_LIGHT_GREY,
+//     borderWidth: 12,
+//     // backgroundColor:"red"
+//   },
+// });
 
 export default PickupSchedule;

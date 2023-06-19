@@ -124,7 +124,7 @@ const ScheduledRoutes: React.FC = (props) => {
             <Typography.H6Light
               style={{
                 alignSelf: "flex-start",
-                marginLeft: moderateScale(20),
+                marginLeft: moderateScale(40),
                 marginTop: moderateScale(8),
                 color: AppStyles.color.COLOR_DARK_GREY,
               }}

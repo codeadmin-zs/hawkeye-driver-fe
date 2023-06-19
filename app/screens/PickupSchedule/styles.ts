@@ -19,8 +19,11 @@ export const makeStyles = (colors: any) =>
       paddingHorizontal: moderateScale(13)
     },
     titleContainerStyle: {
-      backgroundColor: AppStyles.color.COLOR_WHITE,
-      padding: moderateScale(5),
+      borderColor: AppStyles.color.COLOR_MEDIUM_LIGHT_GREY,
+      borderWidth: 5,
+      padding: moderateScale(15),
+      paddingHorizontal:moderateScale(15)
+      // backgroundColor:"red"
     },
     titleStyle: {
       fontSize: moderateScale(14),

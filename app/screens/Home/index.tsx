@@ -51,6 +51,9 @@ const Home: React.FC = () => {
       const response = await getDriverDetails();
       console.log("======response",response);
       setProfileData(response?.body);
+      // const driverDetails=await getVehicleDetails()
+      // console.log("driverDetails",driverDetails);
+      
     };
     fetchData();
   }, []);
@@ -111,15 +114,6 @@ const Home: React.FC = () => {
       iconName: "Holiday",
       icon: <Holiday />,
     },
-    // {
-    //   title: t("home.applyLeave"),
-    //   bgColor: "#5DD261",
-    //   iconBgColor: "#3EB843",
-    //   textColor: "#fff",
-    //   onPress: () => NavigationService.navigate("HolidayList"),
-    //   iconName: "Holiday",
-    //   icon: <Holiday />,
-    // },
     {
       title: t("home.trips"),
       bgColor: "#ad60d1",
