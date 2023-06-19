@@ -36,16 +36,11 @@ this.map = "";
 
 const Track: React.FC = ({ route, navigation }) => {
   const { routeParam } = route.params;
+  
   const { stations } = routeParam;
   const driverName = storeHelpers.getUserDetails()?.name;
   const [wayPoints, setWayPoints] = useState([]);
   const [routes, setRoutes] = useState([
-    // {
-    //   latitude: 37.3318456,
-    //   longitude: -122.0296002,
-    //   latitudeDelta: 0.04,
-    //   longitudeDelta: 0.05,
-    // },
   ]);
   const [origin, setOrigin] = useState({
     latitude: 37.3318456,
@@ -65,8 +60,6 @@ const Track: React.FC = ({ route, navigation }) => {
       let routesArray = stations.map((item: any) => ({
         latitude: item?.latitude,
         longitude: item?.longitude,
-        // latitudeDelta: 0.04,
-        // longitudeDelta: 0.05,
       }));
       setRoutes(routesArray);
       setDestination(routesArray[routesArray.length - 1]);
@@ -112,14 +105,10 @@ const Track: React.FC = ({ route, navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      // The screen is focused
-      // Call any action
-      // setTimeout(() => {
 
       if (routes?.length > 0) {
         setMapCoords();
       }
-      // },1000)
     });
 
     // Return the function to unsubscribe from the event so it gets removed on unmount
@@ -182,12 +171,6 @@ const Track: React.FC = ({ route, navigation }) => {
                 longitudeDelta: 0.0421,
               }}
               mapPadding={{ top: 20, right: 20, bottom: 20, left: 20 }}
-              // region={{
-              //   latitude: parseFloat(routes[0]?.latitude), //or Number(LATITUDE)
-              //   longitude: parseFloat(routes[0]?.longitude),
-              //   latitudeDelta: 0.02,
-              //   longitudeDelta: 0.02,
-              // }}
               showsUserLocation={true}
               followUserLocation={true}
               rotateEnabled={false}
@@ -196,16 +179,10 @@ const Track: React.FC = ({ route, navigation }) => {
                 height: "100%",
                 width: "100%",
                 padding: "5%",
-                // flex:1
               }}
-              // onRegionChange={region => onRegionChange(region)}
-              // ref={(ref) => {
-              //   mapRef = ref;
-              // }}
               ref={mapRef}
               onLayout={() => {
                 routes?.length > 0 &&
-                  // !this.state.showMarker &&
                   mapRef &&
                   mapRef?.current?.fitToCoordinates?.(routes, {
                     edgePadding: {
@@ -241,7 +218,6 @@ const Track: React.FC = ({ route, navigation }) => {
                   latitude: JSON.parse(origin?.latitude),
                   longitude: JSON.parse(origin?.longitude),
                 }}
-                // pinColor="green"
                 onPress={() => showModal(origin, 0)}
               >
                 <StartTrackIcon
@@ -255,7 +231,6 @@ const Track: React.FC = ({ route, navigation }) => {
                   latitude: JSON.parse(destination?.latitude),
                   longitude: JSON.parse(destination?.longitude),
                 }}
-                // pinColor="red"
                 onPress={() => showModal(destination, routes?.length)}
               >
                 <StopTrackIcon
@@ -281,7 +256,6 @@ const Track: React.FC = ({ route, navigation }) => {
                 apikey={googleApiKey}
                 strokeWidth={3}
                 strokeColor="#144072"
-                // splitWaypoints={true}
                 onReady={(result) => {
                   mapRef?.current?.fitToCoordinates(result.coordinates, {
                     edgePadding: {

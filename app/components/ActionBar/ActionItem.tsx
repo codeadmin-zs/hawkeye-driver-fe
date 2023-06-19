@@ -1,7 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, View,TouchableOpacity} from 'react-native';
 import {moderateScale} from 'react-native-size-matters';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const ActionItem = ({children,onPress}) => {
   return (

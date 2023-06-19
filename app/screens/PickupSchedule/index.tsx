@@ -1,181 +1,137 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  StyleSheet,
   View,
+  Text,
+  Button,
   ActivityIndicator,
-  useWindowDimensions,
-  ScrollView,
 } from "react-native";
-import { TabView, SceneMap } from "react-native-tab-view";
-import { useTheme, List } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import NavigationService from "app/navigation/NavigationService";
+import { moderateScale } from "react-native-size-matters";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import moment from "moment";
+import { useTheme } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { loadingActions } from "../../store/features/loading/slice";
-import { moderateScale } from "react-native-size-matters";
 
-import NavigationService from "app/navigation/NavigationService";
-import { Header, DriverPod, NoResourceFound, RoutePod } from "../../components";
-import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
+import { DateTab, Header, TrackPod, NoResourceFound } from "app/components";
+import ExpandableList from "app/components/ExpandableList";
+import { t } from "../../i18n";
 import { Typography } from "../../components/Typography";
-import { TabButton } from "../../components/Buttons/TabButton";
-import Dimensions from "../../utils/helper";
-import { getPickupRoutes } from "../../services/children";
-import PickupStop from "./components/PickupStop";
-import moment from "moment";
-import LinearGradient from "react-native-linear-gradient";
-import DownArrow from "app/assets/Svgs/DownArrow.svg";
-import { fonts } from "../../config/fonts";
-import { storeHelpers } from "app/store";
-
-const dim = Dimensions.Screen;
+import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
 import { makeStyles } from "./styles";
+import { FutureDateTab } from "app/components/FutureDateTab";
+import AppStyles from "../../config/styles";
+import {
+  getVehicleDetails,
+  getVehiclePaths,
+  getRoutesOfVehicle,
+  getStopsOfRoute,
+} from "../../services/vehicles";
+import BusPod from "../../components/BusPod";
+import RouteListView from "app/components/RouteListView";
+import ScheduledRoutes from "app/components/ScheduledRoutes";
 
 const PickupSchedule: React.FC = ({ route }) => {
-  const { childeInfo } = route.params;
-  const driverName = storeHelpers.getUserDetails()?.name;
+  const { profileInfo, vehicleDetails } = route.params;
+  const navigation = useNavigation();
   const { colors } = useTheme();
   const styles = makeStyles(colors);
-  const [pickupData, setPickupData] = useState([]);
-  const [selectedRoute, setSelectedRoute] = useState("");
-  const [selectedPath, setSelectedPath] = useState("");
-  const [studentStop, setStudentStop] = useState({ fromStop: "", toStop: "" });
-  const dispatch = useDispatch();
 
+  const [date, setDate] = useState({
+    startDate: moment().format("YYYY-MM-DD"),
+  });
+  const [stops, setStops] = useState([]);
+  const [stopsCoordinates, setStopsCoordinates] = useState([]);
+  const [routes, setRoutes] = useState();
+  const [isDateClickedOnce, setIsDateClickedOnce] = useState(false);
+
+  const [getVehiclesData, setGetVehiclesData] = useState({});
+  const [vehicleRoutes, setVehicleRoutes] = useState();
+  const [getStops, setGetStops] = useState([]);
+
+  const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
 
+  const dateChangeHandler = (date) => {
+    setDate((prev) => {
+      return { ...prev, startDate: date };
+    });
+  };
+
   useEffect(() => {
-    dispatch(loadingActions.enableLoading());
-    let response = null;
-    const fetchData = async () => {
-      const vehicleId = storeHelpers.getUserDetails()?.vehicleGuid;
-      response = await getPickupRoutes(vehicleId);
-      let selectedRoute = response?.body[0]?.pathid;
-      let selectedPath = response?.body[0];
+    const getVehicles = async () => {
+      dispatch(loadingActions.enableLoading());
+      const vehicleResponse = await getVehicleDetails(vehicleDetails[0]?.guid);
+      const vehiclesRes = vehicleResponse?.body;
+      setGetVehiclesData(vehiclesRes);
+
+      let routesRespp = null;
+      if (isDateClickedOnce) {
+        routesRespp = await getRoutesOfVehicle(
+          vehicleDetails[0]?.guid,
+          moment(date.startDate).format("YYYY-MM-DD")
+        );
+      } else {
+        routesRespp = await getRoutesOfVehicle(vehicleDetails[0]?.guid, null);
+      }
+      setVehicleRoutes(routesRespp?.body);
+      setStops(new Array(routesRespp?.body?.length));
+
       dispatch(loadingActions.disableLoading());
-
-      setSelectedPath(selectedPath);
-      setSelectedRoute(selectedRoute);
-      setPickupData(response?.body);
     };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    let toStop = "";
-    let fromStop = "";
-    if (pickupData?.outbound_stop) {
-      fromStop = pickupData?.outbound?.find(
-        (item) => pickupData?.outbound_stop === item.id
-      );
-    }
-    if (pickupData?.inbound_stop) {
-      toStop = pickupData?.inbound?.find(
-        (item) => pickupData?.inbound_stop === item.id
-      );
-    }
-    setStudentStop({ fromStop, toStop });
-  }, [pickupData]);
+    getVehicles();
+  }, [date]);
 
   const goBack = () => NavigationService.goBack();
+
   return (
     <View style={styles.container}>
       <Header
-        title={"Schedule Trips"}
+        title={t("pickUpSchedule.title")}
         leftIcon={<LeftArrow />}
         leftIconPress={() => goBack()}
       />
-      {/* <DriverPod data={selectedPath} index={selectedPath.pathid} /> */}
-      {/* <List.AccordionGroup>
-        {pickupData?.length> 0 ? pickupData.map((item) => (
-          <List.Accordion
-            title={item.pathname}
-            id={item.pathid}
-            titleStyle={{ color: colors.primary, fontFamily: fonts.medium }}
-            right={(props) => <DownArrow fill={colors.primary} />}
-          >
-            <PickupStop pickupData={pickupData} selectedRoute={selectedRoute} />  
-          </List.Accordion>
-        )):
-        (<NoResourceFound />)}
-      </List.AccordionGroup> */}
-      {isLoading ? (
-        <View style={styles.fullView}>
-          <ActivityIndicator size="large" color={colors.primary} />
-        </View>
-      ) : (
-        <View style={{ marginHorizontal: "4%", marginTop: "4%" }}>
-          {pickupData?.length > 0 ? (
-            pickupData.map((item) => (
-              <RoutePod
-                routeData={item}
-                driverName={driverName}
-                onPress={() =>
-                  NavigationService.navigate("Track", { routeParam: item })
-                }
-              />
-            ))
-          ) : (
-            <NoResourceFound />
-          )}
-        </View>
-      )}
-      {/* <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{ width: layout.width }}
-    /> */}
-
-      {/* <ScrollView
-        style={styles.tabButtonBox}
-        horizontal={true}
-        contentContainerStyle={{}}
-      >
-        {pickupData.map((item) => (
-          <TabButton
-            Label={item.pathname}
-            textColor={
-              selectedRoute === item.pathid ? colors.primary : colors.passive
-            }
-            borderWidth={selectedRoute === item.pathid ? 3 : 1}
-            borderColor={
-              selectedRoute === item.pathid ? colors.primary : colors.passive
-            }
-            onPress={() => setSelectedRoute(item.pathid)}
-            height={moderateScale(40)}
+      <View style={styles.topContainer}>
+        <FutureDateTab
+          startDate={date.startDate}
+          onChangeDate={(date) => dateChangeHandler(date)}
+          isDateClickedOnce={isDateClickedOnce}
+          setIsDateClickedOnce={setIsDateClickedOnce}
+        />
+        <View style={styles.busPod}>
+          <BusPod
+            busNumber={vehicleDetails?.name}
+            plateNumber={vehicleDetails?.plate}
+            driverName={profileInfo.name}
           />
-        ))} */}
-
-      {/* <TabButton
-          Label={"To School"}
-          height={moderateScale(40)}
-          textColor={showFromSchool ? colors.passive : colors.primary}
-          borderWidth={showFromSchool ? 1 : 3}
-          borderColor={showFromSchool ? colors.passive : colors.primary}
-          onPress={() => setShowFromSchool(false)}
-        /> */}
-      {/* </ScrollView>
+        </View>
+      </View>
       {isLoading ? (
         <View style={styles.fullView}>
           <ActivityIndicator size="large" color={colors.primary} />
         </View>
       ) : (
-        <> */}
-      {/* <View
+        <ScrollView>
+          <View
             style={{
               alignItems: "center",
               justifyContent: "center",
               width: "100%",
             }}
           >
-            <Typography.H4 style={{ paddingTop: 8 }}>
-              {showFromSchool
-                ? `${studentStop.fromStop.name} : ETA : ${moment(studentStop.fromStop.eta,'HH:mm:ss').format('hh:mm A')}`
-                : `${studentStop.toStop.name} : ETA : ${moment(studentStop.toStop.eta,'HH:mm:ss').format('hh:mm A')}`}
-            </Typography.H4>
-          </View> */}
-
-      {/* <PickupStop pickupData={pickupData} selectedRoute={selectedRoute} />
-        </>
-      )} */}
+            <ScheduledRoutes
+              profileInfo={profileInfo}
+              routesOfvehicle={vehicleRoutes}
+              stops={stops}
+              isDateClickedOnce={false}
+              vehicleDetails={vehicleDetails}
+              date={date}
+            />
+          </View>
+        </ScrollView>
+      )}
     </View>
   );
 };

@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import Dimensions from '../../utils/helper';
+import { moderateScale } from 'react-native-size-matters';
 
 const dim = Dimensions.Screen;
 
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     textAlign: 'center',
   },
+
 });
 
 export default styles;
