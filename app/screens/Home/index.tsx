@@ -13,8 +13,8 @@ import MyProfile from "../../assets/Svgs/MyProfile.svg";
 import Children from "../../assets/Svgs/Children.svg";
 import Messages from "../../assets/Svgs/Messages.svg";
 import Holiday from "../../assets/Svgs/Holiday.svg";
-import MyBus from "../../assets/Svgs/MyBus.svg"
-import Calendar from "../../assets/Svgs/Calendar.svg"
+import MyBus from "../../assets/Svgs/MyBus.svg";
+import Calendar from "../../assets/Svgs/Calendar.svg";
 import { TrackerHistoryIcon } from "app/components/svgComponents";
 import { t } from "../../i18n";
 import { getDriverDetails } from "../../services/driver";
@@ -27,6 +27,14 @@ import { moderateScale } from "react-native-size-matters";
 import { DatePickerCalender } from "app/components/svgComponents";
 import ExpandableList from "app/components/ExpandableList";
 import ScheduledRoutes from "app/components/ScheduledRoutes";
+import {
+  getVehicleDetails,
+  getVehiclePaths,
+  getRoutesOfVehicle,
+  getStopsOfRoute,
+} from "app/services/vehicles";
+import { getDriverVehicles } from "app/services/driver";
+import moment from "moment";
 
 const dim = Dimensions.Screen;
 const scaledWidth = moderateScale(36);
@@ -43,17 +51,54 @@ const Home: React.FC = () => {
 
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
   const [profileData, setProfileData] = useState({});
+  const [date, setDate] = useState({
+    startDate: moment().format("YYYY-MM-DD"),
+  });
+  const [getVehiclesData, setGetVehiclesData] = useState({});
+  const [vehicleRoutes, setVehicleRoutes] = useState();
+  const [stops,setStops]=useState([])
+  const [vehicleDetails,setVehicleDetails]=useState([])
   const goBack = () => NavigationService.goBack();
 
   useEffect(() => {
     let response = null;
     const fetchData = async () => {
       const response = await getDriverDetails();
-      console.log("======response",response);
+      console.log("======response", response);
       setProfileData(response?.body);
+      const profileInfo = response?.body;
+      const vehicles = await getDriverVehicles(profileInfo.guid);
+      console.log("vehicleshome",vehicles.body);
+      console.log("vehiclesid",vehicles?.body);
+      setVehicleDetails(vehicles?.body);
+
+      vehicles.body.forEach(async (vehicle) => {
+        const routesRespp = await getRoutesOfVehicle(
+          vehicle.guid,
+          moment(date.startDate).format("YYYY-MM-DD")
+        );
+        console.log("routesRespp",routesRespp);  
+        setVehicleRoutes(routesRespp?.body);
+      setStops(new Array(routesRespp?.body?.length));
+      }
+      );
+   
+      // const vehicleResponse = await getVehicleDetails(vehicleDetails?.guid);
+      // console.log("&&&vehicleResponse", vehicleResponse);
+      // console.log("vehicleGuid", moment(date.startDate).format("YYYY-MM-DD"));
+      // const vehiclesRes = vehicleResponse?.body;
+      // setGetVehiclesData(vehiclesRes);
+      // const routesRespp = await getRoutesOfVehicle(
+      //   vehicles?.body?.guid,
+      //   moment(date.startDate).format("YYYY-MM-DD")
+      // );
+      // console.log("routesRespp", routesRespp);
+      // const routesOfVehicle = routesRespp?.body;
+      // setVehicleRoutes(routesRespp?.body);
+      // setStops(new Array(routesRespp?.body?.length));
+
       // const driverDetails=await getVehicleDetails()
       // console.log("driverDetails",driverDetails);
-      
     };
     fetchData();
   }, []);
@@ -63,7 +108,8 @@ const Home: React.FC = () => {
       bgColor: "#FBE151",
       iconBgColor: "#DAC241",
       textColor: "#000",
-      onPress: () => NavigationService.navigate("BusList", { profileInfo: profileData }),
+      onPress: () =>
+        NavigationService.navigate("BusList", { profileInfo: profileData }),
       iconName: "Track",
       icon: <Track />,
     },
@@ -73,7 +119,9 @@ const Home: React.FC = () => {
       iconBgColor: "#C6C6A0",
       textColor: "#fff",
       onPress: () =>
-        NavigationService.navigate("PickupBusList", {profileInfo: profileData }),
+        NavigationService.navigate("PickupBusList", {
+          profileInfo: profileData,
+        }),
       iconName: "Schedule",
       icon: <Schedule />,
     },
@@ -87,15 +135,16 @@ const Home: React.FC = () => {
       iconName: "MyProfile",
       icon: <MyProfile />,
     },
-      {
-        title: t("home.myBus"),
-        bgColor: "#E97A73",
-        iconBgColor: "#CD6059",
-        textColor: "#fff",
-        onPress: () => NavigationService.navigate("MyBusList",{profileInfo: profileData}),
-        iconName: "MyBus",
-        icon: <MyBus />,
-      },
+    {
+      title: t("home.myBus"),
+      bgColor: "#E97A73",
+      iconBgColor: "#CD6059",
+      textColor: "#fff",
+      onPress: () =>
+        NavigationService.navigate("MyBusList", { profileInfo: profileData }),
+      iconName: "MyBus",
+      icon: <MyBus />,
+    },
     {
       title: t("home.messages"),
       bgColor: "#4767BB",
@@ -120,7 +169,7 @@ const Home: React.FC = () => {
       iconBgColor: "#913eb8",
       textColor: "#fff",
       onPress: () =>
-        NavigationService.navigate("TripHistory", { profileInfo: profileData}),
+        NavigationService.navigate("TripHistory", { profileInfo: profileData }),
       iconName: "TripHistory",
       icon: (
         <TrackerHistoryIcon
@@ -135,30 +184,32 @@ const Home: React.FC = () => {
       bgColor: "#f081b1",
       iconBgColor: "#b56085",
       textColor: "#fff",
-      onPress: () => NavigationService.navigate("ApplyLeave",{driverData:profileData}),
+      onPress: () =>
+        NavigationService.navigate("ApplyLeave", { driverData: profileData }),
       iconName: "ApplyLeave",
-      icon:  <Calendar width={30} height={30}/>
+      icon: <Calendar width={30} height={30} />,
     },
   ];
 
   return (
     <View style={styles.container}>
-    <WithLogoMenuHeader />
-    <UserDetailsInfo userName={profileData?.name} />
-    {/* <ScheduledRoutes
+      <WithLogoMenuHeader />
+      <UserDetailsInfo userName={profileData?.name} />
+      <View style={styles.schedulesRoutes}>
+      <ScheduledRoutes
       profileInfo={profileData}
       routesOfvehicle={vehicleRoutes}
       stops={stops}
       isDateClickedOnce={false}
       vehicleDetails={vehicleDetails}
       date={date}
-    /> */}
-   
-    
-    {/* <Typography.H5 style={{ color: "red", textAlign: "center" }}>
+    />
+    </View>
+
+      {/* <Typography.H5 style={{ color: "red", textAlign: "center" }}>
       {`Your Bus ${t("home.busArrivalMsg")}`}
     </Typography.H5> */}
-    {/* <Typography.Link
+      {/* <Typography.Link
       style={{ textAlign: "center",color: AppStyles.color.COLOR_SECONDARY_BLUE,textDecorationLine: "none"}}
       onPress={() =>
         NavigationService.navigate("ApplyLeave",{driverData:profileData})

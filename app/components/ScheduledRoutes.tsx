@@ -124,7 +124,7 @@ const ScheduledRoutes: React.FC = (props) => {
             <Typography.H6Light
               style={{
                 alignSelf: "flex-start",
-                marginLeft: moderateScale(40),
+                marginLeft: moderateScale(25),
                 marginTop: moderateScale(8),
                 color: AppStyles.color.COLOR_DARK_GREY,
               }}
@@ -137,6 +137,7 @@ const ScheduledRoutes: React.FC = (props) => {
             <View style={{ width: "92%", marginTop: moderateScale(6) }}>
               {routesOfvehicle?.map((item, index) => (
                 <>
+
                   <View style={styles.expandableContainer}>
                     {/* <View style={{ marginBottom: moderateScale(4) }}></View> */}
                     <ExpandableList
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
     // backgroundColor:"red"
   },
   expandableContainer: {
-    paddingHorizontal: moderateScale(40),
+    paddingHorizontal: moderateScale(20),
     paddingBottom: moderateScale(6),
   },
   titleStyle: {

@@ -28,6 +28,7 @@ const LiveLocation = ({ route }) => {
   const { profileInfo, vehicleDetails = null } = route.params;
   console.log("liveLocation-profileinfo", profileInfo);
   console.log("liveLocation-vehicleDetails", vehicleDetails);
+  console.log("liveLocation-vehicleDetails234", vehicleDetails[0]?.guid);
   const [liveLocation, setLiveLocation] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [liveLocationData, setLiveLocationData] = useState();
@@ -57,7 +58,7 @@ const LiveLocation = ({ route }) => {
       let vehicleResponse = null;
       let routesResponse = null;
 
-      routesResponse = await getRoutesOfVehicle(vehicleDetails.guid, today);
+      routesResponse = await getRoutesOfVehicle(vehicleDetails[0]?.guid, today);
       console.log("routesResponse-live", routesResponse);
 
       const routes = routesResponse.body;
@@ -159,7 +160,10 @@ const LiveLocation = ({ route }) => {
           />
 
           <View
-            style={{ flex: 1, backgroundColor: AppStyles.color.COLOR_GREY_WHITE }}
+            style={{
+              flex: 1,
+              backgroundColor: AppStyles.color.COLOR_GREY_WHITE,
+            }}
           >
             {activeTab === 0 && (
               <>
