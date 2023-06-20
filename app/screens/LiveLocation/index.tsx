@@ -23,6 +23,8 @@ import { Refresh } from "../../components/svgComponents";
 
 import TabToggler from "../../components/TabToggler";
 import RouteListView from "../../components/RouteListView";
+import RouteSummaryPod from "app/components/RouteSummaryPod";
+import { Typography } from "app/components/Typography";
 
 const LiveLocation = ({ route }) => {
   const { profileInfo, vehicleDetails = null } = route.params;
@@ -62,7 +64,7 @@ const LiveLocation = ({ route }) => {
       console.log("routesResponse-live", routesResponse);
 
       const routes = routesResponse.body;
-      console.log("routes", routesResponse.body);
+      console.log("routeslivelocation", routesResponse.body);
       setVehicleRoutes(routes);
 
       if (routes.length === 0) {
@@ -138,10 +140,10 @@ const LiveLocation = ({ route }) => {
 
   useEffect(() => {
     getLiveLocation();
-    const interval = setInterval(() => {
-      getLiveLocation();
-    }, 60000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(() => {
+    //   getLiveLocation();
+    // }, 60000);
+    // return () => clearInterval(interval);
   }, []);
 
   return (
@@ -158,6 +160,8 @@ const LiveLocation = ({ route }) => {
             activeTab={activeTab}
             switchTab={switchTab}
           />
+          <RouteSummaryPod stops={coords} />
+          
 
           <View
             style={{

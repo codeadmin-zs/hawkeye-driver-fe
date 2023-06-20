@@ -87,6 +87,8 @@ const MyBus: React.FC = ({ route }) => {
       // const vehicleRoutes = routesRespp?.body;
       console.log("getVehicleRoutes", routesRespp?.body);
       const routesOfVehicle = routesRespp?.body;
+      console.log("routesOfVehicle",routesOfVehicle);
+      
       setVehicleRoutes(routesRespp?.body);
       setStops(new Array(routesRespp?.body?.length));
       // setStopsCoordinates(new Array(routeResponse.body?.length));

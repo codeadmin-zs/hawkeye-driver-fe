@@ -22,9 +22,6 @@ function RouteListView(props) {
   const { stops } = props;
   console.log("SDWED", props);
   console.log("routename",props?.stops?.route?.name);
-  
-  // console.log("startstop",props.stops[0].startstop);
-  // console.log("props.getStop",props);
 
   return (
     <ScrollView
@@ -57,9 +54,6 @@ function RouteListView(props) {
           <Typography.H3 style={{ color: AppStyles.color.COLOR_BLACK }}>
             {props?.profileInfo?.schoolName}
           </Typography.H3>
-          {/* <Typography.H4 style={{ color: AppStyles.color.COLOR_BLACK_TRANSP }}>
-            {props?.stops?.route?.name}
-          </Typography.H4> */}
           <Separator style={{ marginVertical: "2%", marginRight: "8%" }} />
           <View style={styles.dot}></View>
           {stops?.map((item, index) => (

@@ -51,6 +51,7 @@
   "myBus":{
     "title": "My Bus",
     "eta":"eta",
+    "ETA":"ETA",
     "myBusList":"My Bus List",
     "scheduleEvery":"Schedule - Every ",
     "schedule":"Schedule",
