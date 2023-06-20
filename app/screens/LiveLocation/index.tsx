@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity,Text } from "react-native";
 import data from "./data";
 
 import { Header, HudView, NoResourceFound } from "../../components";
@@ -18,7 +18,7 @@ import AppStyles from "../../config/styles";
 import AssetBottomSheet from "../../components/AssetBottomSheet";
 import moment from "moment";
 import RouteViewPod from "../../components/RouteViewPod";
-
+import {BusPod} from "../../components";
 import { Refresh } from "../../components/svgComponents";
 
 import TabToggler from "../../components/TabToggler";
@@ -148,11 +148,21 @@ const LiveLocation = ({ route }) => {
 
   return (
     <>
+    <View style={styles.headerContainer}>
       <Header
         title={t("liveLocation.title")}
         leftIcon={<LeftArrow />}
         leftIconPress={() => goBack()}
       />
+      <BusPod 
+      busNumber={ <Text style={{ fontWeight: 'bold' }}>
+      {`To ${coords[coords.length - 1]?.stopName}`}
+    </Text>}
+      plateNumber={vehicleDetails[0]?.plate}
+      driverName={profileInfo?.name}
+      time={moment().format('h:mm A')}/>
+      
+      </View>
       {!isLoading && !errorMessage && (
         <>
           <TabToggler

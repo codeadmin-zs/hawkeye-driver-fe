@@ -30,7 +30,8 @@
     "applyLeave": "Apply Leave",
     "busArrivalMsg": "will arrive in 10 mts",
     "trips": " Trip History",
-    "myBus":"My Bus"
+    "myBus":"My Bus",
+    "todaysRoutes":"Todays "
   },
   "track": {
     "title": "Bus Track",

@@ -27,4 +27,8 @@ export const makeStyles = () =>
       width: "100%",
       flexDirection: "row",
     },
+    headerContainer:{
+      backgroundColor:AppStyles.color.COLOR_DARK_BLUE,
+      padding:moderateScale(15)
+    }
   });

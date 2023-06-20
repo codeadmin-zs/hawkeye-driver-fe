@@ -191,12 +191,20 @@ const Home: React.FC = () => {
     },
   ];
 
+  const findRouteNoun = () => {
+    if (vehicleRoutes?.length === 1) {
+      return "Route";
+    } else {
+      return "Routes";
+    }
+  };
+
   return (
     <View style={styles.container}>
       <WithLogoMenuHeader />
       <UserDetailsInfo userName={profileData?.name} />
       <View>
-        <Typography.H5 style={{marginLeft:moderateScale(25)}}>Todays Route:</Typography.H5>
+        <Typography.H5 style={{marginLeft:moderateScale(25)}}>{t("home.todaysRoutes")}{findRouteNoun()}:</Typography.H5>
       <ScheduledRoutes
       profileInfo={profileData}
       routesOfvehicle={vehicleRoutes}
