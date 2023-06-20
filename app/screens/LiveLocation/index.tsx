@@ -161,7 +161,6 @@ const LiveLocation = ({ route }) => {
             switchTab={switchTab}
           />
           <RouteSummaryPod stops={coords} />
-          
 
           <View
             style={{

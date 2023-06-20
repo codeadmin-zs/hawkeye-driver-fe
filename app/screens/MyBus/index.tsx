@@ -147,102 +147,11 @@ const MyBus: React.FC = ({ route }) => {
               date={date}
               showRoutesNumber={true}
             />
-            {/* {vehicleRoutes?.length > 0 ? (
-              <>
-                <>
-                  <Typography.H6Light
-                    style={{
-                      alignSelf: "flex-start",
-                      marginLeft: moderateScale(20),
-                      marginTop: moderateScale(8),
-                      color: AppStyles.color.COLOR_DARK_GREY,
-                    }}
-                  >
-                    {vehicleRoutes?.length} {findRouteNoun()} found
-                    {isDateClickedOnce ? findDateOfRoute() : ""}
-                  </Typography.H6Light>
-                </>
-               
-                {vehicleRoutes?.length > 0 && (
-                  <View style={{ width: "92%", marginTop: moderateScale(6) }}>
-                    {vehicleRoutes?.map((item, index) => (
-                      <>
-                        <View>
-                          <View
-                            style={{ marginBottom: moderateScale(4) }}
-                          ></View>
-                          <ExpandableList
-                            key={index}
-                            title={renderRouteHeader(
-                              item.routeName,
-                              item.startdate,
-                              item.enddate,
-                              item.repeateddays
-                            )}
-                            titleContainerStyle={styles.titleContainerStyle}
-                            listStyle={styles.listStyle}
-                            titleStyle={styles.titleStyle}
-                            onPress={() => fetchRoute(item.route_guid, index)}
-                          >
-                            {stops?.length > 0 && stops[index] && (
-                              <>
-                                <View
-                                  style={{
-                                    width: "100%",
-                                    flexDirection: "row",
-                                    justifyContent: "flex-end",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <TouchableOpacity>
-                                    <Typography.H5Light
-                                      style={{
-                                        color:
-                                          AppStyles.color.COLOR_SECONDARY_BLUE,
-                                      }}
-                                      onPress={() =>
-                                       { showRouteOnMap(stops[index].stopsDetail)
-                                      console.log("button pressed");
-                                      }
-                                      }
-                                    >
-                                      {t("map.viewOnMap")}
-                                    </Typography.H5Light>
-                                  </TouchableOpacity>
-                                </View>
-                                <RouteListView
-                                  profileInfo={profileInfo}
-                                  vehicleRoutes={vehicleRoutes}
-                                  stops={stops[index]?.stopsDetail}
-                                />
-                              </>
-                            )}
-                          </ExpandableList>
-                        </View>
-                      </>
-                    ))}
-                  </View>
-                )}
-              </>
-            ) : (
-              <NoResourceFound title={t("errors.noRouteFound")} />
-            )} */}
           </View>
         </ScrollView>
       )}
     </View>
   );
 };
-// const styles = StyleSheet.create({
-//   text: {
-//     color: "black",
-//     fontSize: moderateScale(32),
-//   },
-//   titleContainerStyle: {
-//     borderColor: AppStyles.color.COLOR_MEDIUM_LIGHT_GREY,
-//     borderWidth: 12,
-//     // backgroundColor:"red"
-//   },
-// });
 
 export default MyBus;

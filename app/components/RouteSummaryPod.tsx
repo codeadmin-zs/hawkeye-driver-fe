@@ -23,7 +23,6 @@ function RouteSummaryPod(props) {
   console.log("livelocationSDWED", props);
   const routeStops = props.stops;
   console.log("routeStops", routeStops.length);
-
   const startStop = props?.stops[0];
   const endStop = props?.stops[props.stops.length - 1];
   console.log("length", props?.stops?.length);
@@ -31,9 +30,9 @@ function RouteSummaryPod(props) {
   return (
     <View style={{ backgroundColor: AppStyles.color.COLOR_WHITE }}>
       <ScrollView
-        style={{ marginBottom: moderateScale(15) }}
+        // style={{ marginBottom: moderateScale(1) }}
         contentContainerStyle={{
-          marginTop: moderateScale(20),
+          marginTop: moderateScale(13),
         }}
       >
         <View style={styles.dataContainer}>
@@ -41,7 +40,7 @@ function RouteSummaryPod(props) {
             style={{
               // flex: 1,
               justifyContent: "space-between",
-              paddingBottom: "3.2%",
+              //   paddingBottom: "2%",
             }}
           >
             <>
@@ -57,7 +56,7 @@ function RouteSummaryPod(props) {
                 <View style={styles.dot}></View>
 
                 <View>
-                  <View style={{ flexDirection: "row", marginBottom: "1%" }}>
+                  <View style={{ flexDirection: "row" }}>
                     <View style={styles.marker}>
                       <StartTrackIcon
                         width={moderateScale(15)}
@@ -114,12 +113,17 @@ function RouteSummaryPod(props) {
           </View>
         </View>
       </ScrollView>
-      <View style={styles.stopsNumber}>
-        <Typography.H1 style={{ marginRight: "2%" }}>
-          {routeStops.length}
-          {""}
-        </Typography.H1>
-        <Typography.H5Light>stops</Typography.H5Light>
+      <View style={styles.stopsDistance}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Typography.H3 style={{color:AppStyles.color.COLOR_RED,marginRight:4}}>58 min</Typography.H3>
+          <Typography.H3Light style={{color:AppStyles.color.COLOR_GREY_TRANSP}}>(15Km)</Typography.H3Light>
+        </View>
+        <View style={styles.stopsNumber}>
+          <Typography.H1 style={{ marginRight: "4%" }}>
+            {routeStops.length}
+          </Typography.H1>
+          <Typography.H5Light>Stops</Typography.H5Light>
+        </View>
       </View>
     </View>
   );
@@ -150,9 +154,10 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderStyle: "dashed",
     borderLeftColor: "#0090D9",
-    backgroundColor: "red",
+
     padding: 0,
-    margin: 0,
+    marginLeft: moderateScale(33),
+    height: 10,
     // marginLeft:"10%"
   },
   marker: {
@@ -161,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dataContainer: {
-    marginTop: "3%",
+    // marginTop: "1%",
     width: "100%",
     flexDirection: "row",
   },
@@ -174,7 +179,7 @@ const styles = StyleSheet.create({
     marginLeft: negativeMargin,
   },
   stopsNames: {
-    width: "75%",
+    width: "81%",
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -182,6 +187,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
-    marginRight: "3%",
+    // marginRight: "3%",
+    // width:"92%",
+  },
+  stopsDistance: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+	paddingHorizontal:"8%"
   },
 });
