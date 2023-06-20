@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, View, StyleSheet, Text } from "react-native";
+import { ScrollView, View, StyleSheet, Text,Pressable } from "react-native";
 import { StartTrackIcon, StopTrackIcon } from "../components/svgComponents";
 import AppStyles from "../config/styles";
 import { moderateScale } from "react-native-size-matters";
@@ -10,6 +10,8 @@ import moment from "moment";
 import Separator from "./Separator";
 import { getRoutesOfVehicle, getStopsOfRoute } from "app/services/vehicles";
 import { Colors } from "react-native-paper";
+import { DownArrow } from "./svgComponents";
+
 
 const dim = Dimensions.Screen;
 
@@ -27,8 +29,49 @@ function RouteSummaryPod(props) {
   const endStop = props?.stops[props.stops.length - 1];
   console.log("length", props?.stops?.length);
 
+  const [expandList, setExpandList] = useState(false);
+
+  function toggleList() {
+    setExpandList((prev) => !prev);
+    if (props.onPress) {
+      props.onPress();
+    }
+  }
+
+
   return (
     <View style={{ backgroundColor: AppStyles.color.COLOR_WHITE }}>
+       <Pressable onPress={toggleList}>
+        <View
+          // style={{ ...styles.titleContainer, ...props.titleContainerStyle }}
+        >
+            {typeof props.title === "string" ? (
+ <Typography.H5Light style={{ ...props.titleStyle }}>
+ {props.title}
+</Typography.H5Light>
+            ):(
+              props.title
+            )}
+         
+          <View
+            style={{
+              transform: expandList
+                ? [{ rotateX: "180deg" }]
+                : [{ rotateX: "0deg" }], flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',marginVertical:moderateScale(15)
+            }}
+          >
+            <DownArrow
+              width={moderateScale(30)}
+              height={moderateScale(25)}
+              color={"black"}
+            />
+          </View>
+        </View>
+      </Pressable>
+      {expandList && (
+        <>
       <ScrollView
         // style={{ marginBottom: moderateScale(1) }}
         contentContainerStyle={{
@@ -125,6 +168,9 @@ function RouteSummaryPod(props) {
           <Typography.H5Light>Stops</Typography.H5Light>
         </View>
       </View>
+      </>
+        )}
+
     </View>
   );
 }

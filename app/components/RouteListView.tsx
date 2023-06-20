@@ -118,9 +118,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dataContainer: {
-    marginTop: "3%",
+    // marginTop: "1%",
     width: "100%",
     flexDirection: "row",
+    borderWidth: 1,
+    borderColor: AppStyles.color.COLOR_MEDIUM_LIGHT_GREY,
+    padding:10
   },
   dot: {
     backgroundColor: AppStyles.color.COLOR_SECONDARY_BLUE,

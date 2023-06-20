@@ -118,7 +118,12 @@ const LiveLocation = ({ route }) => {
       setIsLoading(false);
       setErrorMessage(error.message);
     }
-  }
+  // }catch(error){
+  //   setIsLoading(false);
+  //   setErrorMessage(error.message);
+    
+  // }
+}
 
   function assetPressHandler() {
     setShowDetails(true);
@@ -194,6 +199,7 @@ const LiveLocation = ({ route }) => {
                     fullTrips={coords}
                     currentPos={markerState}
                     liveLocationData={liveLocation[0]}
+                    // liveLocationData={coords[0].stopName}
                     assetPressHandler={assetPressHandler}
                   />
                 )}

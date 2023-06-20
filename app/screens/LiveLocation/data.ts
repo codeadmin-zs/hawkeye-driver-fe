@@ -22,7 +22,8 @@ const DATA = [
   
       icon: "/Img/carylwSouthwest.png",
   
-      latlang: "23.659917, 57.942883",
+      // latlang: "23.659917, 57.942883",
+      latlang:"23.239925,57.912405",
   
       address: "",
   
