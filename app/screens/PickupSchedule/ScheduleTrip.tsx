@@ -206,9 +206,6 @@ const ScheduledTrip: React.FC = ({ route }) => {
             onPress={() => setShowMap(false)}
           />
         </View>
-        {/* <View style={{ width: "100%", alignItems: "center" }}>
-          <StudentCountBox data={stations}/>
-        </View> */}
 
         {showMap && routes?.length > 0 ? (
           <View style={{ width: "100%" }}>
@@ -233,7 +230,6 @@ const ScheduledTrip: React.FC = ({ route }) => {
                 height: "100%",
                 width: "100%",
               }}
-              // onRegionChange={region => onRegionChange(region)}
               ref={(ref) => {
                 mapRef = ref;
               }}
@@ -241,7 +237,6 @@ const ScheduledTrip: React.FC = ({ route }) => {
               onLayout={
                 () => {
                  routes?.length > 0 &&
-                    // !this.state.showMarker &&
                     mapRef &&
                     mapRef?.fitToCoordinates?.(routes, {
                       edgePadding: {

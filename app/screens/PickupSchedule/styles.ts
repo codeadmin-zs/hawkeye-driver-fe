@@ -1,51 +1,13 @@
 import {StyleSheet} from 'react-native';
+import { moderateScale } from 'react-native-size-matters';
+import AppStyles from "../../config/styles";
 
 export const makeStyles = (colors: any) =>
   StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    tabButtonBox: {
-      flexGrow:0,
-      width:'100%',
-      flexDirection: 'row',
-      backgroundColor: '#fff',
-    },
-    contentContainer: {
-      width: '100%',
-    },
-    podContainer: {
-      padding: '4%',
+    topContainer: {
+      width: "100%",
       backgroundColor: colors.primary,
-    },
-    Line: {
-      flex: 1,
-      borderLeftWidth: 1,
-      borderStyle: 'dashed',
-      borderLeftColor: '#0090D9',
-      padding: 0,
-      margin: 0,
-    },
-    Marker: {
-      width: '18%',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    dataContainer: {
-      marginTop: '3%',
-      width: '100%',
-      flexDirection: 'row',
-    },
-    dataItemContainer: {
-      marginVertical: '2%',
-      borderBottomWidth: 1,
-      borderBottomColor: colors.passive,
-      marginRight: '8%',
-    },
-    dataItemBox: {
-      flex: 1,
-      justifyContent: 'space-between',
-      paddingBottom: '1%',
+      paddingBottom: "2%",
     },
     fullView: {
       alignItems: 'center',
@@ -53,10 +15,21 @@ export const makeStyles = (colors: any) =>
       width: '100%',
       height: '100%',
     },
-    boardingInfoBox: {
-      width: '100%',
-      flexDirection:'row',
-      justifyContent:'space-between',
-      alignItems: 'center'
-    }
+    busPod: {
+      paddingHorizontal: moderateScale(13)
+    },
+    titleContainerStyle: {
+      borderColor: AppStyles.color.COLOR_MEDIUM_LIGHT_GREY,
+      borderWidth: 5,
+      padding: moderateScale(15),
+      paddingHorizontal:moderateScale(15)
+      // backgroundColor:"red"
+    },
+    titleStyle: {
+      fontSize: moderateScale(14),
+    },
+
+    listStyle: {
+      backgroundColor: "transparent",
+    },
   });

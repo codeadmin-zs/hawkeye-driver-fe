@@ -6,7 +6,8 @@ import { FetchTypes } from "../types";
 const FetchApi = async ({
   auth = true,
   blob = false,
-  isAuth = false,
+  isAuthReq = false,
+  isGtrackit = false,
   apiOverride = ApiConfig.BASE_URL_API,
   endpoint = "",
   payload = {},
@@ -16,28 +17,32 @@ const FetchApi = async ({
 }) => {
   const body =
     contentType === "multipart/form-data" ? payload : JSON.stringify(payload);
-  apiOverride = isAuth ? ApiConfig.BASE_URL_AUTH : ApiConfig.BASE_URL_API;
-  apiOverride += ApiConfig.SUB_URL;
+  apiOverride = isAuthReq ? ApiConfig.BASE_URL_AUTH : ApiConfig.BASE_URL_API;
+  apiOverride = isGtrackit ? ApiConfig.GTRACKIT_BASE_URL_API : apiOverride;
+  apiOverride += ApiConfig.SUB_URL
+
   const consolidatedHeaders: FetchTypes.ParamHeaders = {
     Authorization: auth ? `Bearer ${storeHelpers.getAccessToken()}` : "",
     "Content-Type": contentType,
     "API-KEY": ApiConfig.KEY,
     ...headers,
   };
-
+  console.log("api path ", apiOverride);
+  
   const params: FetchTypes.Params = {
     method,
     headers: consolidatedHeaders,
     body: method !== "GET" ? body : null,
   };
-
   console.log("---access token---", storeHelpers.getAccessToken());
-  console.log("---consolidatedHeaders---",consolidatedHeaders);
-  console.log(`${apiOverride}${endpoint}`);
+  console.log("---consolidatedHeaders---", consolidatedHeaders);
+  console.log("api drivers----------", `${apiOverride}${endpoint}`);
 
   return fetch(`${apiOverride}${endpoint}`, params)
     .then((response: FetchTypes.RawResponse): FetchTypes.Responses => {
-      console.log("---api response ---"response);
+
+      console.log("---api response ---", response);
+
       const { status } = response;
       let isError = true;
       const errorResponse: FetchTypes.Error = {
@@ -57,6 +62,7 @@ const FetchApi = async ({
           break;
         case 404:
           errorResponse.body.detail = "Resource not found.";
+          isError = false;
           break;
         case 405:
           errorResponse.body.detail = "Invalid build.";
@@ -65,15 +71,22 @@ const FetchApi = async ({
           errorResponse.body.detail =
             "The service is currently unavailable. We apologise for the inconvenience and thank you for your patience. We’ll be back with you soon.";
           break;
+        case 409:
+          errorResponse.body.detail = "Conflicting data found";
+          console.log("reached case 409");
+
+          break;
         default:
           isError = false;
       }
 
       if (isError) {
+        console.log("error response", errorResponse);
         return errorResponse;
       } else if (blob) {
         // SUCCESSFUL BLOB RESPONSE
         return response.blob().then((body: FetchTypes.Responses) => {
+          console.log("---response body---", body);
           const blobResponse: FetchTypes.Blob = {
             status,
             body: {
@@ -84,21 +97,21 @@ const FetchApi = async ({
           return blobResponse;
         });
       } else {
-        console.log("---status--", status);
-        if (response.headers.get("content-type") && response.headers.get("content-type")?.match(/application\/json/)) {
+        if (
+          response.headers.get("content-type")?.match(/application\/json/)
+        ) {
           // SUCCESSFUL JSON RESPONSE
           return response?.json()?.then((body: FetchTypes.Responses) => {
-            console.log("---response body---", body);
             const jsonResponse: FetchTypes.Json = { status, body };
             return jsonResponse;
           });
         } else {
-          
-          return {status,body:"success"};
+          return { status, body: "success" };
         }
       }
     })
     .then((result: any) => {
+      console.log("second then result", result);
       return result;
     })
     .catch((error) => {
@@ -108,8 +121,7 @@ const FetchApi = async ({
           detail: error.message,
         },
       };
-      console.log("---error response---",error);
-
+      console.log("---error response---", error);
       return errorResponse;
     });
 };
