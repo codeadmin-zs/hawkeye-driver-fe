@@ -18,7 +18,9 @@
     "busNo":"Bus Number",
     "schoolName":"School Name",
     "mapView":"Map view",
-    "listView":"List view"
+    "listView":"List view",
+    "markAllAsRead":"Mark all as read",
+
   },
   "home": {
     "track": "Track",

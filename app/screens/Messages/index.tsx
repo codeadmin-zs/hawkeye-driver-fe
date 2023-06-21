@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, TouchableOpacity } from "react-native";
 import { Button, TextInput } from "react-native-paper";
-
+import { t } from "app/i18n";
 import NavigationService from "app/navigation/NavigationService";
 import { Header, HudView, NoResourceFound } from "../../components";
 import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
 import { Typography } from "../../components/Typography";
 import { MessagePod } from "../../components";
+import AppStyles from "app/config/styles";
 import {
   getMessages,
   oneMessageRead,
@@ -15,6 +16,7 @@ import {
 import moment from "moment";
 import styles from "./styles";
 import SearchHeader from "../../components/SearchHeader";
+import { moderateScale } from "react-native-size-matters";
 
 const Messages: React.FC = () => {
   const goBack = () => NavigationService.goBack();
@@ -33,41 +35,27 @@ const Messages: React.FC = () => {
       console.log("messageresponse", response);
       setNotices(response.body);
       console.log("guid of notice", response?.body[0]?.guid);
-      // function handleClick(guid) {
-      // // function handleClick(e) {
-      //   async function markMessageAsRead() {
-      //     setIsLoading(true);
-      //     const messageReadRes = await oneMessageRead(guid);
-      //     console.log("messageRead", messageReadRes);
-          // Do something with the messageReadRes
-        // }
-        // markMessageAsRead();
-    
-
-      // const messageReadRes=await oneMessageRead(response?.body?.guid)
-      // console.log("messageRead",messageReadRes);
 
       //transforming data here to make search algo work
       const transformedData = response?.body?.map((item) => {
-        console.log('item:', item);
+        console.log("item:", item);
         return {
           subject: item?.subject,
           content: item?.content,
           created_on: moment(item.created_on)?.format("DD-MMM-YYYY h:mm A"),
           guid: item?.guid,
-          readStatus:item?.readStatus,
+          readStatus: item?.readStatus,
         };
       });
       console.log("transformedData", transformedData);
-      console.log("readstatus",transformedData.subject);
-      
+      console.log("readstatus", transformedData.subject);
+
       setMessages(transformedData);
       setFilteredData(transformedData);
       setIsLoading(false);
     }
     fetchMessage();
   }, []);
-
 
   // const onPress = (item) => {
   //   NavigationService.navigate("FullMessage", { data: item });
@@ -100,14 +88,55 @@ const Messages: React.FC = () => {
   };
 
   function handleClick(item) {
-    console.log("ittttte",item);
+    console.log("ittttte", item);
     NavigationService.navigate("FullMessage", { data: item });
     async function markMessageAsRead() {
       const messageReadRes = await oneMessageRead(item?.guid);
-      console.log("messageRead", messageReadRes);  
+      console.log("messageRead", messageReadRes);
+
+
+const updatedData=filteredData.map((data)=>{
+  if(data.guid===item.guid){
+    return{
+      ...data,
+      readStatus:true
     }
-    markMessageAsRead();
+
+  }else return data
+  
+})
+setFilteredData(updatedData)
+
+
+      // const updatedData = filteredData.map((item) => {
+      //   return {
+      //     ...item,
+      //     readStatus: true
+      //   };
+      // });
+  // setFilteredData(updatedData)
+    }
+    markMessageAsRead();    
   }
+
+  const handleMarkAllRead=async()=>{
+    // async function markAllRead
+    const markAllRead=await allMessageRead()
+    console.log("markAllRead",markAllRead);
+
+    const updatedData = filteredData.map((item) => {
+      return {
+        ...item,
+        readStatus: true
+      };
+    });
+  console.log("updatedData",updatedData);
+  
+    setFilteredData(updatedData);
+  
+    // Rest of your code...
+  };
+
 
   return (
     <View style={styles.container}>
@@ -129,24 +158,46 @@ const Messages: React.FC = () => {
       ) : (
         <View style={styles.messageContainer}>
           {filteredData?.length > 0 ? (
-            <FlatList
-              style={{ width: "100%" }}
-              contentContainerStyle={{ width: "100%", alignItems: "center" }}
-              data={filteredData.length > 0 ? filteredData : []}
-              renderItem={({ item, index, separators }) => (
-                <MessagePod
-                  onPress={() => handleClick(item)}
-                  // onPress={() => handleClick(item.guid)}
-                  // onPress={(e) => handleClick(e)}
-                  key={index}
-                  messageTitle={item?.subject}
-                  messageType={"info"}
-                  message={item.content}
-                  date={item?.created_on}
-                  readStatus={item?.readStatus}
-                />
-              )}
-            />
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+                paddingTop: moderateScale(15),
+              }}
+            >
+              <TouchableOpacity>
+                <Typography.H5Light
+                  style={{
+                    color: AppStyles.color.COLOR_SECONDARY_BLUE,
+                    paddingBottom: moderateScale(12),
+                    marginRight:moderateScale(20),
+                  }}
+                  onPress={()=>handleMarkAllRead()}
+                >
+                  {t("general.markAllAsRead")}
+                </Typography.H5Light>
+              </TouchableOpacity>
+              <FlatList
+                style={{ width: "100%" }}
+                contentContainerStyle={{ width: "100%", alignItems: "center" }}
+                data={filteredData.length > 0 ? filteredData : []}
+                renderItem={({ item, index, separators }) => (
+                  <MessagePod
+                    onPress={() => handleClick(item)}
+                    // onPress={() => handleClick(item.guid)}
+                    // onPress={(e) => handleClick(e)}
+                    key={index}
+                    messageTitle={item?.subject}
+                    messageType={"info"}
+                    message={item.content}
+                    date={item?.created_on}
+                    readStatus={item?.readStatus}
+                  />
+                )}
+              />
+            </View>
           ) : (
             <NoResourceFound title={"No message Found"} />
           )}
@@ -155,7 +206,5 @@ const Messages: React.FC = () => {
     </View>
   );
 };
-
-
 
 export default Messages;

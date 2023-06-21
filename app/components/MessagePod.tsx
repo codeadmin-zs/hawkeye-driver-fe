@@ -36,7 +36,7 @@ const MessagePod: FunctionComponent<any> = ({
   }
 
   // const titleColor = readStatus ? AppStyles.color.COLOR_GREY_TRANSP : AppStyles.color.COLOR_BLACK;
-  const titleColor = readStatus ? "#FFFF00" :"#0094FF";
+  const titleColor = readStatus ? AppStyles.color.COLOR_GREY : AppStyles.color.COLOR_BLACK;
   return (
     <TouchableOpacity style={styles.rootContainer} onPress={onPress}>
       <View style={styles.container}>

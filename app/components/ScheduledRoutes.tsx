@@ -21,8 +21,6 @@ const ScheduledRoutes: React.FC = (props) => {
     date,
     showRoutesNumber = false,
   } = props;
-  console.log("profileInfo-sched", profileInfo);
-  console.log("routesOfvehicle-scheduled", routesOfvehicle);
 
   const [stops, setStops] = useState([]);
   const [allStops, setAllStops] = useState([]);
@@ -88,8 +86,7 @@ const ScheduledRoutes: React.FC = (props) => {
   };
 
   const showRouteOnMap = (stops) => {
-    console.log("stops[0]", stops[0].latitude);
-    console.log("stops-mybus", stops);
+  
     const currentPos = {
       latitude: JSON.parse(stops[0].latitude),
       longitude: JSON.parse(stops[0].longitude),
@@ -110,11 +107,8 @@ const ScheduledRoutes: React.FC = (props) => {
       const tempData = [...allStops];
 
       const stopsResponse = await getStopsOfRoute(guid);
-      console.log("stopsResponse", stopsResponse);
-      // setStops(stopsResponse.body)
 
       const stopsCopy = stopsResponse.body;
-      // stopsCopy.accordionPosition = index;
       tempData[index] = stopsCopy;
       setAllStops(tempData);
     }
@@ -194,7 +188,6 @@ const ScheduledRoutes: React.FC = (props) => {
                                     showRouteOnMap(
                                       allStops[index]?.stopsDetail
                                     );
-                                    console.log("button pressed");
                                   }}
                                 >
                                   {t("map.viewOnMap")}
@@ -232,7 +225,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: moderateScale(25),
     backgroundColor: AppStyles.color.COLOR_WHITE,
-    // backgroundColor:"red"
   },
   expandableContainer: {
     paddingHorizontal: moderateScale(20),
