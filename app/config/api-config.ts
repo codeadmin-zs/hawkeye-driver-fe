@@ -24,7 +24,8 @@ const ApiConfig = {
   USERS:"users",
   ROUTES:"routes",
   DATE:"date",
-  ASSETS:"assets"
+  ASSETS:"assets",
+  READS:"reads"
 };
 
 export default ApiConfig;
