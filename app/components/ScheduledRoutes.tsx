@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import NavigationService from "app/navigation/NavigationService";
-import { View, TouchableOpacity, StyleSheet,ScrollView} from "react-native";
+import { View, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import { Typography } from "app/components/Typography";
 import { t } from "app/i18n";
 import { moderateScale } from "react-native-size-matters";
@@ -13,7 +13,14 @@ import { getStopsOfRoute } from "app/services/vehicles";
 import RouteListView from "app/components/RouteListView";
 
 const ScheduledRoutes: React.FC = (props) => {
-  const { profileInfo, routesOfvehicle, isDateClickedOnce,vehicleDetails,date,showRoutesNumber=false} = props;
+  const {
+    profileInfo,
+    routesOfvehicle,
+    isDateClickedOnce,
+    vehicleDetails,
+    date,
+    showRoutesNumber = false,
+  } = props;
   console.log("profileInfo-sched", profileInfo);
   console.log("routesOfvehicle-scheduled", routesOfvehicle);
 
@@ -113,36 +120,38 @@ const ScheduledRoutes: React.FC = (props) => {
     }
   };
 
- 
-
-
   return (
     <View>
       {routesOfvehicle?.length > 0 ? (
         <>
           <>
-          {showRoutesNumber && (
-<View>
-<Typography.H6Light
-              style={{
-                alignSelf: "flex-start",
-                marginLeft: moderateScale(25),
-                marginTop: moderateScale(8),
-                color: AppStyles.color.COLOR_DARK_GREY,
-              }}
-            >
-              {routesOfvehicle?.length} {findRouteNoun()} found
-              {isDateClickedOnce ? findDateOfRoute() : ""}
-            </Typography.H6Light>
-</View>
-          )}
-           
+            {showRoutesNumber && (
+              <View>
+                <Typography.H6Light
+                  style={{
+                    alignSelf: "flex-start",
+                    marginLeft: moderateScale(25),
+                    marginTop: moderateScale(8),
+                    color: AppStyles.color.COLOR_DARK_GREY,
+                  }}
+                >
+                  {routesOfvehicle?.length} {findRouteNoun()} found
+                  {isDateClickedOnce ? findDateOfRoute() : ""}
+                </Typography.H6Light>
+              </View>
+            )}
           </>
           {routesOfvehicle?.length > 0 && (
-           <View style={{ width: "100%", marginTop: moderateScale(6), marginLeft:'auto', marginRight:'auto' }}>
+            <View
+              style={{
+                width: "100%",
+                marginTop: moderateScale(6),
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
               {routesOfvehicle?.map((item, index) => (
                 <>
-
                   <View style={styles.expandableContainer}>
                     {/* <View style={{ marginBottom: moderateScale(4) }}></View> */}
                     <ExpandableList
@@ -162,31 +171,42 @@ const ScheduledRoutes: React.FC = (props) => {
                         <>
                           <View
                             style={{
-                              width: "100%",
-                              flexDirection: "row",
-                              justifyContent: "flex-end",
-                              alignItems: "center",
+                              borderWidth: 1,
+                              borderColor:
+                                AppStyles.color.COLOR_MEDIUM_LIGHT_GREY,
+                              padding: 10,
                             }}
                           >
-                            <TouchableOpacity>
-                              <Typography.H5Light
-                                style={{
-                                  color: AppStyles.color.COLOR_SECONDARY_BLUE,
-                                }}
-                                onPress={() => {
-                                  showRouteOnMap(allStops[index]?.stopsDetail);
-                                  console.log("button pressed");
-                                }}
-                              >
-                                {t("map.viewOnMap")}
-                              </Typography.H5Light>
-                            </TouchableOpacity>
+                            <View
+                              style={{
+                                width: "100%",
+                                flexDirection: "row",
+                                justifyContent: "flex-end",
+                                alignItems: "center",
+                              }}
+                            >
+                              <TouchableOpacity>
+                                <Typography.H5Light
+                                  style={{
+                                    color: AppStyles.color.COLOR_SECONDARY_BLUE,
+                                  }}
+                                  onPress={() => {
+                                    showRouteOnMap(
+                                      allStops[index]?.stopsDetail
+                                    );
+                                    console.log("button pressed");
+                                  }}
+                                >
+                                  {t("map.viewOnMap")}
+                                </Typography.H5Light>
+                              </TouchableOpacity>
+                            </View>
+                            <RouteListView
+                              profileInfo={profileInfo}
+                              vehicleRoutes={routesOfvehicle}
+                              stops={allStops[index]?.stopsDetail}
+                            />
                           </View>
-                          <RouteListView
-                            profileInfo={profileInfo}
-                            vehicleRoutes={routesOfvehicle}
-                            stops={allStops[index]?.stopsDetail}
-                          />
                         </>
                       )}
                     </ExpandableList>
@@ -200,7 +220,6 @@ const ScheduledRoutes: React.FC = (props) => {
         <NoResourceFound title={t("errors.noRouteFound")} />
       )}
     </View>
-
   );
 };
 const styles = StyleSheet.create({
