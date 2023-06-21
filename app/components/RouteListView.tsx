@@ -20,8 +20,6 @@ const negativeMargin = (-1 * (widthOfMarkerContainer + widthOfDot)) / 2;
 
 function RouteListView(props) {
   const { stops } = props;
-  console.log("SDWED", props);
-  console.log("routename",props?.stops?.route?.name);
 
   return (
     <ScrollView
@@ -118,7 +116,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dataContainer: {
-    // marginTop: "1%",
     width: "100%",
     flexDirection: "row",
   },

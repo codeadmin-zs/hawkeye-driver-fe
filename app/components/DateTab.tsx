@@ -29,7 +29,6 @@ export const DateTab = ({ startDate, onChangeDate }) => {
     if (startDate !== selectedDate) {
       setSelectedDate(startDate);
     }
-    console.log('startDate',startDate);
   }, [startDate]);
 
   const setMoment = (noOfDays, previosDate) => {

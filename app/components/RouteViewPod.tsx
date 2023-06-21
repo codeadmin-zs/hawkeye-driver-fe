@@ -40,7 +40,6 @@ const LATITUDE_DELTA = 0.0003;
 const LONGITUDE_DELTA = 0.0002;
 
 const RouteViewPod: FunctionComponent<any> = (props) => {
-  // const { fullTrips, goingBack } = props;
   const {
     fullTrips,
     currentPos,
@@ -124,7 +123,6 @@ const RouteViewPod: FunctionComponent<any> = (props) => {
                 bottom: 10,
                 left: 10,
               },
-              // animated: true,
             });
           }
         }}

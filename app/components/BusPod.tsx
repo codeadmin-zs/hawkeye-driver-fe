@@ -46,8 +46,7 @@ const BusPod: FunctionComponent<any> = ({
   const { colors } = useTheme();
 
   const styles = makeStyles(colors);
-  // const showDots=false;
-  // console.log(colors);
+  
   return (
     <>
       <TouchableOpacity onPress={onPress}>

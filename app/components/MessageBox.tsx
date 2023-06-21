@@ -15,7 +15,6 @@ import AppStyles from "../config/styles";
 
 export default function MessageBox(props) {
   const { alarmDetails, stopDetails} = props;
-  console.log("stopDetails", stopDetails);
 
   return (
     <TouchableOpacity

@@ -14,7 +14,7 @@ import { Header } from "../../components";
 import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
 import UserIcon from "../../assets/Svgs/UserIcon.svg";
 import { Typography } from "../../components/Typography";
-import { StudentPod, HudView, MessageBox,DriverPod } from "../../components";
+import { StudentPod, HudView, MessageBox, DriverPod } from "../../components";
 import { makeStyles } from "./styles";
 import { Button } from "../../components/Buttons/button";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
@@ -28,8 +28,6 @@ import { applyDriverLeave, getLeavesData } from "../../services/driver";
 import AppStyles from "app/config/styles";
 const ApplyLeave: React.FC = ({ route }) => {
   const { driverData } = route.params;
-  console.log("driverData", driverData);
-
   const dispatch = useDispatch();
 
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
@@ -56,11 +54,9 @@ const ApplyLeave: React.FC = ({ route }) => {
       Object.keys(markedDates).length > 0 &&
       true
     ) {
-      console.log("form is VALID");
       setIsFormValid(true);
       return true;
     } else {
-      console.log("form is still not valid");
       setIsFormValid(false);
       return false;
     }
@@ -85,16 +81,12 @@ const ApplyLeave: React.FC = ({ route }) => {
 
       for (let i = 1; i <= days; i++) {
         const tempDate = new Date(startDateObj);
-        console.log("tempDate", tempDate);
         tempDate.setDate(tempDate.getDate() + i);
-        console.log("tempDate after adding", tempDate);
         const tempDateStr = tempDate.toISOString().slice(0, 10);
-        console.log("tempDateStr",tempDateStr);
-        const dates = Object.keys(alreadyMarkedDates)
-        if(!dates.includes(tempDateStr)){
+        const dates = Object.keys(alreadyMarkedDates);
+        if (!dates.includes(tempDateStr)) {
           range[tempDateStr] = { color: "#00BFFF", date: tempDateStr };
         }
-        console.log("range", range);
       }
 
       setEndDate(date);
@@ -104,9 +96,8 @@ const ApplyLeave: React.FC = ({ route }) => {
         [date]: { endingDay: true, color: "#00BFFF", date: date },
       });
     }
-  };  
+  };
 
-  console.log("markedDates", markedDates);
   const goBack = () => {
     NavigationService.goBack();
   };
@@ -121,11 +112,9 @@ const ApplyLeave: React.FC = ({ route }) => {
         leaveReason,
         absentType
       );
-      console.log("formattedParams", formattedParams);
 
       const resp = await applyDriverLeave(driverData?.guid, formattedParams);
       dispatch(loadingActions.disableLoading());
-      console.log("ressppp==", resp);
       if (resp?.status === 201) {
         if (startDate && endDate) {
           setShowSuccess(
@@ -139,7 +128,6 @@ const ApplyLeave: React.FC = ({ route }) => {
 
         //Update markedDates state with the applied leave dates
         const appliedLeaveDates = Object.keys(markedDates);
-        // console.log("appliedLeaveDates", appliedLeaveDates);
         const updatedMarkedDates = {
           ...markedDates,
           ...appliedLeaveDates.reduce((acc, date) => {
@@ -149,11 +137,9 @@ const ApplyLeave: React.FC = ({ route }) => {
             };
           }, {}),
         };
-        console.log("updatedMarkedDates", updatedMarkedDates);
         setMarkedDates(updatedMarkedDates);
       } else if (resp?.status === 409) {
         setErrorStatus(true);
-        console.log("reached the error part");
       }
     } else {
       setShowWarning(true);
@@ -162,7 +148,7 @@ const ApplyLeave: React.FC = ({ route }) => {
   useEffect(() => {
     const getDriverLeaves = async () => {
       const leaveResponse = await getLeavesData();
-      console.log("leaveResponse.start_date", leaveResponse);
+      "leaveResponse.start_date", leaveResponse;
       if (
         Array.isArray(leaveResponse?.body) &&
         leaveResponse?.body?.length > 0
@@ -170,75 +156,71 @@ const ApplyLeave: React.FC = ({ route }) => {
         // setAppliedLeaves(leaveResponse?.body);
         setAppliedLeaves([leaveResponse.body]);
       }
-    
+
       const leaveDates = leaveResponse.body.map((leave) => {
         const startDate = new Date(leave.start_date);
-        // console.log("sssstartDate",startDate);
-        
+
         const endDate = new Date(leave.end_date);
         const inBetweenDates = [];
-      //  const appliedLeaveDates = Object.keys(appliedLeaves);
-      //  console.log("appliedLeaveDates2",appliedLeaveDates);
 
-       // Generate in-between dates
-       const currentDate = new Date(startDate);
-       while (currentDate <= endDate) {
-         inBetweenDates.push(new Date(currentDate));
-         currentDate.setDate(currentDate.getDate() + 1);
-       }
+        // Generate in-between dates
+        const currentDate = new Date(startDate);
+        while (currentDate <= endDate) {
+          inBetweenDates.push(new Date(currentDate));
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
 
-       return {
-        startDate,
-        endDate,
-        inBetweenDates,
-      };
-    });
-
-    const updatedMarkedDates = leaveDates.reduce((acc, leave) => {
-      const startDateFormat = moment(leave.startDate).format("YYYY-MM-DD");
-      const endDateFormat = moment(leave.endDate).format("YYYY-MM-DD");
-
-      const leaveDates = {
-        ...acc,
-        [startDateFormat]: {
-          color: AppStyles.color.COLOR_RED_IDLE,
-          textColor: "white",
-          markingType: "period",
-          disableTouchEvent: true,
-        },
-        [endDateFormat]: {
-          color: AppStyles.color.COLOR_RED_IDLE,
-          textColor: "white",
-          markingType: "period",
-          disableTouchEvent: true,
-        },
-      };
-
-      const inBetweenDates = leave.inBetweenDates.reduce((dates, date) => {
-        const formattedDate = moment(date).format("YYYY-MM-DD");
         return {
-          ...dates,
-          [formattedDate]: {
+          startDate,
+          endDate,
+          inBetweenDates,
+        };
+      });
+
+      const updatedMarkedDates = leaveDates.reduce((acc, leave) => {
+        const startDateFormat = moment(leave.startDate).format("YYYY-MM-DD");
+        const endDateFormat = moment(leave.endDate).format("YYYY-MM-DD");
+
+        const leaveDates = {
+          ...acc,
+          [startDateFormat]: {
+            color: AppStyles.color.COLOR_RED_IDLE,
+            textColor: "white",
+            markingType: "period",
+            disableTouchEvent: true,
+          },
+          [endDateFormat]: {
             color: AppStyles.color.COLOR_RED_IDLE,
             textColor: "white",
             markingType: "period",
             disableTouchEvent: true,
           },
         };
+
+        const inBetweenDates = leave.inBetweenDates.reduce((dates, date) => {
+          const formattedDate = moment(date).format("YYYY-MM-DD");
+          return {
+            ...dates,
+            [formattedDate]: {
+              color: AppStyles.color.COLOR_RED_IDLE,
+              textColor: "white",
+              markingType: "period",
+              disableTouchEvent: true,
+            },
+          };
+        }, {});
+
+        return {
+          ...leaveDates,
+          ...inBetweenDates,
+        };
       }, {});
 
-      return {
-        ...leaveDates,
-        ...inBetweenDates,
-      };
-    }, {});
+      setAlreadyMarkedDates(updatedMarkedDates);
+    };
 
-    console.log("updatedMarkedDates", updatedMarkedDates);
-    setAlreadyMarkedDates(updatedMarkedDates);
-  };
-
-  getDriverLeaves();
-}, []);
+    getDriverLeaves();
+  }, []);
   return (
     <View style={styles.container}>
       <Header
@@ -278,9 +260,8 @@ const ApplyLeave: React.FC = ({ route }) => {
         <View style={{ width: "92%" }}>
           <Calendar
             markingType={"period"}
-            markedDates={{...markedDates, ...alreadyMarkedDates }}
+            markedDates={{ ...markedDates, ...alreadyMarkedDates }}
             onDayPress={(day) => {
-              console.log("selected day", day);
               getSelectedDayEvents(day.dateString);
             }}
             theme={{
@@ -335,7 +316,6 @@ const ApplyLeave: React.FC = ({ route }) => {
                 selectedValue={absentType}
                 onValueChange={(itemValue) => {
                   setAbsentType(itemValue);
-                  console.log("absent type selected is ", itemValue);
                 }}
                 mode={"dropdown"}
                 style={{

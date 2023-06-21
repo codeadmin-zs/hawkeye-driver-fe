@@ -54,8 +54,6 @@ const TripHistory: React.FC = ({ route }) => {
       const response = await getVehicleDetails(profileInfo?.vehicleGuid);
 
       const vehicleResponse = response.body;
-      console.log("vehicle",vehicleResponse);
-      
 
       setVehicle(vehicleResponse);
 
