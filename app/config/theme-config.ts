@@ -24,7 +24,6 @@ export const PaperThemeDefault = {
       invertText: '#000000',
     },
   },
-  // fonts: configureFonts({config: fontConfig}),
 };
 
 export const PaperThemeDark = {
@@ -44,7 +43,6 @@ export const PaperThemeDark = {
       invertText: '#000000',
     },
   },
-  // fonts: configureFonts({config: fontConfig}),
 };
 
 export const CombinedDefaultTheme = {

@@ -26,8 +26,3 @@ const loadingSlice = createSlice({
  */
 export const {actions: loadingActions} = loadingSlice;
 export default loadingSlice.reducer;
-
-// export const useLoadingSlice = () => {
-//   useInjectReducer({key: slice.name, reducer: slice.reducer});
-//   return {actions: slice.actions};
-// };

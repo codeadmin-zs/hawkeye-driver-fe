@@ -19,10 +19,6 @@ interface StudentCountProps {
 
 const StudentCount: FunctionComponent<any> = ({boardedCount,notBoardedCount,yetBoardedCount}) => {
   const { colors } = useTheme();
-
-  //   if (!data) {
-  //     return null;
-  //   }
   const styles = makeStyles(colors);
 
   return (

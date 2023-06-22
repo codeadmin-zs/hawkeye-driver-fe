@@ -33,7 +33,7 @@ const Login: React.FC = () => {
   const isLoading = useSelector((state: any) => state.loading?.isLoading);
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-
+  const [isValid, setIsValid] = useState({ userName: false, password: false });
   const userNameRef = React.useRef(null);
   const passwordRef = React.useRef(null);
   // const {actions} = useLoginSlice();
@@ -44,14 +44,24 @@ const Login: React.FC = () => {
   // const handleUserNameChange = text => setUserName(text);
 
   const onLogin = () => {
-    // const userName = 'Demo1';
-    // const password = '123';
 
-    // if (userName && password) {
+    if(!userName){
+      setIsValid((prev)=>{
+        return {...prev,userName:true}
+      })
+    }
+
+    if(!password){
+      setIsValid((prev)=>{
+        return {...prev,password:true}
+      })
+    }
+
+    if (userName && password) {
     dispatch(loadingActions.enableLoading());
     dispatch(loginActions.loginRequest({userName, password}));
-    // }
-    // return null;
+    }
+    return null;
   };
 
   // const onForgot = () => NavigationService.navigate('ForgotPassword');
@@ -69,28 +79,30 @@ const Login: React.FC = () => {
               label={t('login.userName')}
               placeholder={t('login.userName')}
               style={styles.textInput}
+              error={isValid.userName}
               // value={userName}
-              onChangeText={text => {
-
+              onChangeText={(text) => {
                 setUserName(text);
               }}
               // left={()=> <Username fill={'red'} />}
-            />
-          </View>
-          <View style={styles.textInputContainer}>
-            <View style={{right: -10}}>
-              <Lock />
-            </View>
-            <TextInput
-              ref={passwordRef}
-              label={t('login.password')}
-              placeholder={t('login.password')}
-              style={styles.textInput}
-              onChangeText={text => setPassword(text)}
-              // value={password}
-              right={<Close />}
-            />
-          </View>
+              />
+              </View>
+              <View style={styles.textInputContainer}>
+                <View style={{right: -10}}>
+                  <Lock />
+                </View>
+                <TextInput
+                  ref={passwordRef}
+                  label={t('login.password')}
+                  placeholder={t('login.password')}
+                  style={styles.textInput}
+                  onChangeText={text => setPassword(text)}
+                  // value={password}
+                  error={isValid.password}
+                  right={<Close />}
+                  secureTextEntry={true}
+                />
+              </View>
           {/* <View
             style={{
               alignSelf: 'center',

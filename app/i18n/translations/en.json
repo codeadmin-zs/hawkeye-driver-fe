@@ -14,7 +14,13 @@
     "address": "Address",
     "holidays": "Holidays",
     "events": "Events",
-    "reason": "Reason"
+    "reason": "Reason",
+    "busNo":"Bus Number",
+    "schoolName":"School Name",
+    "mapView":"Map view",
+    "listView":"List view",
+    "markAllAsRead":"Mark all as read",
+
   },
   "home": {
     "track": "Track",
@@ -24,20 +30,36 @@
     "messages": "Messages",
     "holidayList": "Holiday list",
     "applyLeave": "Apply Leave",
-    "busArrivalMsg": "will arrive in 10 mts"
+    "busArrivalMsg": "will arrive in 10 mts",
+    "trips": " Trip History",
+    "myBus":"My Bus",
+    "todaysRoutes":"Todays "
   },
   "track": {
     "title": "Bus Track",
     "mapView": "Map view",
-    "listView": "List view"
+    "listView": "List view",
+    "busList":"Bus List"
   },
   "pickUpSchedule": {
     "title": "Pickup Schedule",
     "toSchool": "To School",
-    "fromSchool": "From School"
+    "fromSchool": "From School",
+    "scheduleEvery":"Schedule - Every ",
+    "schedule":"Schedule"
   },
   "children": {
     "title": "Children"
+  },
+  "myBus":{
+    "title": "My Bus",
+    "eta":"eta",
+    "ETA":"ETA",
+    "myBusList":"My Bus List",
+    "scheduleEvery":"Schedule - Every ",
+    "schedule":"Schedule",
+    "on":"on",
+    "to":"to"
   },
   "childProfile": {
     "title": "Children profile",
@@ -60,10 +82,13 @@
     "admissionDate": "Date of Admission",
     "admissionNum": "Admission Number",
     "rollNumber": "Roll Number",
-    "dob": "Date of Birth"
+    "dob": "Date of Birth",
+    "schoolName":"School Name",
+    "busNo":"Bus Number"
   },
   "profile": {
-    "details": "My Details"
+    "details": "My Details",
+    "busNo":"Bus Number(s)"
   },
   "holidays": {
     "title": "Holidays",
@@ -72,5 +97,33 @@
   "students": {
     "title": "Students",
     "searchDescription": "Search Student or Stop"
-  }
+  },
+  "tripHistory": {
+    "title": "Trip History",
+    "noTripsFound":"No trips found on"
+  },
+  "tripDetails": {
+    "title": "Trip Details"
+  },
+
+  "driver":{
+    "empId":"Employee Id",
+    "rfid":"RFID"
+},
+  "applyLeave":{
+    "title":"Apply Leave",
+    "applyLeaveOn":"Apply leave on",
+    "*":"*",
+    "leaveType":"Leave type"
+},
+ "errors":{
+  "noRouteFound":"No Route Found"
+ },
+ "map":{
+  "viewOnMap":"View On Map"
+ },
+ "liveLocation":{
+  "title":"Live Location"
+ }
+
 }
