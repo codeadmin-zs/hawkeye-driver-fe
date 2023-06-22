@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+  TurboModuleRegistry,
+} from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { t } from "app/i18n";
 import NavigationService from "app/navigation/NavigationService";
@@ -94,19 +100,15 @@ const Messages: React.FC = () => {
       const messageReadRes = await oneMessageRead(item?.guid);
       console.log("messageRead", messageReadRes);
 
-
-const updatedData=filteredData.map((data)=>{
-  if(data.guid===item.guid){
-    return{
-      ...data,
-      readStatus:true
-    }
-
-  }else return data
-  
-})
-setFilteredData(updatedData)
-
+      const updatedData = filteredData.map((data) => {
+        if (data.guid === item.guid) {
+          return {
+            ...data,
+            readStatus: true,
+          };
+        } else return data;
+      });
+      setFilteredData(updatedData);
 
       // const updatedData = filteredData.map((item) => {
       //   return {
@@ -114,29 +116,28 @@ setFilteredData(updatedData)
       //     readStatus: true
       //   };
       // });
-  // setFilteredData(updatedData)
+      // setFilteredData(updatedData)
     }
-    markMessageAsRead();    
+    markMessageAsRead();
   }
 
-  const handleMarkAllRead=async()=>{
+  const handleMarkAllRead = async () => {
     // async function markAllRead
-    const markAllRead=await allMessageRead()
-    console.log("markAllRead",markAllRead);
+    const markAllRead = await allMessageRead();
+    console.log("markAllRead", markAllRead);
 
     const updatedData = filteredData.map((item) => {
       return {
         ...item,
-        readStatus: true
+        readStatus: true,
       };
     });
-  console.log("updatedData",updatedData);
-  
+    console.log("updatedData", updatedData);
+
     setFilteredData(updatedData);
-  
+
     // Rest of your code...
   };
-
 
   return (
     <View style={styles.container}>
@@ -162,26 +163,36 @@ setFilteredData(updatedData)
               style={{
                 width: "100%",
                 flexDirection: "column",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
+                position: "relative",
                 paddingTop: moderateScale(15),
               }}
             >
-              <TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  top: moderateScale(14),
+                }}
+              >
                 <Typography.H5Light
                   style={{
                     color: AppStyles.color.COLOR_SECONDARY_BLUE,
                     paddingBottom: moderateScale(12),
-                    marginRight:moderateScale(20),
+                    marginRight: moderateScale(20),
                   }}
-                  onPress={()=>handleMarkAllRead()}
+                  onPress={() => handleMarkAllRead()}
                 >
                   {t("general.markAllAsRead")}
                 </Typography.H5Light>
               </TouchableOpacity>
               <FlatList
-                style={{ width: "100%" }}
-                contentContainerStyle={{ width: "100%", alignItems: "center" }}
+                contentContainerStyle={{
+                  width: "100%",
+                  padding: moderateScale(15),
+                  marginTop: moderateScale(10),
+                  flexGrow: 1,
+                  paddingBottom: moderateScale(40),
+                }}
                 data={filteredData.length > 0 ? filteredData : []}
                 renderItem={({ item, index, separators }) => (
                   <MessagePod
