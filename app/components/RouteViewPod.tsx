@@ -193,7 +193,7 @@ const RouteViewPod: FunctionComponent<any> = (props) => {
           }}
           onPress={(stopCoord) => stopPressHandler(stopCoord, fullTrips[0])}
         >
-          <CustomMarker size={25} color={AppStyles.color.COLOR_GREEN} />
+          <CustomMarker size={25} color={AppStyles.color.COLOR_DARK_RED} />
         </Marker>
 
         <Marker
@@ -205,7 +205,7 @@ const RouteViewPod: FunctionComponent<any> = (props) => {
             stopPressHandler(stopCoord, fullTrips[fullTrips.length - 1])
           }
         >
-          <CustomMarker size={25} color={AppStyles.color.COLOR_DARK_RED} />
+          <CustomMarker size={25} color={AppStyles.color.COLOR_GREEN} />
         </Marker>
       </MapView>
       {expandAlarmBox && (

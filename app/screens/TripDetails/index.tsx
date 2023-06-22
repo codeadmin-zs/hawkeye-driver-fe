@@ -22,6 +22,8 @@ import {
 
 const TripDetails: React.FC = ({ route }) => {
   const { vehicleData } = route.params;
+  console.log("vehicleDatatrip",vehicleData);
+  
 
   const { colors } = useTheme();
   const styles = makeStyles(colors);

@@ -58,7 +58,7 @@ const DriverPod: FunctionComponent<any> = (props) => {
           <Typography.H5Light
             style={{
               color: AppStyles.color.COLOR_DARK_GREY,
-              marginLeft: moderateScale(20),
+              // marginLeft: moderateScale(20),
             }}
           >
             Plate : {vehicle.plate}

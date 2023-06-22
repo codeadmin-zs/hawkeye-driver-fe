@@ -54,26 +54,37 @@ const TripHistory: React.FC = ({ route }) => {
       const response = await getVehicleDetails(profileInfo?.vehicleGuid);
 
       const vehicleResponse = response.body;
-      console.log("vehicle",vehicleResponse);
-      
+      console.log("vehicle", vehicleResponse);
 
       setVehicle(vehicleResponse);
 
+      // const formattedPlate = vehicleResponse.plate.replace(/\s|\/+/g, ""); // Remove spaces and slashes from the plate number
+      // console.log("formattedPlate",formattedPlate);
+      
+      // const encodedPlate = encodeURI(formattedPlate);
+      // console.log("encodedPlate",encodedPlate);
+
+const encodedPlate=encodeURI(vehicleResponse.plate)
+console.log("encodedPlate",encodedPlate);
+
+
       const tripsResponse = await getTrips(
-        vehicleResponse.plate,
+        encodedPlate,
         moment(dateDetails.startDate).format("YYYY-MM-DD 00:00:00"),
         moment(dateDetails.endDate).format("YYYY-MM-DD 23:59:59")
       );
+
+      console.log("dateDetails.endDate",moment(dateDetails.endDate).format("YYYY-MM-DD 23:59:59"));
+      console.log("dateDetails.startDate",dateDetails.startDate);
+      console.log("tripsResponse", tripsResponse);
 
       if (tripsResponse.status === 404) {
         setErrorStatus(true);
         setTrips(tripsResponse.body);
       } else {
         setErrorStatus(false);
-
         setTrips(tripsResponse.body);
       }
-
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -97,6 +108,7 @@ const TripHistory: React.FC = ({ route }) => {
         "YYYY-MM-DD 23:59:59"
       )
     );
+    console.log("tripsResponse", tripsResponse);
 
     setTrips(tripsResponse.body);
     setIsLoading(false);
@@ -146,15 +158,18 @@ const TripHistory: React.FC = ({ route }) => {
               <FlatList
                 data={trips}
                 renderItem={({ item }) => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      NavigationService.navigate("TripDetails", {
-                        vehicleData: item,
-                      });
-                    }}
-                  >
-                    <TripSummaryPod data={item} />
-                  </TouchableOpacity>
+                  console.log("itemtrip", item),
+                  (
+                    <TouchableOpacity
+                      onPress={() => {
+                        NavigationService.navigate("TripDetails", {
+                          vehicleData: item,
+                        });
+                      }}
+                    >
+                      <TripSummaryPod data={item} />
+                    </TouchableOpacity>
+                  )
                 )}
                 keyExtractor={(item) => item.id}
               />
@@ -164,7 +179,7 @@ const TripHistory: React.FC = ({ route }) => {
               <NoResourceFound />
               <View style={styles.errorMsg}>
                 <Text style={styles.extraBoldFont}>
-                   {t("tripHistory.noTripsFound")} :
+                  {t("tripHistory.noTripsFound")} :
                   <Text
                     style={{
                       color: AppStyles.color.COLOR_DARK_GREY,

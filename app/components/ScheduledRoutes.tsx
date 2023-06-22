@@ -24,6 +24,7 @@ const ScheduledRoutes: React.FC = (props) => {
 
   const [stops, setStops] = useState([]);
   const [allStops, setAllStops] = useState([]);
+  const [reversedAllStops, setReversedAllStops] = useState([]);
 
   const findRouteNoun = () => {
     if (routesOfvehicle?.length === 1) {
@@ -86,7 +87,6 @@ const ScheduledRoutes: React.FC = (props) => {
   };
 
   const showRouteOnMap = (stops) => {
-  
     const currentPos = {
       latitude: JSON.parse(stops[0].latitude),
       longitude: JSON.parse(stops[0].longitude),
@@ -110,7 +110,10 @@ const ScheduledRoutes: React.FC = (props) => {
 
       const stopsCopy = stopsResponse.body;
       tempData[index] = stopsCopy;
+      console.log("tempData", tempData);
+      console.log("tempDatarev", allStops.reverse());
       setAllStops(tempData);
+      // setReversedAllStops(tempData)
     }
   };
 
@@ -197,7 +200,7 @@ const ScheduledRoutes: React.FC = (props) => {
                             <RouteListView
                               profileInfo={profileInfo}
                               vehicleRoutes={routesOfvehicle}
-                              stops={allStops[index]?.stopsDetail}
+                              stops={allStops[index]?.stopsDetail.reverse()}
                             />
                           </View>
                         </>
