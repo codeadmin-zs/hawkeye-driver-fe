@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import NavigationService from "app/navigation/NavigationService";
 import { useNavigation } from "@react-navigation/native";
-import { useTheme,ActivityIndicator } from "react-native-paper";
+import { useTheme, ActivityIndicator } from "react-native-paper";
 
 import LeftArrow from "../../assets/Svgs/LeftArrow.svg";
 import { getDriverVehicles } from "app/services/driver";
@@ -10,14 +10,12 @@ import { Header } from "app/components";
 import { t } from "../../i18n";
 import { BusPod } from "app/components";
 import MenuPressPopup from "app/components/MenuPressPopup";
-import {NoResourceFound} from "app/components";
+import { NoResourceFound } from "app/components";
 
 const MyBusList: React.FC = ({ route }) => {
   const { colors } = useTheme();
   const styles = makeStyles(colors);
-  const { profileInfo,showDots} = route.params;
-  console.log("profileInfo2", profileInfo);
-  console.log("guid", profileInfo.guid);
+  const { profileInfo, showDots } = route.params;
 
   const navigation = useNavigation();
   const [vehicleDetails, setVehicleDetails] = useState([]);
@@ -44,7 +42,6 @@ const MyBusList: React.FC = ({ route }) => {
     const vehicleList = async () => {
       const vehicles = await getDriverVehicles(profileInfo.guid);
       setIsLoading(true);
-      console.log("vehicleList", vehicles);
       const vehiclesDetails = vehicles.body;
       setVehicleDetails(vehiclesDetails);
       setIsLoading(false);
@@ -85,7 +82,6 @@ const MyBusList: React.FC = ({ route }) => {
         <>
           <View style={styles.contentContainer}>
             {vehicleDetails?.length > 0 ? (
-              // <View style={styles.contentContainer}>
               vehicleDetails.map((item, index) => {
                 return (
                   <BusPod

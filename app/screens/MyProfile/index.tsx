@@ -16,18 +16,14 @@ import { getVehicleDetails } from "app/services/vehicles";
 import { moderateScale } from "react-native-size-matters";
 import { getDriverVehicles } from "app/services/driver";
 import AppStyles from "../../config/styles";
-// import { Linking } from 'react-native';
 
 const MyProfile: React.FC = ({ route }) => {
   const { profileInfo } = route.params;
-  console.log("profileInfo", profileInfo);
-  console.log("guid", profileInfo.guid);
   const [vehicleDetails, setVehicleDetails] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const vehicles = await getDriverVehicles(profileInfo.guid);
-      console.log("vehicleDetails", vehicles);
       const vehiclesDetails = vehicles.body;
       setVehicleDetails(vehiclesDetails);
     };

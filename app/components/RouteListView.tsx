@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dataContainer: {
-    // marginTop: "1%",
     width: "100%",
     flexDirection: "row",
   },

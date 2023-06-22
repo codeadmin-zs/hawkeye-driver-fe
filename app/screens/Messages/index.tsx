@@ -38,13 +38,10 @@ const Messages: React.FC = () => {
     async function fetchMessage() {
       setIsLoading(true);
       const response = await getMessages();
-      console.log("messageresponse", response);
       setNotices(response.body);
-      console.log("guid of notice", response?.body[0]?.guid);
 
       //transforming data here to make search algo work
       const transformedData = response?.body?.map((item) => {
-        console.log("item:", item);
         return {
           subject: item?.subject,
           content: item?.content,
@@ -53,8 +50,6 @@ const Messages: React.FC = () => {
           readStatus: item?.readStatus,
         };
       });
-      console.log("transformedData", transformedData);
-      console.log("readstatus", transformedData.subject);
 
       setMessages(transformedData);
       setFilteredData(transformedData);
@@ -63,18 +58,11 @@ const Messages: React.FC = () => {
     fetchMessage();
   }, []);
 
-  // const onPress = (item) => {
-  //   NavigationService.navigate("FullMessage", { data: item });
-  // };
-
   const searchHandler = (input) => {
     if (input.length === 0) {
-      console.log("searchText", input);
       setFilteredData(messages);
       return;
     }
-
-    console.log("searchText", input);
 
     const filteredData = messages.filter((msg) => {
       for (const detail in msg) {
@@ -88,17 +76,13 @@ const Messages: React.FC = () => {
       }
     });
 
-    console.log("filteredData", filteredData);
-
     setFilteredData(filteredData);
   };
 
   function handleClick(item) {
-    console.log("ittttte", item);
     NavigationService.navigate("FullMessage", { data: item });
     async function markMessageAsRead() {
       const messageReadRes = await oneMessageRead(item?.guid);
-      console.log("messageRead", messageReadRes);
 
       const updatedData = filteredData.map((data) => {
         if (data.guid === item.guid) {
@@ -109,34 +93,20 @@ const Messages: React.FC = () => {
         } else return data;
       });
       setFilteredData(updatedData);
-
-      // const updatedData = filteredData.map((item) => {
-      //   return {
-      //     ...item,
-      //     readStatus: true
-      //   };
-      // });
-      // setFilteredData(updatedData)
     }
     markMessageAsRead();
   }
 
   const handleMarkAllRead = async () => {
-    // async function markAllRead
     const markAllRead = await allMessageRead();
-    console.log("markAllRead", markAllRead);
-
     const updatedData = filteredData.map((item) => {
       return {
         ...item,
         readStatus: true,
       };
     });
-    console.log("updatedData", updatedData);
 
     setFilteredData(updatedData);
-
-    // Rest of your code...
   };
 
   return (
@@ -197,8 +167,6 @@ const Messages: React.FC = () => {
                 renderItem={({ item, index, separators }) => (
                   <MessagePod
                     onPress={() => handleClick(item)}
-                    // onPress={() => handleClick(item.guid)}
-                    // onPress={(e) => handleClick(e)}
                     key={index}
                     messageTitle={item?.subject}
                     messageType={"info"}

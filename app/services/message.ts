@@ -28,5 +28,4 @@ export const allMessageRead=async()=>{
     method:'POST'
   })
 }
-// console.log("data",data);
 

@@ -64,12 +64,9 @@ const Home: React.FC = () => {
     let response = null;
     const fetchData = async () => {
       const response = await getDriverDetails();
-      console.log("======response", response);
       setProfileData(response?.body);
       const profileInfo = response?.body;
       const vehicles = await getDriverVehicles(profileInfo.guid);
-      console.log("vehicleshome",vehicles.body);
-      console.log("vehiclesid",vehicles?.body);
       setVehicleDetails(vehicles?.body);
 
       vehicles.body.forEach(async (vehicle) => {
@@ -77,28 +74,10 @@ const Home: React.FC = () => {
           vehicle.guid,
           moment(date.startDate).format("YYYY-MM-DD")
         );
-        console.log("routesRespp",routesRespp);  
         setVehicleRoutes(routesRespp?.body);
       setStops(new Array(routesRespp?.body?.length));
       }
       );
-   
-      // const vehicleResponse = await getVehicleDetails(vehicleDetails?.guid);
-      // console.log("&&&vehicleResponse", vehicleResponse);
-      // console.log("vehicleGuid", moment(date.startDate).format("YYYY-MM-DD"));
-      // const vehiclesRes = vehicleResponse?.body;
-      // setGetVehiclesData(vehiclesRes);
-      // const routesRespp = await getRoutesOfVehicle(
-      //   vehicles?.body?.guid,
-      //   moment(date.startDate).format("YYYY-MM-DD")
-      // );
-      // console.log("routesRespp", routesRespp);
-      // const routesOfVehicle = routesRespp?.body;
-      // setVehicleRoutes(routesRespp?.body);
-      // setStops(new Array(routesRespp?.body?.length));
-
-      // const driverDetails=await getVehicleDetails()
-      // console.log("driverDetails",driverDetails);
     };
     fetchData();
   }, []);

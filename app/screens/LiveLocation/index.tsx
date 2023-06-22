@@ -28,21 +28,14 @@ import { Typography } from "app/components/Typography";
 
 const LiveLocation = ({ route }) => {
   const { profileInfo, vehicleDetails = null } = route.params;
-  console.log("liveLocation-profileinfo", profileInfo);
-  console.log("liveLocation-vehicleDetails", vehicleDetails);
-  console.log("liveLocation-vehicleDetails234", vehicleDetails[0]?.guid);
   const [liveLocation, setLiveLocation] = useState([]);
   const [showDetails, setShowDetails] = useState(false);
   const [liveLocationData, setLiveLocationData] = useState();
-
   const [coords, setCoords] = useState([]);
   const [vehicleRoutes, setVehicleRoutes] = useState();
-
   const [markerState, setMarkerState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
   const [errorMessage, setErrorMessage] = useState(false);
-
   const [activeTab, setActiveTab] = useState(0);
 
   const styles = makeStyles();
@@ -61,25 +54,18 @@ const LiveLocation = ({ route }) => {
       let routesResponse = null;
 
       routesResponse = await getRoutesOfVehicle(vehicleDetails[0]?.guid, today);
-      console.log("routesResponse-live", routesResponse);
 
       const routes = routesResponse.body;
-      console.log("routeslivelocation", routesResponse.body);
       setVehicleRoutes(routes);
 
       if (routes.length === 0) {
         setIsLoading(false);
-        console.log("no route found", t("errors.noRouteFound"));
         throw new Error(t("errors.noRouteFound"));
       }
 
       const routeGuid = routes[0].route_guid;
-
       const stopsResponse = await getStopsOfRoute(routeGuid);
-      console.log("--stopsResponse", stopsResponse);
-
       const completeStops = stopsResponse.body.stopsDetail;
-      console.log("completeStops", completeStops);
 
       if (completeStops.length === 0) {
         setIsLoading(false);
@@ -93,7 +79,6 @@ const LiveLocation = ({ route }) => {
           longitude: JSON.parse(item.longitude),
         };
       });
-      console.log("stopsArr", stopsArr);
 
       setCoords(stopsArr);
 
@@ -118,11 +103,6 @@ const LiveLocation = ({ route }) => {
       setIsLoading(false);
       setErrorMessage(error.message);
     }
-  // }catch(error){
-  //   setIsLoading(false);
-  //   setErrorMessage(error.message);
-    
-  // }
 }
 
   function assetPressHandler() {
@@ -132,7 +112,6 @@ const LiveLocation = ({ route }) => {
   function showAssetBottomPod() {
     setShowDetails(true);
   }
-
   function dismissModal() {
     setShowDetails(false);
   }
@@ -199,7 +178,6 @@ const LiveLocation = ({ route }) => {
                     fullTrips={coords}
                     currentPos={markerState}
                     liveLocationData={liveLocation[0]}
-                    // liveLocationData={coords[0].stopName}
                     assetPressHandler={assetPressHandler}
                   />
                 )}

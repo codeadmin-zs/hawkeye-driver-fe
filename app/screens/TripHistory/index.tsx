@@ -54,8 +54,6 @@ const TripHistory: React.FC = ({ route }) => {
       const response = await getVehicleDetails(profileInfo?.vehicleGuid);
 
       const vehicleResponse = response.body;
-      console.log("vehicle",vehicleResponse);
-      
 
       setVehicle(vehicleResponse);
 
@@ -164,7 +162,7 @@ const TripHistory: React.FC = ({ route }) => {
               <NoResourceFound />
               <View style={styles.errorMsg}>
                 <Text style={styles.extraBoldFont}>
-                   {t("tripHistory.noTripsFound")} :
+                  {t("tripHistory.noTripsFound")} :
                   <Text
                     style={{
                       color: AppStyles.color.COLOR_DARK_GREY,

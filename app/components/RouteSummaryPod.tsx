@@ -43,7 +43,6 @@ function RouteSummaryPod(props) {
     <View style={{ backgroundColor: AppStyles.color.COLOR_WHITE }}>
        <Pressable onPress={toggleList}>
         <View
-          // style={{ ...styles.titleContainer, ...props.titleContainerStyle }}
         >
             {typeof props.title === "string" ? (
  <Typography.H5Light style={{ ...props.titleStyle }}>
@@ -73,7 +72,6 @@ function RouteSummaryPod(props) {
       {expandList && (
         <>
       <ScrollView
-        // style={{ marginBottom: moderateScale(1) }}
         contentContainerStyle={{
           marginTop: moderateScale(13),
         }}
@@ -81,9 +79,7 @@ function RouteSummaryPod(props) {
         <View style={styles.dataContainer}>
           <View
             style={{
-              // flex: 1,
               justifyContent: "space-between",
-              //   paddingBottom: "2%",
             }}
           >
             <>
@@ -204,7 +200,6 @@ const styles = StyleSheet.create({
     padding: 0,
     marginLeft: moderateScale(33),
     height: 10,
-    // marginLeft:"10%"
   },
   marker: {
     width: widthOfMarkerContainer,
@@ -212,7 +207,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dataContainer: {
-    // marginTop: "1%",
     width: "100%",
     flexDirection: "row",
   },
@@ -233,8 +227,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
-    // marginRight: "3%",
-    // width:"92%",
+   
   },
   stopsDistance: {
     flexDirection: "row",

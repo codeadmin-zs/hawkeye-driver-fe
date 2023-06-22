@@ -62,7 +62,6 @@ const HolidayList: React.FC = () => {
         markedHolidayDates[holiday.holiday_on] = {
           selected: true,
           selectedColor: AppStyles.color.COLOR_RED_IDLE,
-          // selectedColor: "green",
           selectedTextColor: "#FFFFFF",
           selectedHolidayText: holiday?.text,
         };

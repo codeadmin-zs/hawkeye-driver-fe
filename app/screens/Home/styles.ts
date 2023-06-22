@@ -32,9 +32,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     textAlign: 'center',
   },
-  // schedulesRoutes:{
-  //   marginLeft:moderateScale(40),
-  // }
 });
 
 export default styles;

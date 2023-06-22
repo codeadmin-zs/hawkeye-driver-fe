@@ -76,7 +76,6 @@ const ApplyLeave: React.FC = ({ route }) => {
     } else {
       // if there's already a start date selected
       const range = {
-        // [startDate]: { startingDay: true, color: "#00BFFF" },
       };
       const endDateObj = new Date(date);
       const startDateObj = new Date(startDate);
@@ -139,7 +138,6 @@ const ApplyLeave: React.FC = ({ route }) => {
 
         //Update markedDates state with the applied leave dates
         const appliedLeaveDates = Object.keys(markedDates);
-        // console.log("appliedLeaveDates", appliedLeaveDates);
         const updatedMarkedDates = {
           ...markedDates,
           ...appliedLeaveDates.reduce((acc, date) => {
@@ -167,18 +165,14 @@ const ApplyLeave: React.FC = ({ route }) => {
         Array.isArray(leaveResponse?.body) &&
         leaveResponse?.body?.length > 0
       ) {
-        // setAppliedLeaves(leaveResponse?.body);
         setAppliedLeaves([leaveResponse.body]);
       }
     
       const leaveDates = leaveResponse.body.map((leave) => {
         const startDate = new Date(leave.start_date);
-        // console.log("sssstartDate",startDate);
         
         const endDate = new Date(leave.end_date);
         const inBetweenDates = [];
-      //  const appliedLeaveDates = Object.keys(appliedLeaves);
-      //  console.log("appliedLeaveDates2",appliedLeaveDates);
 
        // Generate in-between dates
        const currentDate = new Date(startDate);
@@ -233,7 +227,6 @@ const ApplyLeave: React.FC = ({ route }) => {
       };
     }, {});
 
-    console.log("updatedMarkedDates", updatedMarkedDates);
     setAlreadyMarkedDates(updatedMarkedDates);
   };
 
@@ -356,7 +349,6 @@ const ApplyLeave: React.FC = ({ route }) => {
               maxLength={256}
               onChangeText={(text) => {
                 setLeaveReason(text);
-                // validationFunc();
               }}
             />
             <Typography.H5Light

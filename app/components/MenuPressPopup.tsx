@@ -11,7 +11,6 @@ function MenuPressPopup(props) {
   const { dataForNavigation, setMenuOptions } = props;
   console.log("dataForNavigation",dataForNavigation);
   console.log("plate",dataForNavigation.vehicleDetails.plate);
-  // console.log("setMenuOptions",setMenuOptions);
   
   function navigationHandler(url: string) {
     NavigationService.navigate(url, {

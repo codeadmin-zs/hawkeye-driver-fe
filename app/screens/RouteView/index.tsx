@@ -14,10 +14,6 @@ const RouteView: React.FC = ({ route }) => {
   // currentPos is required to make the RouteViewPod component work here
   const { fullTrips, currentPos, vehicleDetails, date,profileInfo } = route.params;
   const [showDetails, setShowDetails] = useState(false);
-
-
-  console.log("vehicleDetails",vehicleDetails);
-  console.log("fullTrips",fullTrips);
   
   const { colors } = useTheme();
   const styles = makeStyles(colors);

@@ -28,7 +28,6 @@ export const makeStyles = (colors: any) =>
       borderWidth: 5,
       padding: moderateScale(15),
       paddingHorizontal:moderateScale(15)
-      // backgroundColor:"red"
     },
     titleStyle: {
       fontSize: moderateScale(14),
